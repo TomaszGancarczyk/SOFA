@@ -4,32 +4,22 @@
 }
 
 <div class="text-center">
-    <p>
-        > choose container
-    </p>
-    <p>
-        > choose artifacts
-    </p>
-    <p>
-        > effects if too high infection
-    </p>
-    <p>
-        @{
-            List<Properties> flameProperties = new List<Properties>
-        {
-        new Properties("Health regeneration", 1.95, true),
-        new Properties("Temperature", 1, false),
-        new Properties("Bleeding", -1, true)
-        };
-            List<Properties> flamePotentialProperties = new List<Properties>
-        {
-        new Properties("Health regeneration", 0.5, true),
-        new Properties("Healing effectiveness", 3.85, true),
-        new Properties("Bleeding", -0.18, true)
-        };
-            Artifact flame = new Artifact("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/artefact/thermal/kqp0.png", "Flame", "Thermal", 0.2, flameProperties, flamePotentialProperties, "A degraded form, this Fireball stayed too close to its parent anomaly for too long. Speeds up tissue regeneration but, unlike its starting form, warms up too fast and is unsafe to touch without protection");
-        }
-    </p>
+    @{
+        List<Properties> flameProperties = new List<Properties>
+    {
+    new Properties("Health regeneration", 1.95, true),
+    new Properties("Temperature", 1, false),
+    new Properties("Bleeding", -1, true)
+    };
+        List<Properties> flamePotentialProperties = new List<Properties>
+    {
+    new Properties("Health regeneration", 0.5, true),
+    new Properties("Healing effectiveness", 3.85, true),
+    new Properties("Bleeding", -0.18, true)
+    };
+        Artifact flame = new Artifact("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/artefact/thermal/kqp0.png", "Flame", "Thermal", 0.2, 300, flameProperties, flamePotentialProperties, "A degraded form, this Fireball stayed too close to its parent anomaly for too long. Speeds up tissue regeneration but, unlike its starting form, warms up too fast and is unsafe to touch without protection");
+    }
+    <img src="@flame.ImgSource" alt="flame">
     <h1>
         @flame.Name
     </h1>
@@ -38,6 +28,9 @@
     </h3>
     <h3>
         Weight: @flame.Weight kg
+    </h3>
+    <h3>
+        Price: @flame.Price ₽
     </h3>
     <h3>
         Properties:
@@ -81,4 +74,78 @@
     <p>
         @flame.Description
     </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    <p>
+    </p>
+    @{
+        Dictionary<string, int> hiveBases = new Dictionary<string, int>
+    {
+    { "100 Rads Bar", 6 },
+    { "Freedom Underground", 6 },
+    { "Duty Base", 6 },
+    { "Mercenary Camp", 6 },
+    { "Covenant Abode", 6 }
+    };
+        ArtifactContainer bartertest = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, null, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
+        ArtifactContainer bartertest2 = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, null, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
+        Dictionary<IItem, int> hiveBartersItems = new Dictionary<IItem, int>
+    {
+    {bartertest, 120},
+    {bartertest2, 19562}
+    };
+        List<Barter> hiveBarters = new List<Barter>
+    {
+    new Barter(1633570, hiveBartersItems)
+    };
+        ArtifactContainer hive = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, hiveBarters, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
+    }
+    <img src="@hive.ImgSource" alt="hive">
+    <h1>
+        @hive.Name
+    </h1>
+    @if (hive.Protection > 0)
+    {
+        <h3>
+            Protection: @hive.Protection
+        </h3>
+    }
+    @if (hive.CarryWeight > 0)
+    {
+        <h3>
+            Carry Weight: @hive.CarryWeight
+        </h3>
+    }
+    <h3>
+        Class: @hive.Class
+    </h3>
+    <h3>
+        Weight: @hive.Weight kg
+    </h3>
+    <h3>
+        Bases:
+    </h3>
+    @foreach (KeyValuePair<string, int> bases in hiveBases)
+    {
+        <p>
+            @bases.Key | @bases.Value
+        </p>
+    }
+    <h3>
+        Barter:
+    </h3>
+    @foreach (Barter barter in hiveBarters)
+    {
+        <p>
+            Cost: @barter.Cost
+        </p>
+        foreach (KeyValuePair<IItem, int> item in barter.BarterResources)
+        {
+            <p>
+                @item.Key.Name : @item.Value
+            </p>
+        }
+    }
 </div>

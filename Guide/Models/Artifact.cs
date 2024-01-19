@@ -1,6 +1,6 @@
 ﻿namespace Guide.Models
 {
-    public class Artifact
+    public class Artifact : IItem
     {
 
         public int Id { get; set; }
@@ -11,13 +11,15 @@
         public List<Properties> PropertiesList { get; set; }
         public List<Properties> PotentialPropertiesList { get; set; }
         public string Description { get; set; }
+        public int Price { get; set; }
 
-        public Artifact(string imgSource, string name, string @class, double weight, List<Properties> properties, List<Properties> potentialProperties, string description)
+        public Artifact(string imgSource, string name, string @class, double weight, int price, List<Properties> properties, List<Properties> potentialProperties, string description)
         {
             ImgSource = imgSource;
             Name = name;
             Class = @class;
             Weight = weight;
+            Price = price;
             PropertiesList = properties;
             PotentialPropertiesList = potentialProperties;
             Description = description;
