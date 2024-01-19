@@ -1,4 +1,6 @@
-﻿namespace Guide.Models
+﻿using Guide.Models.Interfaces;
+
+namespace Guide.Models
 {
     public class ArtifactContainer : IItem
     {

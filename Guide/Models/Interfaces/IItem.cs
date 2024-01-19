@@ -1,6 +1,6 @@
-﻿namespace Guide.Models
+﻿namespace Guide.Models.Interfaces
 {
-    public interface IItem
+    public interface IItem : IBarter
     {
         int Id { get; set; }
         string ImgSource { get; set; }

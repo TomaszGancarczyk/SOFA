@@ -1,4 +1,5 @@
 ﻿@using Guide.Models
+@using Guide.Models.Interfaces
 @{
     ViewData["Title"] = "Artifact Builder";
 }
@@ -40,13 +41,13 @@
         if (property.IsPositive)
         {
             <p style="color:green">
-                @property.Name, @property.Value
+                @property.Name @property.Value
             </p>
         }
         else
         {
             <p style="color:red">
-                @property.Name, @property.Value
+                @property.Name @property.Value
             </p>
         }
     }
@@ -91,7 +92,7 @@
     };
         ArtifactContainer bartertest = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, null, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
         ArtifactContainer bartertest2 = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, null, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
-        Dictionary<IItem, int> hiveBartersItems = new Dictionary<IItem, int>
+        Dictionary<IBarter, int> hiveBartersItems = new Dictionary<IBarter, int>
     {
     {bartertest, 120},
     {bartertest2, 19562}
@@ -100,7 +101,7 @@
     {
     new Barter(1633570, hiveBartersItems)
     };
-        ArtifactContainer hive = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, hiveBarters, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
+        ArtifactContainer hive = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Container", 8, hiveBases, hiveBarters, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
     }
     <img src="@hive.ImgSource" alt="hive">
     <h1>
@@ -141,11 +142,17 @@
         <p>
             Cost: @barter.Cost
         </p>
-        foreach (KeyValuePair<IItem, int> item in barter.BarterResources)
+        foreach (KeyValuePair<IBarter, int> item in barter.BarterResources)
         {
             <p>
                 @item.Key.Name : @item.Value
             </p>
         }
     }
+    <h3>
+        Description:
+    </h3>
+    <p>
+        @hive.Description
+    </p>
 </div>
