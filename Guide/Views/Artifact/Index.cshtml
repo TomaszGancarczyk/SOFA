@@ -1,87 +1,12 @@
 ﻿@using Guide.Models
 @using Guide.Models.Objects
 @using Guide.Models.Interfaces
+@using Guide.Models.Objects.BackpackAndContainerObject
 @{
     ViewData["Title"] = "Artifact Builder";
 }
 
 <div class="text-center">
-    @{
-        List<Properties> flameProperties = new List<Properties>
-    {
-    new Properties("Health regeneration", 1.95, true),
-    new Properties("Temperature", 1, false),
-    new Properties("Bleeding", -1, true)
-    };
-        List<Properties> flamePotentialProperties = new List<Properties>
-    {
-    new Properties("Health regeneration", 0.5, true),
-    new Properties("Healing effectiveness", 3.85, true),
-    new Properties("Bleeding", -0.18, true)
-    };
-        Artifact flame = new Artifact("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/artefact/thermal/kqp0.png", "Flame", "Thermal", 0.2, 300, flameProperties, flamePotentialProperties, "A degraded form, this Fireball stayed too close to its parent anomaly for too long. Speeds up tissue regeneration but, unlike its starting form, warms up too fast and is unsafe to touch without protection");
-    }
-    <img src="@flame.ImgSource" alt="flame">
-    <h1>
-        @flame.Name
-    </h1>
-    <h3>
-        Class: @flame.Class
-    </h3>
-    <h3>
-        Weight: @flame.Weight kg
-    </h3>
-    <h3>
-        Price: @flame.Price ₽
-    </h3>
-    <h3>
-        Properties:
-    </h3>
-    @foreach (Properties property in flame.PropertiesList)
-    {
-        if (property.IsPositive)
-        {
-            <p style="color:green">
-                @property.Name @property.Value
-            </p>
-        }
-        else
-        {
-            <p style="color:red">
-                @property.Name @property.Value
-            </p>
-        }
-    }
-    <h3>
-        Potential Properties:
-    </h3>
-    @foreach (Properties property in flame.PotentialPropertiesList)
-    {
-        if (property.IsPositive)
-        {
-            <p style="color:green">
-                @property.Name, @property.Value
-            </p>
-        }
-        else
-        {
-            <p style="color:red">
-                @property.Name, @property.Value
-            </p>
-        }
-    }
-    <h3>
-        Description:
-    </h3>
-    <p>
-        @flame.Description
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
-    <p>
-    </p>
     @{
         <h1>Barters</h1>
         foreach (BarterItem barter in new BarterItemObject().GetAll())

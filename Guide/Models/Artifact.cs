@@ -10,12 +10,12 @@ namespace Guide.Models
         public string Name { get; set; }
         public string Class { get; set; }
         public double Weight { get; set; }
-        public List<Properties> PropertiesList { get; set; }
-        public List<Properties> PotentialPropertiesList { get; set; }
+        public List<ArtifactProperties> PropertiesList { get; set; }
+        public List<ArtifactProperties> PotentialPropertiesList { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
 
-        public Artifact(string imgSource, string name, string @class, double weight, int price, List<Properties> properties, List<Properties> potentialProperties, string description)
+        public Artifact(string imgSource, string name, string @class, double weight, int price, List<ArtifactProperties> properties, List<ArtifactProperties> potentialProperties, string description)
         {
             ImgSource = imgSource;
             Name = name;
@@ -27,12 +27,12 @@ namespace Guide.Models
             Description = description;
         }
     }
-    public class Properties
+    public class ArtifactProperties
     {
         public string Name { get; set; }
         public double Value { get; set; }
         public bool IsPositive { get; set; }
-        public Properties(string propertyName, double value, bool isPositive)
+        public ArtifactProperties(string propertyName, double value, bool isPositive)
         {
             Name = propertyName;
             Value = value;

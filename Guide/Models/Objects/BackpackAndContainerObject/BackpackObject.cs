@@ -1,6 +1,6 @@
 ﻿using Guide.Models.Interfaces;
 
-namespace Guide.Models.Objects
+namespace Guide.Models.Objects.BackpackAndContainerObject
 {
     public class BackpackObject
     {

@@ -13,4 +13,8 @@
     <None Remove="Models\Icons\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Objects\WeaponObject\" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,6 @@
-﻿using Guide.Models;
-using Guide.Models.Interfaces;
+﻿using Guide.Models.Interfaces;
 
-namespace Guide.Models.Objects
+namespace Guide.Models.Objects.BackpackAndContainerObject
 {
     public class ArtifactContainerObject
     {
@@ -337,6 +336,6 @@ namespace Guide.Models.Objects
 
         }
 
-        
+
     }
 }
