@@ -152,20 +152,23 @@
                     @bases.Key | @bases.Value
                 </p>
             }
-            <h3>
-                Barter:
-            </h3>
+            int i = 1;
             @foreach (Barter barter in container.Barters)
             {
+                <h3>
+                    Barter #@i
+                </h3>
                 <p>
                     Cost: @barter.Cost ₽
                 </p>
                 foreach (KeyValuePair<IBarter, int> item in barter.BarterResources)
                 {
+                    <img src="@item.Key.ImgSource" alt="@item.Key.Name">
                     <p>
-                        @item.Key.Name : @item.Value
+                        @item.Value
                     </p>
                 }
+                i += 1;
             }
             <h3>
                 Description:

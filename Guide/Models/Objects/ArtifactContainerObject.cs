@@ -13,6 +13,9 @@ namespace Guide.Models.Objects
             };
         }
 
+        static List<BarterItem> barterItems = new BarterItemObject().GetAll();
+        BarterItem barter = barterItems.FirstOrDefault(barter => barter.Name == "Stinky Root");
+
         BackpackAndContainer kzs1 = new BackpackAndContainer(
             "https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/9yyq.png",
             "KZS-1 Container",
@@ -30,7 +33,8 @@ namespace Guide.Models.Objects
             {
                 new Barter(4040, new Dictionary<IBarter, int>
                 {
-
+                    { barterItems.FirstOrDefault(barter => barter.Name == "Stinky Root") , 28 },
+                    { barterItems.FirstOrDefault(barter => barter.Name == "Crappite") , 22 }
                 })
             },
             "One of the first container models for transporting artifacts. Contains only 1 artifact slot but has good shielding capabilities. Widespread and inexpensive."
