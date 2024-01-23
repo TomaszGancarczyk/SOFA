@@ -2,7 +2,6 @@ TODO:
 
 > Database
   - fill database with items
-    - group it by
   - add option to compare items
   - add option to upgrade gear
   - search option
@@ -16,6 +15,7 @@ TODO:
   - add timers for dead time, clan wars and emissions
 > Barter tree
   - barter tree with stats / cost
+    - add used in field
   - player inventory with resources, crafted and planned items
 > Quest
   - object quest? name, desc, nextQuest, previousQuest, sideQuest, tasks
