@@ -2,12 +2,13 @@
 
 namespace Guide.Models
 {
-    public class ArtifactContainer : IItem
+    public class BackpackAndContainer : IItem
     {
         public int Id { get; set; }
         public string ImgSource { get; set; }
         public string Name { get; set; }
         public double Protection { get; set; }
+        public int ArtifactSlots { get; set; }
         public int CarryWeight { get; set; }
         public string Class { get; set; }
         public string Rarity { get; set; }
@@ -15,11 +16,12 @@ namespace Guide.Models
         public Dictionary<string, string> BarterBase { get; set; }
         public List<Barter> Barters { get; set; }
         public string Description { get; set; }
-        public ArtifactContainer(string imgSource, string name, double protection, int carryWeight, string @class, string rarity, double weight, Dictionary<string, string> barterBase, List<Barter> barters, string description)
+        public BackpackAndContainer(string imgSource, string name, double protection, int artifactSlots, int carryWeight, string @class, string rarity, double weight, Dictionary<string, string> barterBase, List<Barter> barters, string description)
         {
             ImgSource = imgSource;
             Name = name;
             Protection = protection;
+            ArtifactSlots = artifactSlots;
             CarryWeight = carryWeight;
             Class = @class;
             Rarity = rarity;

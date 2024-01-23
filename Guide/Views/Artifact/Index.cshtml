@@ -83,18 +83,51 @@
     <p>
     </p>
     @{
-        foreach (ArtifactContainer container in new ArtifactContainerObject().GetAllContainers())
+        <h1>Barters</h1>
+        foreach (BarterItem barter in new BarterItemObject().GetAll())
+        {
+            <img src="@barter.ImgSource" alt="@barter.Name">
+            <h2>
+                @barter.Name
+            </h2>
+            <h3>
+                Rarity: @barter.Rarity
+            </h3>
+            <h3>
+                Price: @barter.Price ₽
+            </h3>
+            <h3>
+                Weight: @barter.Weight
+            </h3>
+            <h3>
+                Obtained:
+            </h3>
+            <p>
+                @barter.Obtained
+            </p>
+            <h3>
+                Description:
+            </h3>
+            <p>
+                @barter.Description
+            </p>
+        }
+        <h1>Containers</h1>
+        foreach (BackpackAndContainer container in new ArtifactContainerObject().GetAll())
         {
             <img src="@container.ImgSource" alt="@container.Name">
-            <h1>
+            <h2>
                 @container.Name
-            </h1>
+            </h2>
             @if (container.Protection > 0)
             {
                 <h3>
                     Protection: @container.Protection
                 </h3>
             }
+            <h3>
+                Artifact Slots: @container.ArtifactSlots
+            </h3>
             @if (container.CarryWeight > 0)
             {
                 <h3>
@@ -106,6 +139,9 @@
             </h3>
             <h3>
                 Weight: @container.Weight kg
+            </h3>
+            <h3>
+                Rarity: @container.Rarity
             </h3>
             <h3>
                 Bases:
@@ -122,7 +158,7 @@
             @foreach (Barter barter in container.Barters)
             {
                 <p>
-                    Cost: @barter.Cost
+                    Cost: @barter.Cost ₽
                 </p>
                 foreach (KeyValuePair<IBarter, int> item in barter.BarterResources)
                 {
@@ -136,6 +172,68 @@
             </h3>
             <p>
                 @container.Description
+            </p>
+        }
+        <h1>Backpacks</h1>
+        foreach (BackpackAndContainer backpack in new BackpackObject().GetAll())
+        {
+            <img src="@backpack.ImgSource" alt="@backpack.Name">
+            <h2>
+                @backpack.Name
+            </h2>
+            @if (backpack.Protection > 0)
+            {
+                <h3>
+                    Protection: @backpack.Protection
+                </h3>
+            }
+            <h3>
+                Artifact Slots: @backpack.ArtifactSlots
+            </h3>
+            @if (backpack.CarryWeight > 0)
+            {
+                <h3>
+                    Carry Weight: @backpack.CarryWeight
+                </h3>
+            }
+            <h3>
+                Class: @backpack.Class
+            </h3>
+            <h3>
+                Weight: @backpack.Weight kg
+            </h3>
+            <h3>
+                Rarity: @backpack.Rarity
+            </h3>
+            <h3>
+                Bases:
+            </h3>
+            @foreach (KeyValuePair<string, string> bases in backpack.BarterBase)
+            {
+                <p>
+                    @bases.Key | @bases.Value
+                </p>
+            }
+            <h3>
+                Barter:
+            </h3>
+            @foreach (Barter barter in backpack.Barters)
+            {
+                <p>
+                    Cost: @barter.Cost ₽
+                </p>
+                foreach (KeyValuePair<IBarter, int> item in barter.BarterResources)
+                {
+                    <p>
+                        @item.Key.Name : @item.Value
+                    </p>
+                }
+            }
+            <h3>
+                Description:
+            </h3>
+            <p>
+                @backpack.Description
             </p>
         }
     }
