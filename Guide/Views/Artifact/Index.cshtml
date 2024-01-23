@@ -171,6 +171,16 @@
                 i += 1;
             }
             <h3>
+                Used in:
+            </h3>
+            @foreach (IBarter barter in container.UsedIn)
+            {
+                <img src="@barter.ImgSource" alt="@barter.Name">
+                <p>
+                    @barter.Name
+                </p>
+            }
+            <h3>
                 Description:
             </h3>
             <p>
@@ -233,11 +243,22 @@
                 }
             }
             <h3>
-                Description:
+                Used in:
             </h3>
-            <p>
-                @backpack.Description
-            </p>
+            @foreach (IBarter barter in backpack.UsedIn)
+            {
+                <img src="@barter.ImgSource" alt="@barter.Name">
+                <p>
+                    @barter.Name
+                </p>
+                <h3>
+                    Description:
+                </h3>
+                <p>
+                    @backpack.Description
+                </p>
+            }
+
         }
     }
 </div>

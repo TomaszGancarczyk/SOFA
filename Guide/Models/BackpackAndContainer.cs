@@ -15,8 +15,9 @@ namespace Guide.Models
         public double Weight { get; set; }
         public Dictionary<string, string> BarterBase { get; set; }
         public List<Barter> Barters { get; set; }
+        public List<IBarter> UsedIn { get; set; }
         public string Description { get; set; }
-        public BackpackAndContainer(string imgSource, string name, double protection, int artifactSlots, int carryWeight, string @class, string rarity, double weight, Dictionary<string, string> barterBase, List<Barter> barters, string description)
+        public BackpackAndContainer(string imgSource, string name, double protection, int artifactSlots, int carryWeight, string @class, string rarity, double weight, Dictionary<string, string> barterBase, List<Barter> barters, List<IBarter> usedIn, string description)
         {
             ImgSource = imgSource;
             Name = name;
@@ -28,6 +29,7 @@ namespace Guide.Models
             Weight = weight;
             BarterBase = barterBase;
             Barters = barters;
+            UsedIn = usedIn;
             Description = description;
         }
     }
