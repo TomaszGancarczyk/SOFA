@@ -1,4 +1,5 @@
 ﻿@using Guide.Models
+@using Guide.Models.Objects
 @using Guide.Models.Interfaces
 @{
     ViewData["Title"] = "Artifact Builder";
@@ -82,77 +83,60 @@
     <p>
     </p>
     @{
-        Dictionary<string, int> hiveBases = new Dictionary<string, int>
-    {
-    { "100 Rads Bar", 6 },
-    { "Freedom Underground", 6 },
-    { "Duty Base", 6 },
-    { "Mercenary Camp", 6 },
-    { "Covenant Abode", 6 }
-    };
-        ArtifactContainer bartertest = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, null, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
-        ArtifactContainer bartertest2 = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Backpacks and Containers", 8, hiveBases, null, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
-        Dictionary<IBarter, int> hiveBartersItems = new Dictionary<IBarter, int>
-    {
-    {bartertest, 120},
-    {bartertest2, 19562}
-    };
-        List<Barter> hiveBarters = new List<Barter>
-    {
-    new Barter(1633570, hiveBartersItems)
-    };
-        ArtifactContainer hive = new ArtifactContainer("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/containers/p92d.png", "Hive Container", 85, 0, "Container", 8, hiveBases, hiveBarters, "While the Bear’s Den was much more compact than the KZS bundle, it was still fairly cumbersome. Scientists conducted a series of projects to improve popular containers. This led to the Hive, a compact, spacious, reliable, but fairly expensive option.");
-    }
-    <img src="@hive.ImgSource" alt="hive">
-    <h1>
-        @hive.Name
-    </h1>
-    @if (hive.Protection > 0)
-    {
-        <h3>
-            Protection: @hive.Protection
-        </h3>
-    }
-    @if (hive.CarryWeight > 0)
-    {
-        <h3>
-            Carry Weight: @hive.CarryWeight
-        </h3>
-    }
-    <h3>
-        Class: @hive.Class
-    </h3>
-    <h3>
-        Weight: @hive.Weight kg
-    </h3>
-    <h3>
-        Bases:
-    </h3>
-    @foreach (KeyValuePair<string, int> bases in hiveBases)
-    {
-        <p>
-            @bases.Key | @bases.Value
-        </p>
-    }
-    <h3>
-        Barter:
-    </h3>
-    @foreach (Barter barter in hiveBarters)
-    {
-        <p>
-            Cost: @barter.Cost
-        </p>
-        foreach (KeyValuePair<IBarter, int> item in barter.BarterResources)
+        foreach (ArtifactContainer container in new ArtifactContainerObject().GetAllContainers())
         {
+            <img src="@container.ImgSource" alt="@container.Name">
+            <h1>
+                @container.Name
+            </h1>
+            @if (container.Protection > 0)
+            {
+                <h3>
+                    Protection: @container.Protection
+                </h3>
+            }
+            @if (container.CarryWeight > 0)
+            {
+                <h3>
+                    Carry Weight: @container.CarryWeight
+                </h3>
+            }
+            <h3>
+                Class: @container.Class
+            </h3>
+            <h3>
+                Weight: @container.Weight kg
+            </h3>
+            <h3>
+                Bases:
+            </h3>
+            @foreach (KeyValuePair<string, string> bases in container.BarterBase)
+            {
+                <p>
+                    @bases.Key | @bases.Value
+                </p>
+            }
+            <h3>
+                Barter:
+            </h3>
+            @foreach (Barter barter in container.Barters)
+            {
+                <p>
+                    Cost: @barter.Cost
+                </p>
+                foreach (KeyValuePair<IBarter, int> item in barter.BarterResources)
+                {
+                    <p>
+                        @item.Key.Name : @item.Value
+                    </p>
+                }
+            }
+            <h3>
+                Description:
+            </h3>
             <p>
-                @item.Key.Name : @item.Value
+                @container.Description
             </p>
         }
     }
-    <h3>
-        Description:
-    </h3>
-    <p>
-        @hive.Description
-    </p>
 </div>
