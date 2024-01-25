@@ -2,8 +2,35 @@
     ViewData["Title"] = "Timers";
 }
 
+<script>
+    var clanWarCountdownTimer = "0:0:2:0";
+    var clanWarCountdown = setInterval(function () {
+        var timer = countdownTimer.split(':');
+        //by parsing integer, I avoid all extra string processing
+        var days = parseInt(timer[0], 10);
+        var hours = parseInt(timer[1], 10);
+        var minutes = parseInt(timer[2], 10);
+        var seconds = parseInt(timer[3], 10);
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        hours = (minutes < 0) ? --hours : hours;
+        days = (hours < 0) ? --days : days;
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        minutes = (minutes < 0) ? 59 : minutes;
+        minutes = (minutes < 10) ? '0' + minutes : minutes;
+        hours = (hours < 0) ? 23 : hours;
+        $('.countdown').html(days + ':' + hours + ':' + minutes);
+        clanWarCountdownTimer = days + ':' + hours + ':' + minutes + ':' + seconds;
+        if (days == 0 && hours == 0 && minutes == 0) {
+            console.log("Stopping countdown")
+            clearInterval(clanWarCountdown);
+        }
+    }, 1000);
+</script>
+
 <div class="text-center">
     <p>
-        Timer
+        <div class="countdown"></div>
     </p>
 </div>

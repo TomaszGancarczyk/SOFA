@@ -16,7 +16,7 @@ namespace Guide.Models
     {
         public string Reader()
         {
-
+            return "";
         }
     }
 }
