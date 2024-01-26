@@ -1,10 +1,59 @@
-﻿namespace Guide.Models.Armor
+﻿using System.IO;
+
+namespace Guide.Models.Armor
 {
     public class ArmorModel
     {
-        public ArmorModel(int id)
+        public List<ArmorModel> GetAllArmors()
         {
-            //Id = id;
+            List<ArmorModel> allArmors = new List<ArmorModel>();
+            foreach (ArmorModel clothes in GetArmorCategory("clothes"))
+            {
+                allArmors.Add(clothes);
+            }
+            foreach (ArmorModel combat in GetArmorCategory("combat"))
+            {
+                allArmors.Add(combat);
+            }
+            foreach (ArmorModel combined in GetArmorCategory("combined"))
+            {
+                allArmors.Add(combined);
+            }
+            foreach (ArmorModel scientist in GetArmorCategory("scientist"))
+            {
+                allArmors.Add(scientist);
+            }
+            return allArmors;
+        }
+        public List<ArmorModel> GetArmorCategory(string category)
+        {
+            Console.WriteLine("Getting files:");
+            Console.WriteLine("");
+            List<string> armorPaths = new List<string>();
+            foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
+            {
+                Console.WriteLine(file);
+                armorPaths.Add(file);
+            }
+            List<ArmorModel> armors = new List<ArmorModel>();
+            foreach (string filePath in armorPaths)
+            {
+                string[] collection = filePath.Split('\\');
+                string id = collection.Last();
+                collection = id.Split('.');
+                id = collection[0];
+                ArmorModel armormodel = new ArmorModel(id);
+                armors.Add(armormodel);
+            }
+            return armors;
+        }
+
+
+
+    public ArmorModel() { }
+    public ArmorModel(string id)
+        {
+            Id = id;
             //Name = name;
             //Rarity = rarity;
             //Class = @class;
@@ -20,7 +69,7 @@
             //ImgSource = $"https://github.com/EXBO-Studio/stalcraft-database/blob/main/global/icons/armor/{class}/{id}.png";
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Rarity { get; set; }
         public string Class { get; set; }

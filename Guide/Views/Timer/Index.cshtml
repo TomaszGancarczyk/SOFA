@@ -1,12 +1,12 @@
-﻿@{
+﻿@using Guide.Models.Armor
+@{
     ViewData["Title"] = "Timers";
 }
 
 <script>
     var clanWarCountdownTimer = "0:0:2:0";
     var clanWarCountdown = setInterval(function () {
-        var timer = countdownTimer.split(':');
-        //by parsing integer, I avoid all extra string processing
+        var timer = clanWarCountdownTimer.split(':');
         var days = parseInt(timer[0], 10);
         var hours = parseInt(timer[1], 10);
         var minutes = parseInt(timer[2], 10);
@@ -33,4 +33,12 @@
     <p>
         <div class="countdown"></div>
     </p>
+    <p></p>
+    @{
+        List<ArmorModel> armorsId = new ArmorModel().GetAllArmors();
+        foreach (ArmorModel armor in armorsId)
+        {
+            <p>@armor.Id</p>
+        }
+    }
 </div>
