@@ -37,29 +37,23 @@ namespace Guide.Models.Armor
             {
                 armorPaths.Add(file);
                 string jsonString = new Json().Reader(file);
-                //ArmorModel? armorModel = JsonSerializer.Deserialize<ArmorModel>(jsonString);
-                ArmorModel armorModel = new ArmorModel(jsonString);
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(armorModel.ImgSource);
+                var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{jObject["id"].Value<string>()}.png");
                 request.Method = "HEAD";
                 try
                 {
                     request.GetResponse();
+                    ArmorModel armorModel = new ArmorModel(jsonString);
                     armors.Add(armorModel);
                 }
                 catch { }
             }
-            //foreach (string filePath in armorPaths)
-            //{
-            //    string[] collection = filePath.Split('\\');
-            //    string id = collection.Last();
-            //    collection = id.Split('.');
-            //    id = collection[0];
-            //    ArmorModel armorModel = new ArmorModel(id);
-            //    armors.Add(armorModel);
-            //}
             return armors;
         }
 
+
+
+        public ArmorModel() { }
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
         public ArmorModel(string jsonString)
