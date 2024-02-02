@@ -19,7 +19,6 @@ namespace Guide.Models
             using (StreamReader r = new StreamReader(filePath))
             {
                 string text = r.ReadToEnd();
-                Console.WriteLine(text);
                 return text;
             }
         }

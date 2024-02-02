@@ -1,9 +1,25 @@
-﻿@{
+﻿@using Guide.Models.Armor
+@using System.Net
+@{
     ViewData["Title"] = "Database";
 }
 
 <div class="text-center">
     <p>
-        Database
+        @{
+            List<ArmorModel> armors = new ArmorModel().GetAllArmors();
+            foreach (ArmorModel armor in armors)
+            {
+                <img src="@armor.ImgSource" />
+                <p>Id: @armor.Id</p>
+                <p>Name: @armor.Name</p>
+                <p>Rarity: @armor.Rarity</p>
+                <p>Class: @armor.Class</p>
+                <p>Weight: @armor.Weight</p>
+                <p>CompatibleBackpacks: @armor.CompatibleBackpacks</p>
+                <p>CompatibleContainers: @armor.CompatibleContainers</p>
+                <p>Description: @armor.Description</p>
+            }
+        }
     </p>
 </div>

@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using System.Net;
 using System.Text.Json;
 
 namespace Guide.Models.Armor
@@ -28,56 +31,103 @@ namespace Guide.Models.Armor
         }
         public List<ArmorModel> GetArmorCategory(string category)
         {
-            Console.WriteLine("Getting files:");
-            Console.WriteLine("");
             List<string> armorPaths = new List<string>();
+            List<ArmorModel> armors = new List<ArmorModel>();
             foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
-                Console.WriteLine(file);
                 armorPaths.Add(file);
                 string jsonString = new Json().Reader(file);
-                ArmorModel? armorModel = JsonSerializer.Deserialize<ArmorModel>(jsonString);
-                Console.WriteLine(armorModel.id);
+                //ArmorModel? armorModel = JsonSerializer.Deserialize<ArmorModel>(jsonString);
+                ArmorModel armorModel = new ArmorModel(jsonString);
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(armorModel.ImgSource);
+                request.Method = "HEAD";
+                try
+                {
+                    request.GetResponse();
+                    armors.Add(armorModel);
+                }
+                catch { }
             }
-            List<ArmorModel> armors = new List<ArmorModel>();
-            foreach (string filePath in armorPaths)
-            {
-                string[] collection = filePath.Split('\\');
-                string id = collection.Last();
-                collection = id.Split('.');
-                id = collection[0];
-                ArmorModel armormodel = new ArmorModel(id);
-                armors.Add(armormodel);
-            }
+            //foreach (string filePath in armorPaths)
+            //{
+            //    string[] collection = filePath.Split('\\');
+            //    string id = collection.Last();
+            //    collection = id.Split('.');
+            //    id = collection[0];
+            //    ArmorModel armorModel = new ArmorModel(id);
+            //    armors.Add(armorModel);
+            //}
             return armors;
         }
 
-
-
-    public ArmorModel() { }
-    public ArmorModel(string file)
+#pragma warning disable CS8601 // Possible null reference assignment.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+        public ArmorModel(string jsonString)
         {
-            this.id = id;
-            //name = name;
-            //Rarity = rarity;
-            //Class = @class;
-            //Weight = weight;
+            var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
+            Id = jObject["id"]
+                .Value<string>();
+            Console.WriteLine("Id: " + Id);
+            Name = jObject["name"]
+                .Value<JObject>("lines")
+                .Value<string>("en");
+            Console.WriteLine("Name: " + Name);
+            Rarity = jObject["infoBlocks"][0]
+                .Value<JArray>("elements")[0]
+                .Value<JObject>("value")
+                .Value<JObject>("lines")
+                .Value<string>("en");
+            Console.WriteLine("Rarity: " + Rarity);
+            Class = jObject["infoBlocks"][0]
+                .Value<JArray>("elements")[1]
+                .Value<JObject>("value")
+                .Value<JObject>("lines")
+                .Value<string>("en");
+            Console.WriteLine("Class: " + Class);
+            Weight = jObject["infoBlocks"][0]
+                .Value<JArray>("elements")[2]
+                .Value<double>("value");
+            Console.WriteLine("Weight: " + Weight);
             //Properties = properties;
             //Stats = stats;
-            //CompatibleBackpacks = compatibleBackpacks;
-            //CompatibleContainers = compatibleContainers;
+            int ifHasFeature = 0;
+            if (jObject["infoBlocks"][4]
+                .Value<JObject>("title")
+                .Value<JObject>("lines")
+                .Value<string>("en") == "Features")
+            {
+                ifHasFeature = 1;
+            }
+            CompatibleBackpacks = jObject["infoBlocks"][4 + ifHasFeature]
+                .Value<JObject>("text")
+                .Value<JObject>("lines")
+                .Value<string>("en");
+            Console.WriteLine("CompatibleBackpacks: " + CompatibleBackpacks);
+            CompatibleContainers = jObject["infoBlocks"][5 + ifHasFeature]
+                .Value<JObject>("text")
+                .Value<JObject>("lines")
+                .Value<string>("en");
+            Console.WriteLine("CompatibleContainers: " + CompatibleContainers);
             //BarterBase = barterBase;
             //Barters = barters;
             //UsedInID = usedInID;
-            //Description = description;
-            //ImgSource = $"https://github.com/EXBO-Studio/stalcraft-database/blob/main/global/icons/armor/{class}/{id}.png";
+            Description = jObject["infoBlocks"][6]
+                .Value<JObject>("text")
+                .Value<JObject>("lines")
+                .Value<string>("en");
+            Console.WriteLine("Description: " + Description);
+            ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
+            Console.WriteLine("ImgSource: " + ImgSource);
+            Console.WriteLine("");
         }
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-        public string id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Rarity { get; set; }
         public string Class { get; set; }
-        public string Weight { get; set; }
+        public double Weight { get; set; }
         public List<string> Properties { get; set; }
         public List<string> Stats { get; set; }
         public string CompatibleBackpacks { get; set; }

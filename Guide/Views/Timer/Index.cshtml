@@ -33,12 +33,4 @@
     <p>
         <div class="countdown"></div>
     </p>
-    <p></p>
-    @{
-        List<ArmorModel> armorsId = new ArmorModel().GetAllArmors();
-        foreach (ArmorModel armor in armorsId)
-        {
-            <p>@armor.id</p>
-        }
-    }
 </div>
