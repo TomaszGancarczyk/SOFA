@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.Json;
 
 namespace Guide.Models.Armor
 {
@@ -34,6 +35,9 @@ namespace Guide.Models.Armor
             {
                 Console.WriteLine(file);
                 armorPaths.Add(file);
+                string jsonString = new Json().Reader(file);
+                ArmorModel? armorModel = JsonSerializer.Deserialize<ArmorModel>(jsonString);
+                Console.WriteLine(armorModel.id);
             }
             List<ArmorModel> armors = new List<ArmorModel>();
             foreach (string filePath in armorPaths)
@@ -51,10 +55,10 @@ namespace Guide.Models.Armor
 
 
     public ArmorModel() { }
-    public ArmorModel(string id)
+    public ArmorModel(string file)
         {
-            Id = id;
-            //Name = name;
+            this.id = id;
+            //name = name;
             //Rarity = rarity;
             //Class = @class;
             //Weight = weight;
@@ -69,7 +73,7 @@ namespace Guide.Models.Armor
             //ImgSource = $"https://github.com/EXBO-Studio/stalcraft-database/blob/main/global/icons/armor/{class}/{id}.png";
         }
 
-        public string Id { get; set; }
+        public string id { get; set; }
         public string Name { get; set; }
         public string Rarity { get; set; }
         public string Class { get; set; }

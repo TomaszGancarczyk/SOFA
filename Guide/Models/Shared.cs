@@ -14,9 +14,14 @@ namespace Guide.Models
     }
     public class Json
     {
-        public string Reader()
+        public string Reader(string filePath)
         {
-            return "";
+            using (StreamReader r = new StreamReader(filePath))
+            {
+                string text = r.ReadToEnd();
+                Console.WriteLine(text);
+                return text;
+            }
         }
     }
 }
