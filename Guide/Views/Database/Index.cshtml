@@ -5,21 +5,58 @@
 }
 
 <div class="text-center">
-    <p>
-        @{
-            List<ArmorModel> armors = new ArmorModel().GetAllArmors();
-            foreach (ArmorModel armor in armors)
+    @{
+        List<ArmorModel> armors = new ArmorModel().GetAllArmors();
+        foreach (ArmorModel armor in armors)
+        {
+            <img src="@armor.ImgSource" />
+            <h5>Id: @armor.Id</h5>
+            <h5>Name: @armor.Name</h5>
+            <h5>Rarity: @armor.Rarity</h5>
+            <h5>Class: @armor.Class</h5>
+            <h5>Weight: @armor.Weight</h5>
+            if (armor.Features.Count > 0)
             {
-                <img src="@armor.ImgSource" />
-                <p>Id: @armor.Id</p>
-                <p>Name: @armor.Name</p>
-                <p>Rarity: @armor.Rarity</p>
-                <p>Class: @armor.Class</p>
-                <p>Weight: @armor.Weight</p>
-                <p>CompatibleBackpacks: @armor.CompatibleBackpacks</p>
-                <p>CompatibleContainers: @armor.CompatibleContainers</p>
-                <p>Description: @armor.Description</p>
+                <h5>Features:</h5>
+                foreach (string feature in armor.Features)
+                {
+                    <p>@feature</p>
+                }
             }
+            if (armor.Properties.Count > 0)
+            {
+                <h5>Properties:</h5>
+                foreach (KeyValuePair<string, int> property in armor.Properties)
+                {
+                    <p>
+                        @{
+                            string drawProperty;
+                            if (property.Value == 0)
+                            {
+                                drawProperty = $"{property.Key}";
+                            }
+                            else
+                            {
+                                drawProperty = $"{property.Key}: {property.Value}";
+                            }
+                        }
+                        @drawProperty
+                    </p>
+                }
+            }
+            <h5>Stats:</h5>
+            foreach (KeyValuePair<string, int> stat in armor.Stats)
+            {
+                <p>
+                    @{
+                        string drawStat = $"{stat.Key}: {stat.Value}";
+                    }
+                    @drawStat
+                </p>
+            }
+            <h5>CompatibleBackpacks: @armor.CompatibleBackpacks</h5>
+            <h5>CompatibleContainers: @armor.CompatibleContainers</h5>
+            <p>Description: @armor.Description</p>
         }
-    </p>
+    }
 </div>
