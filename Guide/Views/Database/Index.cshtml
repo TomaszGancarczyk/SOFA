@@ -6,6 +6,27 @@
 
 <div class="text-center">
     @{
+        List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts();
+        foreach (ArtefactModel artefact in artefacts)
+        {
+            <img src="@artefact.ImgSource" />
+            <h1>Id: @artefact.Id</h1>
+            <h3>@artefact.Name</h3>
+            <h5>Class: @artefact.Class</h5>
+            <h5>Weight: @artefact.Weight</h5>
+            <h5>Stats:</h5>
+            foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.Stats)
+            {
+                string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
+                <p>
+                    @drawStat
+                </p>
+            }
+            if (String.IsNullOrEmpty(artefact.Description))
+            {
+                <p>@artefact.Description</p>
+            }
+        }
         List<ContainerModel> containers = new ContainerModel().GetAllContainers();
         foreach (ContainerModel container in containers)
         {
@@ -18,10 +39,8 @@
             <h5>Stats:</h5>
             foreach (KeyValuePair<string, int> stat in container.Stats)
             {
+                string drawStat = $"{stat.Key}: {stat.Value}";
                 <p>
-                    @{
-                        string drawStat = $"{stat.Key}: {stat.Value}";
-                    }
                     @drawStat
                 </p>
             }

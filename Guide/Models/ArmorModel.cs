@@ -21,7 +21,7 @@ namespace Guide.Models
                 .ToList();
             return allArmors;
         }
-        
+
         public List<ArmorModel> CreateArmorCategory(string category)
         {
             List<ArmorModel> armors = new List<ArmorModel>();
@@ -60,7 +60,6 @@ namespace Guide.Models
             {
                 ifHasFeature = 1;
             }
-            //armor model
             //id
             Id = jObject["id"]
                 .Value<string>();
@@ -79,7 +78,7 @@ namespace Guide.Models
                 .Value<JArray>("elements")[1]
                 .Value<JObject>("value")
                 .Value<JObject>("lines")
-                .Value<string>("en");   
+                .Value<string>("en");
             //weight
             Weight = jObject["infoBlocks"][0]
                 .Value<JArray>("elements")[2]
@@ -190,6 +189,5 @@ namespace Guide.Models
         public List<string> UsedInID { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
-
     }
 }
