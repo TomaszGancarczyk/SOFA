@@ -1,4 +1,4 @@
-﻿@using Guide.Models.Armor
+﻿@using Guide.Models
 @using System.Net
 @{
     ViewData["Title"] = "Database";
@@ -6,12 +6,37 @@
 
 <div class="text-center">
     @{
+        List<ContainerModel> containers = new ContainerModel().GetAllContainers();
+        foreach (ContainerModel container in containers)
+        {
+            <img src="@container.ImgSource" />
+            <h1>Id: @container.Id</h1>
+            <h3>@container.Name</h3>
+            <h5>Rarity: @container.Rarity</h5>
+            <h5>Class: @container.Class</h5>
+            <h5>Weight: @container.Weight</h5>
+            <h5>Stats:</h5>
+            foreach (KeyValuePair<string, int> stat in container.Stats)
+            {
+                <p>
+                    @{
+                        string drawStat = $"{stat.Key}: {stat.Value}";
+                    }
+                    @drawStat
+                </p>
+            }
+            if (String.IsNullOrEmpty(container.Description))
+            {
+                <p>@container.Description</p>
+            }
+        }
+
         List<ArmorModel> armors = new ArmorModel().GetAllArmors();
         foreach (ArmorModel armor in armors)
         {
             <img src="@armor.ImgSource" />
-            <h5>Id: @armor.Id</h5>
-            <h5>Name: @armor.Name</h5>
+            <h1>Id: @armor.Id</h1>
+            <h3>@armor.Name</h3>
             <h5>Rarity: @armor.Rarity</h5>
             <h5>Class: @armor.Class</h5>
             <h5>Weight: @armor.Weight</h5>
@@ -54,9 +79,9 @@
                     @drawStat
                 </p>
             }
-            <h5>CompatibleBackpacks: @armor.CompatibleBackpacks</h5>
-            <h5>CompatibleContainers: @armor.CompatibleContainers</h5>
-            <p>Description: @armor.Description</p>
+            <h5>Compatible Backpacks: @armor.CompatibleBackpacks</h5>
+            <h5>Compatible Containers: @armor.CompatibleContainers</h5>
+            <p>@armor.Description</p>
         }
     }
 </div>

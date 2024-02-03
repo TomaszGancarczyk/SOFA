@@ -2,43 +2,34 @@
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
-namespace Guide.Models.Armor
+namespace Guide.Models
 {
-    public class ArmorModel
+    public class ArmorModel : IItem
     {
+        public List<ArmorModel> allArmors { get; set; }
         public List<ArmorModel> GetAllArmors()
         {
-            List<ArmorModel> allArmors = new List<ArmorModel>();
-            foreach (ArmorModel clothes in GetArmorCategory("clothes"))
-            {
-                allArmors.Add(clothes);
-            }
-            foreach (ArmorModel combat in GetArmorCategory("combat"))
-            {
-                allArmors.Add(combat);
-            }
-            foreach (ArmorModel combined in GetArmorCategory("combined"))
-            {
-                allArmors.Add(combined);
-            }
-            foreach (ArmorModel scientist in GetArmorCategory("scientist"))
-            {
-                allArmors.Add(scientist);
-            }
+            allArmors =
+                CreateArmorCategory("clothes")
+                .Concat(CreateArmorCategory("combat"))
+                .Concat(CreateArmorCategory("combined"))
+                .Concat(CreateArmorCategory("scientist"))
+                .ToList();
             return allArmors;
         }
-        public List<ArmorModel> GetArmorCategory(string category)
+        
+        public List<ArmorModel> CreateArmorCategory(string category)
         {
-            List<string> armorPaths = new List<string>();
             List<ArmorModel> armors = new List<ArmorModel>();
             foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
-                armorPaths.Add(file);
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{jObject["id"].Value<string>()}.png");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{jObject["id"].Value<string>()}.png");
                 request.Method = "HEAD";
                 try
                 {
@@ -50,8 +41,6 @@ namespace Guide.Models.Armor
             }
             return armors;
         }
-
-
 
         public ArmorModel() { }
 #pragma warning disable CS8604 // Possible null reference argument.
@@ -75,31 +64,26 @@ namespace Guide.Models.Armor
             //id
             Id = jObject["id"]
                 .Value<string>();
-            Console.WriteLine("Id: " + Id);
             //name
             Name = jObject["name"]
                 .Value<JObject>("lines")
                 .Value<string>("en");
-            Console.WriteLine("Name: " + Name);
             //rarity
             Rarity = jObject["infoBlocks"][0]
                 .Value<JArray>("elements")[0]
                 .Value<JObject>("value")
                 .Value<JObject>("lines")
                 .Value<string>("en");
-            Console.WriteLine("Rarity: " + Rarity);
             //class
             Class = jObject["infoBlocks"][0]
                 .Value<JArray>("elements")[1]
                 .Value<JObject>("value")
                 .Value<JObject>("lines")
-                .Value<string>("en");
-            Console.WriteLine("Class: " + Class);
+                .Value<string>("en");   
             //weight
             Weight = jObject["infoBlocks"][0]
                 .Value<JArray>("elements")[2]
                 .Value<double>("value");
-            Console.WriteLine("Weight: " + Weight);
             //features
             List<string> features = new List<string>();
             if (ifHasFeature == 1)
@@ -116,11 +100,6 @@ namespace Guide.Models.Armor
                 }
             }
             Features = features;
-            Console.WriteLine("Features: ");
-            foreach (var feature in Features)
-            {
-                Console.WriteLine(feature);
-            }
             //properties
             Dictionary<string, int> properties = new Dictionary<string, int>();
             var jsonProperties = jObject["infoBlocks"][2]
@@ -151,11 +130,6 @@ namespace Guide.Models.Armor
                 }
             }
             Properties = properties;
-            Console.WriteLine("Properties: ");
-            foreach (var property in Properties)
-            {
-                Console.WriteLine($"{property.Key} : {property.Value}");
-            }
             //stats
             Dictionary<string, int> stats = new Dictionary<string, int>();
             var jsonStats = jObject["infoBlocks"][3]
@@ -171,23 +145,16 @@ namespace Guide.Models.Armor
                     .Value<int>("value"));
             }
             Stats = stats;
-            Console.WriteLine("Stats: ");
-            foreach (var stat in Stats)
-            {
-                Console.WriteLine($"{stat.Key} : {stat.Value}");
-            }
             //backpacks
             CompatibleBackpacks = jObject["infoBlocks"][4 + ifHasFeature]
                 .Value<JObject>("text")
                 .Value<JObject>("lines")
                 .Value<string>("en");
-            Console.WriteLine("CompatibleBackpacks: " + CompatibleBackpacks);
             //containers
             CompatibleContainers = jObject["infoBlocks"][5 + ifHasFeature]
                 .Value<JObject>("text")
                 .Value<JObject>("lines")
                 .Value<string>("en");
-            Console.WriteLine("CompatibleContainers: " + CompatibleContainers);
 
             //BarterBase = barterBase;
 
@@ -200,11 +167,8 @@ namespace Guide.Models.Armor
                 .Value<JObject>("text")
                 .Value<JObject>("lines")
                 .Value<string>("en");
-            Console.WriteLine("Description: " + Description);
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
-            Console.WriteLine("ImgSource: " + ImgSource);
-            Console.WriteLine("");
         }
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
