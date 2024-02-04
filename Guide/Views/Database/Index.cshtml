@@ -14,43 +14,39 @@
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.width = "200px";
-        sidebarElement.style.outline = "2px solid orange";
-        sidebarElement.style.background = "lightblue";
-        sidebarElement.style.color = "black";
+        sidebarElement.style.outline = "2px solid black";
+        sidebarElement.style.color = "rgb(155, 155, 155)";
+        sidebarElement.style.padding = "10px";
     }
     function closeSidebar(sidebarId) {
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.width = "0";
         sidebarElement.style.outline = "none";
-        sidebarElement.style.background = "white";
-        sidebarElement.style.color = "white";
+        sidebarElement.style.color = "rgba(155, 155, 155, 0)";
+        sidebarElement.style.padding = "0";
     }
     function closeSelf(element) {
         var sidebarId = element.getAttribute('data-sidebar-id');
-        var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.width = "0";
-        sidebarElement.style.outline = "none";
-        sidebarElement.style.background = "white";
-        sidebarElement.style.color = "white";
+        closeSidebar(sidebarId)
     }
 </script>
 
-<div class="sticky" style="top: 51px;">
+<div class="sticky" style="top: 100px;">
     <div id="mainSidebar" class="sidebar-container sticky">
-        <button class="sidebar-button"">
+        <button class="sidebar-button button-background">
             Weapon
         </button>
-        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button button-background" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
             Armor
         </button>
-        <button class="sidebar-button">
+        <button class="sidebar-button button-background">
             Container
         </button>
-        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button button-background" data-sidebar-id="artefactSidebar" onclick="openSidebar(this)">
             Artefact
         </button>
     </div>
-    @* armor sidebar *@
+        @* armor sidebar *@
     <div id="armorSidebar" class="second-sidebar sidebar-container sticky">
         <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="closeSelf(this)">
             <
@@ -68,7 +64,7 @@
             Scientist
         </button>
     </div>
-    @* artefact sidebar *@
+        @* artefact sidebar *@
     <div id="artefactSidebar" class="second-sidebar sidebar-container sticky">
         <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="closeSelf(this)">
             <
@@ -91,30 +87,30 @@
     </div>
 </div>
 <div class="text-center">
-    @{
-        foreach (ArtefactModel artefact in Model.Artefacts)
-        {
+        @{
+            foreach (ArtefactModel artefact in Model.Artefacts)
+            {
             <img src="@artefact.ImgSource" />
             <h1>Id: @artefact.Id</h1>
             <h3>@artefact.Name</h3>
             <h5>Class: @artefact.Class</h5>
             <h5>Weight: @artefact.Weight</h5>
             <h5>Stats:</h5>
-            foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.Stats)
-            {
-                string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
+                foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.Stats)
+                {
+                    string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
                 <p>
-                    @drawStat
+                        @drawStat
                 </p>
-            }
-            if (String.IsNullOrEmpty(artefact.Description))
-            {
+                }
+                if (String.IsNullOrEmpty(artefact.Description))
+                {
                 <p>@artefact.Description</p>
+                }
             }
-        }
 
-        foreach (ContainerModel container in Model.Containers)
-        {
+            foreach (ContainerModel container in Model.Containers)
+            {
             <img src="@container.ImgSource" />
             <h1>Id: @container.Id</h1>
             <h3>@container.Name</h3>
@@ -122,69 +118,69 @@
             <h5>Class: @container.Class</h5>
             <h5>Weight: @container.Weight</h5>
             <h5>Stats:</h5>
-            foreach (KeyValuePair<string, int> stat in container.Stats)
-            {
-                string drawStat = $"{stat.Key}: {stat.Value}";
+                foreach (KeyValuePair<string, int> stat in container.Stats)
+                {
+                    string drawStat = $"{stat.Key}: {stat.Value}";
                 <p>
-                    @drawStat
+                        @drawStat
                 </p>
-            }
-            if (String.IsNullOrEmpty(container.Description))
-            {
+                }
+                if (String.IsNullOrEmpty(container.Description))
+                {
                 <p>@container.Description</p>
+                }
             }
-        }
 
-        foreach (ArmorModel armor in Model.Armors)
-        {
+            foreach (ArmorModel armor in Model.Armors)
+            {
             <img src="@armor.ImgSource" />
             <h1>Id: @armor.Id</h1>
             <h3>@armor.Name</h3>
             <h5>Rarity: @armor.Rarity</h5>
             <h5>Class: @armor.Class</h5>
             <h5>Weight: @armor.Weight</h5>
-            if (armor.Features.Count > 0)
-            {
+                if (armor.Features.Count > 0)
+                {
                 <h5>Features:</h5>
-                foreach (string feature in armor.Features)
-                {
+                    foreach (string feature in armor.Features)
+                    {
                     <p>@feature</p>
-                }
-            }
-            if (armor.Properties.Count > 0)
-            {
-                <h5>Properties:</h5>
-                foreach (KeyValuePair<string, int> property in armor.Properties)
-                {
-                    <p>
-                        @{
-                            string drawProperty;
-                            if (property.Value == 0)
-                            {
-                                drawProperty = $"{property.Key}";
-                            }
-                            else
-                            {
-                                drawProperty = $"{property.Key}: {property.Value}";
-                            }
-                        }
-                        @drawProperty
-                    </p>
-                }
-            }
-            <h5>Stats:</h5>
-            foreach (KeyValuePair<string, int> stat in armor.Stats)
-            {
-                <p>
-                    @{
-                        string drawStat = $"{stat.Key}: {stat.Value}";
                     }
-                    @drawStat
+                }
+                if (armor.Properties.Count > 0)
+                {
+                <h5>Properties:</h5>
+                    foreach (KeyValuePair<string, int> property in armor.Properties)
+                    {
+                    <p>
+                            @{
+                                string drawProperty;
+                                if (property.Value == 0)
+                                {
+                                    drawProperty = $"{property.Key}";
+                                }
+                                else
+                                {
+                                    drawProperty = $"{property.Key}: {property.Value}";
+                                }
+                            }
+                            @drawProperty
+                    </p>
+                    }
+                }
+            <h5>Stats:</h5>
+                foreach (KeyValuePair<string, int> stat in armor.Stats)
+                {
+                <p>
+                        @{
+                            string drawStat = $"{stat.Key}: {stat.Value}";
+                        }
+                        @drawStat
                 </p>
-            }
+                }
             <h5>Compatible Backpacks: @armor.CompatibleBackpacks</h5>
             <h5>Compatible Containers: @armor.CompatibleContainers</h5>
             <p>@armor.Description</p>
+            }
         }
-    }
 </div>

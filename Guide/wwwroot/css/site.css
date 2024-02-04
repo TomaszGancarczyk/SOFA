@@ -32,6 +32,12 @@ body {
     position: sticky;
 }
 
+.navbar-layout {
+    padding: 15px;
+    background: rgb(20, 20, 20);
+    color: rgb(155, 155, 155);
+}
+
 /* Database View */
 
 .sidebar-button {
@@ -40,27 +46,33 @@ body {
     width: calc(100% - 2px);
     height: 50px;
     text-align: center;
-    padding: 10px;
+    padding: inherit;
     border: none;
     color: inherit;
-    background: inherit;
-    outline:inherit;
+    background: rgb(20, 20, 20);
+    outline: inherit;
+}
+
+.button-background {
+    background: url(/image/btn.png) no-repeat;
 }
 
 .sidebar-container {
     float: left;
     height: 100vh;
     width: 200px;
-    background: lightblue;
-    outline: 2px solid orange;
+    color: rgb(155, 155, 155);
+    background: rgb(35, 35, 35);
+    outline: 2px solid black;
     outline-offset: -1px;
+    padding: 10px;
     z-index: 3;
 }
 
 .second-sidebar {
     width: 0;
-    background: none;
     outline: none;
     z-index: 2;
     color: white;
+    padding: 0;
 }
