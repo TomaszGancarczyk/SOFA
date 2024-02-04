@@ -1,3 +1,4 @@
+using Guide.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 
@@ -12,6 +13,21 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts();
+            builder.Services.AddSingleton<List<ArtefactModel>>(artefacts);
+
+            List<ContainerModel> containers = new ContainerModel().GetAllContainers();
+            builder.Services.AddSingleton<List<ContainerModel>>(containers);
+
+            List<ArmorModel> armors = new ArmorModel().GetAllArmors();
+            builder.Services.AddSingleton<List<ArmorModel>>(armors);
+
+            List<IItem> allItems = new List<IItem>();
+            allItems.Concat(artefacts)
+                .Concat(containers)
+                .Concat(armors)
+                .ToList();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,6 +37,7 @@ namespace Guide
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

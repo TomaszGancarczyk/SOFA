@@ -184,9 +184,6 @@ namespace Guide.Models
         public Dictionary<string, int> Stats { get; set; }
         public string CompatibleBackpacks { get; set; }
         public string CompatibleContainers { get; set; }
-        public Dictionary<string, string> BarterBase { get; set; }
-        public List<Barter> Barters { get; set; }
-        public List<string> UsedInID { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
     }

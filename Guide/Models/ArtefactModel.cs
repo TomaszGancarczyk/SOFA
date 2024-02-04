@@ -128,9 +128,6 @@ namespace Guide.Models
         public double Weight { get; set; }
         public Dictionary<string, Dictionary<double, double>> Stats { get; set; }
         public Dictionary<string, int> PossibleStats { get; set; }
-        public Dictionary<string, string> BarterBase { get; set; }
-        public List<Barter> Barters { get; set; }
-        public List<string> UsedInID { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
     }

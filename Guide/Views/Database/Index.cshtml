@@ -1,13 +1,15 @@
 ﻿@using Guide.Models
 @using System.Net
+@using Guide.Models.ViewModels
+@model DatabaseViewModel
+
 @{
     ViewData["Title"] = "Database";
 }
 
 <div class="text-center">
     @{
-        List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts();
-        foreach (ArtefactModel artefact in artefacts)
+        foreach (ArtefactModel artefact in Model.Artefacts)
         {
             <img src="@artefact.ImgSource" />
             <h1>Id: @artefact.Id</h1>
@@ -27,8 +29,8 @@
                 <p>@artefact.Description</p>
             }
         }
-        List<ContainerModel> containers = new ContainerModel().GetAllContainers();
-        foreach (ContainerModel container in containers)
+
+        foreach (ContainerModel container in Model.Containers)
         {
             <img src="@container.ImgSource" />
             <h1>Id: @container.Id</h1>
@@ -50,8 +52,7 @@
             }
         }
 
-        List<ArmorModel> armors = new ArmorModel().GetAllArmors();
-        foreach (ArmorModel armor in armors)
+        foreach (ArmorModel armor in Model.Armors)
         {
             <img src="@armor.ImgSource" />
             <h1>Id: @armor.Id</h1>
