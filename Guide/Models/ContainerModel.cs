@@ -9,8 +9,8 @@ namespace Guide.Models
     {
         public List<ContainerModel> GetAllContainers()
         {
-            List<string> containerPaths = new List<string>();
-            List<ContainerModel> containers = new List<ContainerModel>();
+            List<string> containerPaths = [];
+            List<ContainerModel> containers = [];
             foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\containers", "*.*", SearchOption.TopDirectoryOnly))
             {
                 containerPaths.Add(file);
@@ -21,7 +21,7 @@ namespace Guide.Models
                 try
                 {
                     request.GetResponse();
-                    ContainerModel containerModel = new ContainerModel(jsonString);
+                    ContainerModel containerModel = new(jsonString);
                     containers.Add(containerModel);
                 }
                 catch { }
@@ -61,7 +61,7 @@ namespace Guide.Models
                 .Value<JArray>("elements")[2]
                 .Value<double>("value");
             //stats
-            Dictionary<string, int> stats = new Dictionary<string, int>();
+            Dictionary<string, int> stats = [];
             var jsonStats = jObject["infoBlocks"][3]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
@@ -75,13 +75,6 @@ namespace Guide.Models
                     .Value<int>("value"));
             }
             Stats = stats;
-
-            //BarterBase = barterBase;
-
-            //Barters = barters;
-
-            //UsedInID = usedInID;
-
             //description
             var count = jObject["infoBlocks"].Count();
             if (jObject["infoBlocks"].Count() == 6)

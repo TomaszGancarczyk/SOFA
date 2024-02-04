@@ -10,21 +10,22 @@ namespace Guide.Models
 {
     public class ArmorModel : IItem
     {
-        public List<ArmorModel> allArmors { get; set; }
+        public List<ArmorModel> AllArmors { get; set; }
         public List<ArmorModel> GetAllArmors()
         {
-            allArmors =
-                CreateArmorCategory("clothes")
-                .Concat(CreateArmorCategory("combat"))
-                .Concat(CreateArmorCategory("combined"))
-                .Concat(CreateArmorCategory("scientist"))
-                .ToList();
-            return allArmors;
+            AllArmors =
+                [
+                    .. CreateArmorCategory("clothes"),
+                    .. CreateArmorCategory("combat"),
+                    .. CreateArmorCategory("combined"),
+                    .. CreateArmorCategory("scientist"),
+                ];
+            return AllArmors;
         }
 
         public List<ArmorModel> CreateArmorCategory(string category)
         {
-            List<ArmorModel> armors = new List<ArmorModel>();
+            List<ArmorModel> armors = [];
             foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = new Json().Reader(file);
@@ -34,7 +35,7 @@ namespace Guide.Models
                 try
                 {
                     request.GetResponse();
-                    ArmorModel armorModel = new ArmorModel(jsonString);
+                    ArmorModel armorModel = new(jsonString);
                     armors.Add(armorModel);
                 }
                 catch { }
@@ -84,7 +85,7 @@ namespace Guide.Models
                 .Value<JArray>("elements")[2]
                 .Value<double>("value");
             //features
-            List<string> features = new List<string>();
+            List<string> features = [];
             if (ifHasFeature == 1)
             {
                 var jsonFeatures = jObject["infoBlocks"][4]
@@ -100,7 +101,7 @@ namespace Guide.Models
             }
             Features = features;
             //properties
-            Dictionary<string, int> properties = new Dictionary<string, int>();
+            Dictionary<string, int> properties = [];
             var jsonProperties = jObject["infoBlocks"][2]
                 .Value<JArray>("elements");
             foreach (var property in jsonProperties)
@@ -130,7 +131,7 @@ namespace Guide.Models
             }
             Properties = properties;
             //stats
-            Dictionary<string, int> stats = new Dictionary<string, int>();
+            Dictionary<string, int> stats = [];
             var jsonStats = jObject["infoBlocks"][3]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
@@ -154,13 +155,6 @@ namespace Guide.Models
                 .Value<JObject>("text")
                 .Value<JObject>("lines")
                 .Value<string>("en");
-
-            //BarterBase = barterBase;
-
-            //Barters = barters;
-
-            //UsedInID = usedInID;
-
             //description
             Description = jObject["infoBlocks"][6 + ifHasFeature]
                 .Value<JObject>("text")

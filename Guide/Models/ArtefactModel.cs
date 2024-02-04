@@ -9,21 +9,22 @@ namespace Guide.Models
 {
     public class ArtefactModel : IItem
     {
-        public List<ArtefactModel> allArtefacts { get; set; }
+        public List<ArtefactModel> AllArtefacts { get; set; }
         public List<ArtefactModel> GetAllArtefacts()
         {
-            allArtefacts =
-                CreateArtefactsCategory("biochemical")
-                .Concat(CreateArtefactsCategory("electrophysical"))
-                .Concat(CreateArtefactsCategory("gravity"))
-                .Concat(CreateArtefactsCategory("thermal"))
-                .ToList();
-            return allArtefacts;
+            AllArtefacts =
+                [
+                    .. CreateArtefactsCategory("biochemical"),
+                    .. CreateArtefactsCategory("electrophysical"),
+                    .. CreateArtefactsCategory("gravity"),
+                    .. CreateArtefactsCategory("thermal"),
+                ];
+            return AllArtefacts;
         }
 
         public List<ArtefactModel> CreateArtefactsCategory(string category)
         {
-            List<ArtefactModel> artefacts = new List<ArtefactModel>();
+            List<ArtefactModel> artefacts = [];
             foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\artefact\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = new Json().Reader(file);
@@ -33,7 +34,7 @@ namespace Guide.Models
                 //try
                 //{
                 //    request.GetResponse();
-                ArtefactModel artefactsModel = new ArtefactModel(jsonString);
+                ArtefactModel artefactsModel = new(jsonString);
                 artefacts.Add(artefactsModel);
                 //}
                 //catch { }
@@ -67,12 +68,12 @@ namespace Guide.Models
                 .Value<JArray>("elements")[1]
                 .Value<double>("value");
             //stats
-            Dictionary<string, Dictionary<double, double>> stats = new Dictionary<string, Dictionary<double, double>>();
+            Dictionary<string, Dictionary<double, double>> stats = [];
             var jsonStats = jObject["infoBlocks"][4]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
             {
-                Dictionary<double, double> range = new Dictionary<double, double>();
+                Dictionary<double, double> range = [];
                 if (stat.Value<string>("type") == "text")
                 {
                     range.Add(0, 0);

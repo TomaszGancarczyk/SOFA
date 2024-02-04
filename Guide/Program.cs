@@ -22,11 +22,12 @@ namespace Guide
             List<ArmorModel> armors = new ArmorModel().GetAllArmors();
             builder.Services.AddSingleton<List<ArmorModel>>(armors);
 
-            List<IItem> allItems = new List<IItem>();
+            List<IItem> allItems = [];
             allItems.Concat(artefacts)
                 .Concat(containers)
                 .Concat(armors)
                 .ToList();
+            builder.Services.AddSingleton<List<IItem>>(allItems);
 
             var app = builder.Build();
 

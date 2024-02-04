@@ -7,6 +7,89 @@
     ViewData["Title"] = "Database";
 }
 
+<script>
+    function openSidebar(element) {
+        closeSidebar("armorSidebar")
+        closeSidebar("artefactSidebar")
+        var sidebarId = element.getAttribute('data-sidebar-id');
+        var sidebarElement = document.getElementById(sidebarId);
+        sidebarElement.style.width = "200px";
+        sidebarElement.style.outline = "2px solid orange";
+        sidebarElement.style.background = "lightblue";
+        sidebarElement.style.color = "black";
+    }
+    function closeSidebar(sidebarId) {
+        var sidebarElement = document.getElementById(sidebarId);
+        sidebarElement.style.width = "0";
+        sidebarElement.style.outline = "none";
+        sidebarElement.style.background = "white";
+        sidebarElement.style.color = "white";
+    }
+    function closeSelf(element) {
+        var sidebarId = element.getAttribute('data-sidebar-id');
+        var sidebarElement = document.getElementById(sidebarId);
+        sidebarElement.style.width = "0";
+        sidebarElement.style.outline = "none";
+        sidebarElement.style.background = "white";
+        sidebarElement.style.color = "white";
+    }
+</script>
+
+<div class="sticky" style="top: 51px;">
+    <div id="mainSidebar" class="sidebar-container sticky">
+        <button class="sidebar-button"">
+            Weapon
+        </button>
+        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
+            Armor
+        </button>
+        <button class="sidebar-button">
+            Container
+        </button>
+        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="openSidebar(this)">
+            Artefact
+        </button>
+    </div>
+    @* armor sidebar *@
+    <div id="armorSidebar" class="second-sidebar sidebar-container sticky">
+        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="closeSelf(this)">
+            <
+        </button>
+        <button class="sidebar-button">
+            Clothes
+        </button>
+        <button class="sidebar-button">
+            Combat
+        </button>
+        <button class="sidebar-button">
+            Combined
+        </button>
+        <button class="sidebar-button">
+            Scientist
+        </button>
+    </div>
+    @* artefact sidebar *@
+    <div id="artefactSidebar" class="second-sidebar sidebar-container sticky">
+        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="closeSelf(this)">
+            <
+        </button>
+        <button class="sidebar-button">
+            Biochemical
+        </button>
+        <button class="sidebar-button">
+            Electrophysical
+        </button>
+        <button class="sidebar-button">
+            Gravity
+        </button>
+        <button class="sidebar-button">
+            Thermal
+        </button>
+        <button class="sidebar-button">
+            Other
+        </button>
+    </div>
+</div>
 <div class="text-center">
     @{
         foreach (ArtefactModel artefact in Model.Artefacts)

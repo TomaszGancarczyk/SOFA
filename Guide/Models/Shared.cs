@@ -2,25 +2,13 @@
 
 namespace Guide.Models
 {
-    public class Barter
-    {
-        public int Cost { get; set; }
-        public Dictionary<string, int> Barters { get; set; } = new Dictionary<string, int>();
-        public Barter(int cots, Dictionary<string, int> barters)
-        {  
-            Cost = cots;
-            Barters = barters;
-        }
-    }
     public class Json
     {
         public string Reader(string filePath)
         {
-            using (StreamReader r = new StreamReader(filePath))
-            {
-                string text = r.ReadToEnd();
-                return text;
-            }
+            using StreamReader reader = new(filePath);
+            string text = reader.ReadToEnd();
+            return text;
         }
     }
 }
