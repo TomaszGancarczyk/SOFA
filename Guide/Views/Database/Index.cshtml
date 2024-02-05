@@ -11,12 +11,21 @@
     function openSidebar(element) {
         closeSidebar("armorSidebar")
         closeSidebar("artefactSidebar")
+        closeSidebar("clothesSidebar")
+        closeSidebar("combatSidebar")
+        closeSidebar("comboSidebar")
+        closeSidebar("scientistSidebar")
+        closeSidebar("biochemicalSidebar")
+        closeSidebar("electrophysicalSidebar")
+        closeSidebar("gravitationalSidebar")
+        closeSidebar("thermalSidebar")
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.width = "200px";
-        sidebarElement.style.outline = "2px solid black";
+        sidebarElement.style.outline = "2px solid rgb(20, 20, 20)";
         sidebarElement.style.color = "rgb(155, 155, 155)";
-        sidebarElement.style.padding = "10px";
+        sidebarElement.style.padding = "5px";
+        sidebarElement.style.left = "0px";
     }
     function closeSidebar(sidebarId) {
         var sidebarElement = document.getElementById(sidebarId);
@@ -24,93 +33,198 @@
         sidebarElement.style.outline = "none";
         sidebarElement.style.color = "rgba(155, 155, 155, 0)";
         sidebarElement.style.padding = "0";
+        sidebarElement.style.left = "-2000px";
     }
-    function closeSelf(element) {
+    function openSecondarySidebar(element) {
+        closeSidebar("clothesSidebar")
+        closeSidebar("combatSidebar")
+        closeSidebar("comboSidebar")
+        closeSidebar("scientistSidebar")
+        closeSidebar("biochemicalSidebar")
+        closeSidebar("electrophysicalSidebar")
+        closeSidebar("gravitationalSidebar")
+        closeSidebar("thermalSidebar")
         var sidebarId = element.getAttribute('data-sidebar-id');
-        closeSidebar(sidebarId)
+        var sidebarElement = document.getElementById(sidebarId);
+        sidebarElement.style.width = "200px";
+        sidebarElement.style.outline = "2px solid rgb(20, 20, 20)";
+        sidebarElement.style.color = "rgb(155, 155, 155)";
+        sidebarElement.style.padding = "2px";
+        sidebarElement.style.left = "0px";
     }
 </script>
 
 <div class="sticky" style="top: 100px;">
     <div id="mainSidebar" class="sidebar-container sticky">
-        <button class="sidebar-button button-background">
+        <button class="sidebar-button">
             Weapon
         </button>
-        <button class="sidebar-button button-background" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
             Armor
         </button>
-        <button class="sidebar-button button-background">
+        <button class="sidebar-button">
             Container
         </button>
-        <button class="sidebar-button button-background" data-sidebar-id="artefactSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="openSidebar(this)">
             Artefact
         </button>
     </div>
-        @* armor sidebar *@
+    @* armor sidebar *@
     <div id="armorSidebar" class="second-sidebar sidebar-container sticky">
-        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="closeSelf(this)">
-            <
-        </button>
-        <button class="sidebar-button">
+        <button class="sidebar-button" data-sidebar-id="clothesSidebar" onclick="openSecondarySidebar(this)">
             Clothes
         </button>
-        <button class="sidebar-button">
+        <button class="sidebar-button" data-sidebar-id="combatSidebar" onclick="openSecondarySidebar(this)">
             Combat
         </button>
-        <button class="sidebar-button">
-            Combined
+        <button class="sidebar-button" data-sidebar-id="comboSidebar" onclick="openSecondarySidebar(this)">
+            Combo
         </button>
-        <button class="sidebar-button">
+        <button class="sidebar-button" data-sidebar-id="scientistSidebar" onclick="openSecondarySidebar(this)">
             Scientist
         </button>
     </div>
-        @* artefact sidebar *@
+    @* armor sidebar - Clothing *@
+    <div id="clothesSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArmorModel armor in Model.Armors)
+        {
+            if (armor.Class == "Clothing")
+            {
+                <button class="sidebar-button">
+                    @armor.Name
+                </button>
+            }
+        }
+    </div>
+    @* armor sidebar - Combat *@
+    <div id="combatSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArmorModel armor in Model.Armors)
+        {
+            if (armor.Class == "Combat")
+            {
+                <button class="sidebar-button">
+                    @armor.Name
+                </button>
+            }
+        }
+    </div>
+    @* armor sidebar - Combo *@
+    <div id="comboSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArmorModel armor in Model.Armors)
+        {
+            if (armor.Class == "Combo")
+            {
+                <button class="sidebar-button">
+                    @armor.Name
+                </button>
+            }
+        }
+    </div>
+    @* armor sidebar - Scientist *@
+    <div id="scientistSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArmorModel armor in Model.Armors)
+        {
+            if (armor.Class == "Scientist")
+            {
+                <button class="sidebar-button">
+                    @armor.Name
+                </button>
+            }
+        }
+    </div>
+    @* artefact sidebar *@
     <div id="artefactSidebar" class="second-sidebar sidebar-container sticky">
-        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="closeSelf(this)">
-            <
-        </button>
-        <button class="sidebar-button">
+        <button class="sidebar-button" data-sidebar-id="biochemicalSidebar" onclick="openSecondarySidebar(this)">
             Biochemical
         </button>
-        <button class="sidebar-button">
+        <button class="sidebar-button" data-sidebar-id="electrophysicalSidebar" onclick="openSecondarySidebar(this)">
             Electrophysical
         </button>
-        <button class="sidebar-button">
-            Gravity
+        <button class="sidebar-button" data-sidebar-id="gravitationalSidebar" onclick="openSecondarySidebar(this)">
+            Gravitational
         </button>
-        <button class="sidebar-button">
+        <button class="sidebar-button" data-sidebar-id="thermalSidebar" onclick="openSecondarySidebar(this)">
             Thermal
         </button>
-        <button class="sidebar-button">
-            Other
-        </button>
+    </div>
+    @* artefact sidebar - Biochemical *@
+    <div id="biochemicalSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArtefactModel artefact in Model.Artefacts)
+        {
+            if (artefact.Class == "Biochemical")
+            {
+                <button class="sidebar-button">
+                    @artefact.Name
+                </button>
+            }
+        }
+    </div>
+    @* artefact sidebar - Electrophysical *@
+    <div id="electrophysicalSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArtefactModel artefact in Model.Artefacts)
+        {
+            if (artefact.Class == "Electrophysical")
+            {
+                <button class="sidebar-button">
+                    @artefact.Name
+                </button>
+            }
+        }
+    </div>
+    @* artefact sidebar - Gravitational *@
+    <div id="gravitationalSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArtefactModel artefact in Model.Artefacts)
+        {
+            if (artefact.Class == "Gravitational")
+            {
+                <button class="sidebar-button">
+                    @artefact.Name
+                </button>
+            }
+        }
+    </div>
+    @* artefact sidebar - Thermal *@
+    <div id="thermalSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (ArtefactModel artefact in Model.Artefacts)
+        {
+            if (artefact.Class == "Thermal")
+            {
+                <button class="sidebar-button">
+                    @artefact.Name
+                </button>
+            }
+        }
     </div>
 </div>
+
+
+
+
 <div class="text-center">
-        @{
-            foreach (ArtefactModel artefact in Model.Artefacts)
-            {
+    @{
+        foreach (ArtefactModel artefact in Model.Artefacts)
+        {
             <img src="@artefact.ImgSource" />
             <h1>Id: @artefact.Id</h1>
             <h3>@artefact.Name</h3>
             <h5>Class: @artefact.Class</h5>
             <h5>Weight: @artefact.Weight</h5>
             <h5>Stats:</h5>
-                foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.Stats)
-                {
-                    string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
-                <p>
-                        @drawStat
-                </p>
-                }
-                if (String.IsNullOrEmpty(artefact.Description))
-                {
-                <p>@artefact.Description</p>
-                }
-            }
-
-            foreach (ContainerModel container in Model.Containers)
+            foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.Stats)
             {
+                string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
+                <p>
+                    @drawStat
+                </p>
+            }
+            if (String.IsNullOrEmpty(artefact.Description))
+            {
+                <p>@artefact.Description</p>
+            }
+        }
+
+        foreach (ContainerModel container in Model.Containers)
+        {
             <img src="@container.ImgSource" />
             <h1>Id: @container.Id</h1>
             <h3>@container.Name</h3>
@@ -118,69 +232,69 @@
             <h5>Class: @container.Class</h5>
             <h5>Weight: @container.Weight</h5>
             <h5>Stats:</h5>
-                foreach (KeyValuePair<string, int> stat in container.Stats)
-                {
-                    string drawStat = $"{stat.Key}: {stat.Value}";
-                <p>
-                        @drawStat
-                </p>
-                }
-                if (String.IsNullOrEmpty(container.Description))
-                {
-                <p>@container.Description</p>
-                }
-            }
-
-            foreach (ArmorModel armor in Model.Armors)
+            foreach (KeyValuePair<string, int> stat in container.Stats)
             {
+                string drawStat = $"{stat.Key}: {stat.Value}";
+                <p>
+                    @drawStat
+                </p>
+            }
+            if (String.IsNullOrEmpty(container.Description))
+            {
+                <p>@container.Description</p>
+            }
+        }
+
+        foreach (ArmorModel armor in Model.Armors)
+        {
             <img src="@armor.ImgSource" />
             <h1>Id: @armor.Id</h1>
             <h3>@armor.Name</h3>
             <h5>Rarity: @armor.Rarity</h5>
             <h5>Class: @armor.Class</h5>
             <h5>Weight: @armor.Weight</h5>
-                if (armor.Features.Count > 0)
-                {
+            if (armor.Features.Count > 0)
+            {
                 <h5>Features:</h5>
-                    foreach (string feature in armor.Features)
-                    {
+                foreach (string feature in armor.Features)
+                {
                     <p>@feature</p>
-                    }
                 }
-                if (armor.Properties.Count > 0)
-                {
+            }
+            if (armor.Properties.Count > 0)
+            {
                 <h5>Properties:</h5>
-                    foreach (KeyValuePair<string, int> property in armor.Properties)
-                    {
-                    <p>
-                            @{
-                                string drawProperty;
-                                if (property.Value == 0)
-                                {
-                                    drawProperty = $"{property.Key}";
-                                }
-                                else
-                                {
-                                    drawProperty = $"{property.Key}: {property.Value}";
-                                }
-                            }
-                            @drawProperty
-                    </p>
-                    }
-                }
-            <h5>Stats:</h5>
-                foreach (KeyValuePair<string, int> stat in armor.Stats)
+                foreach (KeyValuePair<string, int> property in armor.Properties)
                 {
-                <p>
+                    <p>
                         @{
-                            string drawStat = $"{stat.Key}: {stat.Value}";
+                            string drawProperty;
+                            if (property.Value == 0)
+                            {
+                                drawProperty = $"{property.Key}";
+                            }
+                            else
+                            {
+                                drawProperty = $"{property.Key}: {property.Value}";
+                            }
                         }
-                        @drawStat
-                </p>
+                        @drawProperty
+                    </p>
                 }
+            }
+            <h5>Stats:</h5>
+            foreach (KeyValuePair<string, int> stat in armor.Stats)
+            {
+                <p>
+                    @{
+                        string drawStat = $"{stat.Key}: {stat.Value}";
+                    }
+                    @drawStat
+                </p>
+            }
             <h5>Compatible Backpacks: @armor.CompatibleBackpacks</h5>
             <h5>Compatible Containers: @armor.CompatibleContainers</h5>
             <p>@armor.Description</p>
-            }
         }
+    }
 </div>

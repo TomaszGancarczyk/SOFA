@@ -25,7 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\resources\" />
+    <Folder Include="Resources\" />
+    <Folder Include="wwwroot\css\infections\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\button.png" />
   </ItemGroup>
 
 </Project>
