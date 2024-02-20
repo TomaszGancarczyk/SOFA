@@ -28,30 +28,40 @@ body {
     color: rgb(155, 155, 155);
 }
 
-.view-50 {
-    width: 30%;
-    margin-left: 50px;
-    margin-right: 50px;
+.content-container {
+    margin-left: 200px;
+    left: 200px;
+    width: calc(100vw - 220px);
+    height: calc(100% - 200px);
+}
+
+.title {
+    font-size: 35px;
+    position: relative;
+    left: 185px;
+    width: calc(100vw - 220px);
 }
 
 .sticky {
     position: sticky;
 }
 
+.padding-top {
+    padding-top: 50px;
+}
+
 .navbar-layout {
+    height: 80px;
+    top: 0;
     padding: 15px;
+    width: 100%;
     background: rgb(70, 70, 100);
     color: rgb(155, 155, 155);
     font: 700 18px system-ui;
     outline: 2px solid rgb(20, 20, 20);
     outline-offset: -1px;
+    text-align: center;
 }
-
-.nav-link {
-    outline: none;
-}
-
-/* Database View */
 
 .sidebar-button {
     position: relative;
@@ -60,27 +70,54 @@ body {
     height: 50px;
     text-align: center;
     padding: inherit;
+    padding-bottom: 0;
     border: none;
     color: inherit;
-    background: url(button.png) no-repeat;
+    background: url(sidebar-button.png) no-repeat;
     margin-bottom: 2px;
 }
 
-.sidebar-button:hover {
-    background: url(button-hover.png) no-repeat;
+    .sidebar-button:hover {
+        background: url(sidebar-button-hover.png) no-repeat;
+    }
+
+.scrollable {
+    overflow: auto;
+}
+.current-sidebar-button {
+    position: relative;
+    left: 1px;
+    width: 196px;
+    height: 50px;
+    text-align: center;
+    padding: inherit;
+    padding-bottom: 0;
+    border: none;
+    color: inherit;
+    background: url(sidebar-button.png) no-repeat;
+    margin-bottom: 2px;
 }
 
 .sidebar-container {
     float: left;
-    height: 100vh;
+    top: 80px;
+    height: calc(100vh - 80px);
     width: 200px;
     color: rgb(155, 155, 155);
     background: rgb(35, 35, 35);
     outline: 2px solid rgb(20, 20, 20);
     outline-offset: -1px;
-    padding: 2px;
+    padding: 5px 2px 25px 2px;
     z-index: 3;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
+
+    .sidebar-container::-webkit-scrollbar {
+        display: none;
+    }
+
+/* Database View */
 
 .second-sidebar {
     width: 0;
@@ -96,7 +133,7 @@ body {
 
 .infection {
     position: absolute;
-    top: 100px;
+    top: 80px;
     bottom: 0;
     left: 10%;
     right: 65%;
@@ -104,17 +141,4 @@ body {
     max-height: 100vh;
     background: url(infections/bio.png) no-repeat;
     background-size: 100%;
-}
-
-.container-container {
-    position: absolute;
-    top: 100px;
-    bottom: 0;
-    left: 10%;
-    right: 65%;
-    max-width: 100vw;
-    max-height: 100vh;
-    background: url(https://github.com/EXBO-Studio/stalcraft-database/blob/main/global/icons/containers/g35n.png?raw=true) no-repeat;
-    background-size: 100%;
-    z-index: 2;
 }

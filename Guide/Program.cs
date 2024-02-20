@@ -13,6 +13,9 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            List<WeaponModel> weapons = new WeaponModel().GetAllWeapons();
+            builder.Services.AddSingleton<List<WeaponModel>>(weapons);
+
             List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts();
             builder.Services.AddSingleton<List<ArtefactModel>>(artefacts);
 

@@ -5,13 +5,13 @@ using System.Diagnostics;
 
 namespace Artefact.Controllers
 {
-    public class ArtefactController : Controller
+    public class ArtefactBuilderController : Controller
     {
-        private readonly ILogger<ArtefactController> _logger;
+        private readonly ILogger<ArtefactBuilderController> _logger;
         private List<ArtefactModel> _artefacts;
         private List<ContainerModel> _containers;
 
-        public ArtefactController(ILogger<ArtefactController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers)
+        public ArtefactBuilderController(ILogger<ArtefactBuilderController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers)
         {
             _logger = logger;
             _artefacts = artefacts;
@@ -20,7 +20,7 @@ namespace Artefact.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new ArtefactViewModel(_artefacts, _containers);
+            var viewModel = new ArtefactBuilderViewModel(_artefacts, _containers);
             return View(viewModel);
         }
     }

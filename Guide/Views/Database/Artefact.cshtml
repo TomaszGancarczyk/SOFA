@@ -1,0 +1,56 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model ArtefactViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+<div class="text-center scrollable padding-top">
+    @{
+        <img src="@Model.CurrentArtefact.ImgSource" />
+        <h1>Id: @Model.CurrentArtefact.Id</h1>
+        <h3>@Model.CurrentArtefact.Name</h3>
+        <h5>Class: @Model.CurrentArtefact.Class</h5>
+        <h5>Weight: @Model.CurrentArtefact.Weight</h5>
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.CurrentArtefact.ArtefactStats)
+        {
+            string drawStat;
+            if (stat.Value.Keys.FirstOrDefault() == stat.Value.Values.FirstOrDefault())
+            {
+                drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault().ToString()}";
+            }
+            else
+            {
+                drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()} - {stat.Value.Values.FirstOrDefault()}";
+            }
+            if (stat.Key == "Radiation" || stat.Key == "Psy-emissions" || stat.Key == "Biological infection" || stat.Key == "Frost" || stat.Key == "Temperature")
+            {
+                if (stat.Value.Keys.FirstOrDefault() > 0)
+                {
+                    <p style="color: red">
+                        @drawStat
+                    </p>
+                }
+                else
+                {
+                    <p style="color: green">
+                        @drawStat
+                    </p>
+                }
+            }
+            else
+            {
+                <p style="color: green">
+                    @drawStat
+                </p>
+            }
+        }
+        if (String.IsNullOrEmpty(Model.CurrentArtefact.Description))
+        {
+            <p>@Model.CurrentArtefact.Description</p>
+        }
+    }
+</div>

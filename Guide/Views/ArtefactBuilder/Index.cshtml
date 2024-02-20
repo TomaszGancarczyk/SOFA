@@ -8,7 +8,7 @@
     <div class="container-container"></div>
 
 
-    <div class="view-50" style="float: left">
+    <div>
         @foreach (ArtefactModel artefact in Model.Artefacts)
         {
             <img src="@artefact.ImgSource" />
@@ -17,7 +17,7 @@
             <h5>Class: @artefact.Class</h5>
             <h5>Weight: @artefact.Weight</h5>
             <h5>Stats:</h5>
-            foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.Stats)
+            foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.ArtefactStats)
             {
                 string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
                 <p>
@@ -30,7 +30,7 @@
             }
         }
     </div>
-    <div class="view-50" style="float: right">
+    <div>
         @foreach (ContainerModel container in Model.Containers)
         {
             <img src="@container.ImgSource"/>
@@ -40,7 +40,7 @@
             <h5>Class: @container.Class</h5>
             <h5>Weight: @container.Weight</h5>
             <h5>Stats:</h5>
-            foreach (KeyValuePair<string, int> stat in container.Stats)
+            foreach (KeyValuePair<string, double> stat in container.Stats)
             {
                 string drawStat = $"{stat.Key}: {stat.Value}";
                 <p>

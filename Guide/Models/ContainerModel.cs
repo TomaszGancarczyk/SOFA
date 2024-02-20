@@ -61,7 +61,7 @@ namespace Guide.Models
                 .Value<JArray>("elements")[2]
                 .Value<double>("value");
             //stats
-            Dictionary<string, int> stats = [];
+            Dictionary<string, double> stats = [];
             var jsonStats = jObject["infoBlocks"][3]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
@@ -93,9 +93,15 @@ namespace Guide.Models
         public string Rarity { get; set; }
         public string Class { get; set; }
         public double Weight { get; set; }
-        public Dictionary<string, int> Stats { get; set; }
+        public Dictionary<string, double> Stats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public List<string> Features { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, int> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.

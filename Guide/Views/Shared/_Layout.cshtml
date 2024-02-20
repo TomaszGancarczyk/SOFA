@@ -10,48 +10,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <header class="sticky navbar-layout" style="top: 0;">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow">
-            <div class="container-fluid">
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 justify-content-center">
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Guide" asp-action="Index">Guide</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Market" asp-action="Index">Market</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Database" asp-action="Index">Database</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Barter" asp-action="Index">Barter Tree</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Artefact" asp-action="Index">Artefact Builder</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Map" asp-action="Index">Map</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Quest" asp-action="Index">Quest Tree</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-layout" asp-area="" asp-controller="Timer" asp-action="Index">Timers</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <header class="sticky navbar-layout">
+        <p class="title">[SOFA] Guide</p>
     </header>
-        <role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div id="mainSidebar" class="sidebar-container sticky">
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Guide")'">
+            Guide
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Market")'">
+            Market
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database")'">
+            Database
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Barter")'">
+            Barter Tree
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "ArtefactBuilder")'">
+            Artefact Builder
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Map")'">
+            Map
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Quest")'">
+            Quest Tree
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Timer")'">
+            Timers
+        </button>
+    </div>
+    <div class="text-center content-container">
+        @RenderBody()
+    </div>
 
     @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Guide - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <div class="container">
+    &copy; 2024 - Guide - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
     </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

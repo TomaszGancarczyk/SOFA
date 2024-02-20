@@ -1,0 +1,54 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model ArmorViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+<div class="text-center scrollable padding-top">
+    @{
+        <img src="@Model.CurrentArmor.ImgSource" />
+        <h1>Id: @Model.CurrentArmor.Id</h1>
+        <h3>@Model.CurrentArmor.Name</h3>
+        <h5>Rarity: @Model.CurrentArmor.Rarity</h5>
+        <h5>Class: @Model.CurrentArmor.Class</h5>
+        <h5>Weight: @Model.CurrentArmor.Weight</h5>
+        if (Model.CurrentArmor.Features.Count > 0)
+        {
+            <h5>Features:</h5>
+            foreach (string feature in Model.CurrentArmor.Features)
+            {
+                <p>@feature</p>
+            }
+        }
+        if (Model.CurrentArmor.Properties.Count > 0)
+        {
+            <h5>Properties:</h5>
+            foreach (KeyValuePair<string, int> property in Model.CurrentArmor.Properties)
+            {
+                string drawProperty = $"{property.Key}: {property.Value}";
+                <p>
+                    @drawProperty
+                </p>
+            }
+        }
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, double> stat in Model.CurrentArmor.Stats)
+        {
+            string drawStat = $"{stat.Key}: {stat.Value}";
+            <p>
+                @drawStat
+            </p>
+        }
+        <h5>CompatibleBackpacks:</h5>
+        <p>@Model.CurrentArmor.CompatibleBackpacks</p>
+        <h5>CompatibleContainers:</h5>
+        <p>@Model.CurrentArmor.CompatibleContainers</p>
+        if (String.IsNullOrEmpty(Model.CurrentArmor.Description))
+        {
+            <p>@Model.CurrentArmor.Description</p>
+        }
+    }
+</div>

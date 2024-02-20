@@ -29,8 +29,4 @@
     <Folder Include="wwwroot\css\infections\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\css\button.png" />
-  </ItemGroup>
-
 </Project>

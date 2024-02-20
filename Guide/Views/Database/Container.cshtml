@@ -1,0 +1,31 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model ContainerViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+<div class="text-center scrollable padding-top">
+    @{
+        <img src="@Model.CurrentContainer.ImgSource" />
+        <h1>Id: @Model.CurrentContainer.Id</h1>
+        <h3>@Model.CurrentContainer.Name</h3>
+        <h5>Rarity: @Model.CurrentContainer.Rarity</h5>
+        <h5>Class: @Model.CurrentContainer.Class</h5>
+        <h5>Weight: @Model.CurrentContainer.Weight</h5>
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, double> stat in Model.CurrentContainer.Stats)
+        {
+            string drawStat = $"{stat.Key}: {stat.Value}";
+            <p>
+                @drawStat
+            </p>
+        }
+        if (String.IsNullOrEmpty(Model.CurrentContainer.Description))
+        {
+            <p>@Model.CurrentContainer.Description</p>
+        }
+    }
+</div>

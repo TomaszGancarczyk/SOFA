@@ -131,7 +131,7 @@ namespace Guide.Models
             }
             Properties = properties;
             //stats
-            Dictionary<string, int> stats = [];
+            Dictionary<string, double> stats = [];
             var jsonStats = jObject["infoBlocks"][3]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
@@ -175,10 +175,12 @@ namespace Guide.Models
         public double Weight { get; set; }
         public List<string> Features { get; set; }
         public Dictionary<string, int> Properties { get; set; }
-        public Dictionary<string, int> Stats { get; set; }
+        public Dictionary<string, double> Stats { get; set; }
         public string CompatibleBackpacks { get; set; }
         public string CompatibleContainers { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, int> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

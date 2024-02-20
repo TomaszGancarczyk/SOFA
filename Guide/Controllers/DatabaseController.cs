@@ -24,5 +24,20 @@ namespace Database.Controllers
             var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors);
             return View(viewModel);
         }
+        public IActionResult Armor(string armorId)
+        {
+            var viewModel = new ArmorViewModel(armorId, _armors);
+            return View(viewModel);
+        }
+        public IActionResult Artefact(string artefactId)
+        {
+            var viewModel = new ArtefactViewModel(artefactId, _artefacts);
+            return View(viewModel);
+        }
+        public IActionResult Container(string containerId)
+        {
+            var viewModel = new ContainerViewModel(containerId, _containers);
+            return View(viewModel);
+        }
     }
 }

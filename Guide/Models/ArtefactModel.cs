@@ -102,7 +102,7 @@ namespace Guide.Models
                         );
                 }
             };
-            Stats = stats;
+            ArtefactStats = stats;
             //description
             var count = jObject["infoBlocks"].Count();
             if (jObject["infoBlocks"].Count() == 6)
@@ -127,9 +127,15 @@ namespace Guide.Models
         public string Name { get; set; }
         public string Class { get; set; }
         public double Weight { get; set; }
-        public Dictionary<string, Dictionary<double, double>> Stats { get; set; }
-        public Dictionary<string, int> PossibleStats { get; set; }
+        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get; set; }
+        public Dictionary<string, int> PossibleArtefactStats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public string Rarity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> Features { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, double> Stats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
