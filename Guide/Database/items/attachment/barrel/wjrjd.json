@@ -113,32 +113,11 @@
               "en": "Spread"
             }
           },
-          "value": -22.000004,
+          "value": -13.0,
           "formatted": {
             "value": {
-              "ru": "-22%",
-              "en": "-22%"
-            },
-            "nameColor": "53C353",
-            "valueColor": "53C353"
-          }
-        },
-        {
-          "type": "numeric",
-          "name": {
-            "type": "translation",
-            "key": "weapon.stat_factor.recoil",
-            "args": {},
-            "lines": {
-              "ru": "Отдача",
-              "en": "Recoil"
-            }
-          },
-          "value": -1.9999981,
-          "formatted": {
-            "value": {
-              "ru": "-2%",
-              "en": "-2%"
+              "ru": "-13%",
+              "en": "-13%"
             },
             "nameColor": "53C353",
             "valueColor": "53C353"
@@ -155,11 +134,11 @@
               "en": "Horizontal recoil"
             }
           },
-          "value": -11.000002,
+          "value": -9.600001,
           "formatted": {
             "value": {
-              "ru": "-11%",
-              "en": "-11%"
+              "ru": "-9,6%",
+              "en": "-9.6%"
             },
             "nameColor": "53C353",
             "valueColor": "53C353"
@@ -188,6 +167,30 @@
             "lines": {
               "ru": "L85A1",
               "en": "L85A1"
+            }
+          }
+        },
+        {
+          "type": "item",
+          "name": {
+            "type": "translation",
+            "key": "item.wpn.m16a1.name",
+            "args": {},
+            "lines": {
+              "ru": "M16A1",
+              "en": "M16A1"
+            }
+          }
+        },
+        {
+          "type": "item",
+          "name": {
+            "type": "translation",
+            "key": "item.wpn.m4cqc.name",
+            "args": {},
+            "lines": {
+              "ru": "M4A1 CQC",
+              "en": "M4A1 CQC"
             }
           }
         },
@@ -291,18 +294,6 @@
           "type": "item",
           "name": {
             "type": "translation",
-            "key": "item.wpn.lr300.name",
-            "args": {},
-            "lines": {
-              "ru": "LR-300",
-              "en": "LR-300"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
             "key": "item.wpn.scarl.name",
             "args": {},
             "lines": {
@@ -315,119 +306,11 @@
           "type": "item",
           "name": {
             "type": "translation",
-            "key": "item.wpn.m249.name",
-            "args": {},
-            "lines": {
-              "ru": "M249 SAW",
-              "en": "M249 SAW"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.aug.name",
-            "args": {},
-            "lines": {
-              "ru": "Steyr AUG A1",
-              "en": "Steyr AUG A1"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.hk416.name",
-            "args": {},
-            "lines": {
-              "ru": "HK416",
-              "en": "HK416"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.aug2.name",
-            "args": {},
-            "lines": {
-              "ru": "Steyr AUG A2",
-              "en": "Steyr AUG A2"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.aug3.name",
-            "args": {},
-            "lines": {
-              "ru": "Steyr AUG A3",
-              "en": "Steyr AUG A3"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.sigsniper.name",
-            "args": {},
-            "lines": {
-              "ru": "SIG SG 550 Sniper",
-              "en": "SIG SG 550 Sniper"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.xm8.name",
-            "args": {},
-            "lines": {
-              "ru": "HK XM8",
-              "en": "HK XM8"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
             "key": "item.wpn.famas.name",
             "args": {},
             "lines": {
               "ru": "FAMAS G2",
               "en": "FAMAS G2"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.xm8s.name",
-            "args": {},
-            "lines": {
-              "ru": "HK XM8S",
-              "en": "HK XM8S"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.x95.name",
-            "args": {},
-            "lines": {
-              "ru": "IWI Tavor X95",
-              "en": "IWI Tavor X95"
             }
           }
         },

@@ -12,20 +12,20 @@ namespace Guide.Models
         {
             AllWeapons =
                 [
-                    .. CreateArmorCategory("assault_rifle"),
-                    .. CreateArmorCategory("device"),
-                    .. CreateArmorCategory("heavy"),
-                    .. CreateArmorCategory("machine_gun"),
-                    .. CreateArmorCategory("melee"),
-                    .. CreateArmorCategory("pistol"),
-                    .. CreateArmorCategory("shotgun_rifle"),
-                    .. CreateArmorCategory("sniper_rifle"),
-                    .. CreateArmorCategory("submachine_gun"),
+                    .. CreateWeaponCategory("assault_rifle"),
+                    .. CreateWeaponCategory("device"),
+                    .. CreateWeaponCategory("heavy"),
+                    .. CreateWeaponCategory("machine_gun"),
+                    .. CreateWeaponCategory("melee"),
+                    .. CreateWeaponCategory("pistol"),
+                    .. CreateWeaponCategory("shotgun_rifle"),
+                    .. CreateWeaponCategory("sniper_rifle"),
+                    .. CreateWeaponCategory("submachine_gun"),
                 ];
             return AllWeapons;
         }
 
-        public List<WeaponModel> CreateArmorCategory(string category)
+        public List<WeaponModel> CreateWeaponCategory(string category)
         {
             List<WeaponModel> weapons = [];
             foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\weapon\\{category}", "*.*", SearchOption.TopDirectoryOnly))
@@ -55,21 +55,37 @@ namespace Guide.Models
             //define jobject
             var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
             //check if has rarity
-            int ifHaveRarity = 0;
+            int ifHasRarity = 0;
             if (jObject["infoBlocks"][0]
-            .Value<string>("type") == "list")
+                    .Value<JArray>("elements")[0]
+                    .Value<JObject>("key")
+                    .Value<JObject>("lines")
+                    .Value<string>("en") == "Rank")
+                ifHasRarity = 1;
+            //check if has type
+            int ifHasType = 0;
+            if (jObject["infoBlocks"][0]
+                    .Value<JArray>("elements")[2]
+                    .Value<string>("type") == "key-value")
             {
-                ifHaveRarity = 1;
+                if (jObject["infoBlocks"][0]
+                    .Value<JArray>("elements")[2]
+                    .Value<JObject>("key")
+                    .Value<JObject>("lines")
+                    .Value<string>("en") == "Type")
+                {
+                    ifHasType = 1;
+                }
             }
             //id
             Id = jObject["id"]
-                .Value<string>();
+            .Value<string>();
             //name
             Name = jObject["name"]
             .Value<JObject>("lines")
             .Value<string>("en");
             //rarity
-            if (ifHaveRarity == 1)
+            if (ifHasRarity == 1)
             {
                 Rarity = jObject["infoBlocks"][0]
                     .Value<JArray>("elements")[0]
@@ -77,17 +93,16 @@ namespace Guide.Models
                     .Value<JObject>("lines")
                     .Value<string>("en");
             }
-            else Rarity = "";
             //class
             Class = jObject["infoBlocks"][0]
-                .Value<JArray>("elements")[0 + ifHaveRarity]
+                .Value<JArray>("elements")[0 + ifHasRarity]
                 .Value<JObject>("value")
                 .Value<JObject>("lines")
                 .Value<string>("en");
             //weight
             Weight = jObject["infoBlocks"][0]
-            .Value<JArray>("elements")[2]
-            .Value<double>("value");
+        .Value<JArray>("elements")[2 + ifHasType]
+        .Value<double>("value");
             //check if object is device
             bool isDevice = false;
             if (Class == "Devices")
@@ -95,12 +110,15 @@ namespace Guide.Models
                 isDevice = true;
             }
             //stats
-            Dictionary<string, double> stats = [];
+            Dictionary<string, string> stats = [];
             List<string> features = [];
             var jsonStats = jObject["infoBlocks"][2]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
             {
+                if (Name == "Coldcutter")
+                {
+                }
                 if (stat.Value<string>("type") == "key-value")
                 {
                     stats.Add(
@@ -111,7 +129,7 @@ namespace Guide.Models
                     stat
                     .Value<JObject>("value")
                     .Value<JObject>("lines")
-                    .Value<double>("en"));
+                    .Value<string>("en"));
                 }
                 else if (stat.Value<string>("type") == "text")
                 {
@@ -121,118 +139,157 @@ namespace Guide.Models
                     .Value<JObject>("lines")
                     .Value<string>("en"));
                 }
-                else
+                else if (stat.Value<string>("type") == "numeric")
                 {
-                    stats.Add(
-                    stat
-                    .Value<JObject>("name")
-                    .Value<JObject>("lines")
-                    .Value<string>("en"),
-                    stat
-                    .Value<double>("value"));
+                    stats.Add(stat
+                            .Value<JObject>("name")
+                            .Value<JObject>("lines")
+                            .Value<string>("en"),
+                        stat
+                            .Value<JObject>("formatted")
+                            .Value<JObject>("value")
+                            .Value<string>("en"));
                 }
             }
             if (!isDevice)
                 Stats = stats;
             else
             {
-                List<string> featuresToAdd = [];
-                foreach (var feature in features) featuresToAdd.Add(feature);
-                Features = featuresToAdd;
+                Features = features;
             }
             //damage modifier
             if (!isDevice)
             {
-                List<string> damageModifiers = new List<string>();
-                var jsonModifiers = jObject["infoBlocks"][4]
-                .Value<JArray>("elements");
-                if (jsonModifiers != null)
+                //features
+                var jsonFeatures = jObject["infoBlocks"][5 - ifHasType]
+                     .Value<JArray>("elements");
+                if (jsonFeatures.Count() > 0)
                 {
-                    foreach (var modifier in jsonModifiers)
+                    foreach (JObject feature in jsonFeatures)
                     {
-                        if (modifier.Value<String>("type") == "numeric")
+                        if (Class != "Other Weapons")
                         {
-                            damageModifiers.Add($"{modifier
-                                .Value<JObject>("name")
-                        .Value<JObject>("lines")
-                        .Value<string>("en")}: {modifier
-                                .Value<JObject>("formatted")
-                        .Value<JObject>("value")
-                        .Value<string>("en")}"
-
-                                );
+                            if (feature.Value<String>("type") != "numeric")
+                            {
+                                features.Add(feature
+                                .Value<JObject>("text")
+                                .Value<JObject>("lines")
+                                .Value<string>("en"));
+                            }
+                            else
+                            {
+                                features.Add($"{feature
+                                        .Value<JObject>("name")
+                                        .Value<JObject>("lines")
+                                        .Value<string>("en")}: {feature
+                                        .Value<JObject>("formatted")
+                                        .Value<JObject>("value")
+                                        .Value<string>("en")}"
+                                    );
+                            }
                         }
                         else
                         {
-                            damageModifiers.Add(modifier
-                                .Value<JObject>("text")
-                                .Value<JObject>("lines")
-                                .Value<string>("en"));
+                            if (feature.Value<string>("type") != "text")
+                            {
+                                features.Add($"{feature
+                                        .Value<JObject>("name")
+                                        .Value<JObject>("lines")
+                                        .Value<string>("en")}: {feature
+                                        .Value<JObject>("formatted")
+                                        .Value<JObject>("value")
+                                        .Value<string>("en")}"
+                                    );
+                            }
                         }
-                        DamageModifiers = damageModifiers;
+
                     }
-                    //features
-                    var jsonFeatures = jObject["infoBlocks"][5]
-                         .Value<JArray>("elements");
-                    List<string> featuresToAdd = [];
-                    if (jsonFeatures.Count() > 0)
+                }
+                var jsonOtherFeatures = jObject["infoBlocks"][4]
+                             .Value<JArray>("elements");
+                if (jsonOtherFeatures.Count() > 0)
+                {
+                    foreach (var otherFeature in jsonOtherFeatures)
                     {
-                        foreach (JObject feature in jsonFeatures)
+                        if (otherFeature.Value<String>("type") == "numeric")
                         {
-                            featuresToAdd.Add(feature
-                                .Value<JObject>("text")
-                                .Value<JObject>("lines")
-                                .Value<string>("en"));
+                            features.Add($"{otherFeature
+                                    .Value<JObject>("name")
+                                    .Value<JObject>("lines")
+                                    .Value<string>("en")}: {otherFeature
+                                    .Value<JObject>("formatted")
+                                    .Value<JObject>("value")
+                                    .Value<string>("en")}");
+                        }
+                        else
+                        {
+                            features.Add(otherFeature
+                            .Value<JObject>("text")
+                            .Value<JObject>("lines")
+                            .Value<string>("en"));
                         }
                     }
-                    Features = featuresToAdd;
-                    //damage graph
+                }
+                Features = features.Distinct().ToList();
+                //damage graph
+                if (Class != "Other Weapons" && Class != "Melee Weapons")
+                {
                     DamageGraph = new DamageGraph(
-                    jObject["infoBlocks"][6]
-                        .Value<double>("startDamage"),
-                    jObject["infoBlocks"][6]
-                        .Value<double>("damageDecreaseStart"),
-                    jObject["infoBlocks"][6]
-                        .Value<double>("endDamage"),
-                    jObject["infoBlocks"][6]
-                        .Value<double>("damageDecreaseEnd"),
-                    jObject["infoBlocks"][6]
-                        .Value<double>("maxDistance")
-                        );
-                    //description
-                    Description = jObject["infoBlocks"][7]
-                    .Value<JObject>("text")
-                    .Value<JObject>("lines")
-                    .Value<string>("en");
+                jObject["infoBlocks"][6]
+                    .Value<double>("startDamage"),
+                jObject["infoBlocks"][6]
+                    .Value<double>("damageDecreaseStart"),
+                jObject["infoBlocks"][6]
+                    .Value<double>("endDamage"),
+                jObject["infoBlocks"][6]
+                    .Value<double>("damageDecreaseEnd"),
+                jObject["infoBlocks"][6]
+                    .Value<double>("maxDistance")
+                    );
                 }
             }
             else
             {
-                DamageModifiers = null;
                 //stats
-                jsonStats = jObject["infoBlocks"][4]
-                         .Value<JArray>("elements");
+                int shortStatsFix = 0;
+                if (Class == "Melee Weapons")
+                {
+                    shortStatsFix = -1;
+                }
+                if (jObject["infoBlocks"][4].Value<string>("type") == "list" && isDevice)
+                {
+                    shortStatsFix = 1;
+                }
+                jsonStats = jObject["infoBlocks"][3 + shortStatsFix]
+                                     .Value<JArray>("elements");
                 foreach (var stat in jsonStats)
                 {
+                    if (Name == "SN-2 Leg")
+                    {
+                        var aosga = jObject["infoBlocks"];
+                    }
                     stats.Add(stat
                     .Value<JObject>("name")
                         .Value<JObject>("lines")
                         .Value<string>("en"),
-                     double.Parse(stat
+                     stat
                     .Value<JObject>("formatted")
                         .Value<JObject>("value")
-                        .Value<string>("en")
-                        .Split()[0]));
+                        .Value<string>("en"));
                 }
                 Stats = stats;
-                //description
-                var Description = jObject["infoBlocks"][5]
+            }
+            //description
+            if (jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1].Value<string>("type") == "text")
+            {
+                Description = jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1]
                                 .Value<JObject>("text")
                                 .Value<JObject>("lines")
                                 .Value<string>("en");
             }
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
+
         }
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -244,10 +301,9 @@ namespace Guide.Models
         public string Rarity { get; set; }
         public string Class { get; set; }
         public double Weight { get; set; }
-        public List<string> DamageModifiers { get; set; }
         public List<string> Features { get; set; }
         public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, double> Stats { get; set; }
+        public Dictionary<string, string> Stats { get; set; }
         public DamageGraph DamageGraph { get; set; }
         public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

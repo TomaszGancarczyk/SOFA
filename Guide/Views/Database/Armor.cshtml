@@ -35,7 +35,7 @@
             }
         }
         <h5>Stats:</h5>
-        foreach (KeyValuePair<string, double> stat in Model.CurrentArmor.Stats)
+        foreach (KeyValuePair<string, string> stat in Model.CurrentArmor.Stats)
         {
             string drawStat = $"{stat.Key}: {stat.Value}";
             <p>
@@ -46,9 +46,6 @@
         <p>@Model.CurrentArmor.CompatibleBackpacks</p>
         <h5>CompatibleContainers:</h5>
         <p>@Model.CurrentArmor.CompatibleContainers</p>
-        if (String.IsNullOrEmpty(Model.CurrentArmor.Description))
-        {
-            <p>@Model.CurrentArmor.Description</p>
-        }
+        <p>@Model.CurrentArmor.Description</p>
     }
 </div>

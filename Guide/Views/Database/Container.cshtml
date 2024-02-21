@@ -16,16 +16,13 @@
         <h5>Class: @Model.CurrentContainer.Class</h5>
         <h5>Weight: @Model.CurrentContainer.Weight</h5>
         <h5>Stats:</h5>
-        foreach (KeyValuePair<string, double> stat in Model.CurrentContainer.Stats)
+        foreach (KeyValuePair<string, string> stat in Model.CurrentContainer.Stats)
         {
             string drawStat = $"{stat.Key}: {stat.Value}";
             <p>
                 @drawStat
             </p>
         }
-        if (String.IsNullOrEmpty(Model.CurrentContainer.Description))
-        {
-            <p>@Model.CurrentContainer.Description</p>
-        }
+        <p>@Model.CurrentContainer.Description</p>
     }
 </div>

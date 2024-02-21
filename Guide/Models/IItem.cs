@@ -9,7 +9,7 @@
         public double Weight { get; set; }
         public List<string> Features { get; set; }
         public Dictionary<string, int> Properties { get; set; }
-        public Dictionary<string, double> Stats { get; set; }
+        public Dictionary<string, string> Stats { get; set; }
         public string CompatibleBackpacks { get; set; }
         public string CompatibleContainers { get; set; }
         public string Description { get; set; }

@@ -10,6 +10,7 @@
 <script>
     function openSidebar(element) {
         closeSidebar("armorSidebar")
+        closeSidebar("weaponSidebar")
         closeSidebar("artefactSidebar")
         closeSidebar("containerSidebar")
         closeSecondarySidebars()
@@ -42,7 +43,7 @@
         sidebarElement.style.left = "-2000px";
     }
     function closeSecondarySidebars() {
-        closeSidebar("clothesSidebar")
+        closeSidebar("clothingSidebar")
         closeSidebar("combatSidebar")
         closeSidebar("comboSidebar")
         closeSidebar("scientistSidebar")
@@ -50,12 +51,21 @@
         closeSidebar("electrophysicalSidebar")
         closeSidebar("gravitationalSidebar")
         closeSidebar("thermalSidebar")
+        closeSidebar("assaultriflesSidebar")
+        closeSidebar("devicesSidebar")
+        closeSidebar("otherweaponsSidebar")
+        closeSidebar("machinegunsSidebar")
+        closeSidebar("meleeweaponsSidebar")
+        closeSidebar("pistolsSidebar")
+        closeSidebar("shotgunsandriflesSidebar")
+        closeSidebar("sniperriflesSidebar")
+        closeSidebar("submachinegunsSidebar")
     }
 </script>
 
 <div class="sticky" style="top: 80px;">
     <div id="mainSidebar" class="sidebar-container sticky">
-        <button class="sidebar-button">
+        <button class="sidebar-button" data-sidebar-id="weaponSidebar" onclick="openSidebar(this)">
             Weapon
         </button>
         <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
@@ -68,69 +78,39 @@
             Artefact
         </button>
     </div>
+
+
     @* armor sidebar *@
+    @{
+        List<string> armorClasses = ["Clothing", "Combat", "Combo", "Scientist"];
+    }
     <div id="armorSidebar" class="second-sidebar sidebar-container sticky">
-        <button class="sidebar-button" data-sidebar-id="clothesSidebar" onclick="openSecondarySidebar(this)">
-            Clothes
-        </button>
-        <button class="sidebar-button" data-sidebar-id="combatSidebar" onclick="openSecondarySidebar(this)">
-            Combat
-        </button>
-        <button class="sidebar-button" data-sidebar-id="comboSidebar" onclick="openSecondarySidebar(this)">
-            Combo
-        </button>
-        <button class="sidebar-button" data-sidebar-id="scientistSidebar" onclick="openSecondarySidebar(this)">
-            Scientist
-        </button>
-    </div>
-    @* armor sidebar - Clothing *@
-    <div id="clothesSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArmorModel armor in Model.Armors)
+        @foreach (string armorClass in armorClasses)
         {
-            if (armor.Class == "Clothing")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = armor.Id})'">
-                    @armor.Name
-                </button>
-            }
+            string id = $"{armorClass.ToLower()}Sidebar";
+            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
+                @armorClass
+            </button>
         }
     </div>
-    @* armor sidebar - Combat *@
-    <div id="combatSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArmorModel armor in Model.Armors)
+    @{
+        @foreach (string armorClass in armorClasses)
         {
-            if (armor.Class == "Combat")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = armor.Id})'">
-                    @armor.Name
-                </button>
-            }
+            string id = $"{armorClass.ToLower()}Sidebar";
+            <div id=@id class="second-sidebar sidebar-container sticky">
+                @foreach (ArmorModel armor in Model.Armors)
+                {
+                    if (armor.Class == armorClass)
+                    {
+                        <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = armor.Id})'">
+                            @armor.Name
+                        </button>
+                    }
+                }
+            </div>
         }
-    </div>
-    @* armor sidebar - Combo *@
-    <div id="comboSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArmorModel armor in Model.Armors)
-        {
-            if (armor.Class == "Combo")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = @armor.Id})'">
-                    @armor.Name
-                </button>
-            }
-        }
-    </div>
-    @* armor sidebar - Scientist *@
-    <div id="scientistSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArmorModel armor in Model.Armors)
-        {
-            if (armor.Class == "Scientist")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = @armor.Id})'">
-                    @armor.Name
-                </button>
-            }
-        }
-    </div>
+    }
+
 
     @* container & backpack sidebar *@
     <div id="containerSidebar" class="second-sidebar sidebar-container sticky">
@@ -142,73 +122,67 @@
         }
     </div>
 
+
     @* artefact sidebar *@
+    @{
+        List<string> artefactClasses = ["Biochemical", "Electrophysical", "Gravitational", "Thermal"];
+    }
     <div id="artefactSidebar" class="second-sidebar sidebar-container sticky">
-        <button class="sidebar-button" data-sidebar-id="biochemicalSidebar" onclick="openSecondarySidebar(this)">
-            Biochemical
-        </button>
-        <button class="sidebar-button" data-sidebar-id="electrophysicalSidebar" onclick="openSecondarySidebar(this)">
-            Electrophysical
-        </button>
-        <button class="sidebar-button" data-sidebar-id="gravitationalSidebar" onclick="openSecondarySidebar(this)">
-            Gravitational
-        </button>
-        <button class="sidebar-button" data-sidebar-id="thermalSidebar" onclick="openSecondarySidebar(this)">
-            Thermal
-        </button>
-    </div>
-    @* artefact sidebar - Biochemical *@
-    <div id="biochemicalSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArtefactModel artefact in Model.Artefacts)
+        @foreach (string artefactClass in artefactClasses)
         {
-            if (artefact.Class == "Biochemical")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
-                    @artefact.Name
-                </button>
-            }
+            string id = $"{artefactClass.ToLower()}Sidebar";
+            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
+                @artefactClass
+            </button>
         }
     </div>
-    @* artefact sidebar - Electrophysical *@
-    <div id="electrophysicalSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArtefactModel artefact in Model.Artefacts)
+    @{
+        @foreach (string artefactClass in artefactClasses)
         {
-            if (artefact.Class == "Electrophysical")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
-                    @artefact.Name
-                </button>
-            }
+            string id = $"{artefactClass.ToLower()}Sidebar";
+            <div id=@id class="second-sidebar sidebar-container sticky">
+                @foreach (ArtefactModel artefact in Model.Artefacts)
+                {
+                    if (artefact.Class == artefactClass)
+                    {
+                        <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
+                            @artefact.Name
+                        </button>
+                    }
+                }
+            </div>
+        }
+    }
+
+
+    @* weapon sidebar *@
+    @{
+        List<string> weaponClasses = ["Assault Rifles", "Devices", "Other Weapons", "Machine Guns", "Melee Weapons", "Pistols", "Shotguns and Rifles", "Sniper Rifles", "Submachine Guns"];
+    }
+    <div id="weaponSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (string weaponClass in weaponClasses)
+        {
+            string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
+            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
+                @weaponClass
+            </button>
         }
     </div>
-    @* artefact sidebar - Gravitational *@
-    <div id="gravitationalSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArtefactModel artefact in Model.Artefacts)
+    @{
+        @foreach (string weaponClass in weaponClasses)
         {
-            if (artefact.Class == "Gravitational")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
-                    @artefact.Name
-                </button>
-            }
+            string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
+            <div id=@id class="second-sidebar sidebar-container sticky">
+                @foreach (WeaponModel weapon in Model.Weapons)
+                {
+                    if (weapon.Class == weaponClass)
+                    {
+                        <button class="sidebar-button" onclick="location.href='@Url.Action("Weapon", "Database", new {weaponId = weapon.Id})'">
+                            @weapon.Name
+                        </button>
+                    }
+                }
+            </div>
         }
-    </div>
-    @* artefact sidebar - Thermal *@
-    <div id="thermalSidebar" class="second-sidebar sidebar-container sticky">
-        @foreach (ArtefactModel artefact in Model.Artefacts)
-        {
-            if (artefact.Class == "Thermal")
-            {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
-                    @artefact.Name
-                </button>
-            }
-        }
-    </div>
-</div>
-
-
-
-
-<div class="text-center scrollable padding-top">
+    }
 </div>

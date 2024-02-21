@@ -40,7 +40,7 @@
             <h5>Class: @container.Class</h5>
             <h5>Weight: @container.Weight</h5>
             <h5>Stats:</h5>
-            foreach (KeyValuePair<string, double> stat in container.Stats)
+            foreach (KeyValuePair<string, string> stat in container.Stats)
             {
                 string drawStat = $"{stat.Key}: {stat.Value}";
                 <p>

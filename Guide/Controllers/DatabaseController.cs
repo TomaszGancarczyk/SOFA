@@ -11,17 +11,19 @@ namespace Database.Controllers
         private List<ArtefactModel> _artefacts;
         private List<ContainerModel> _containers;
         private List<ArmorModel> _armors;
-        public DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor)
+        private List<WeaponModel> _weapons;
+        public DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons)
         {
             _logger = logger;
             _artefacts = artefacts;
             _containers = containers;
             _armors = armor;
+            _weapons = weapons;
         }
 
         public IActionResult Index()
         {
-            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors);
+            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons);
             return View(viewModel);
         }
         public IActionResult Armor(string armorId)
@@ -37,6 +39,11 @@ namespace Database.Controllers
         public IActionResult Container(string containerId)
         {
             var viewModel = new ContainerViewModel(containerId, _containers);
+            return View(viewModel);
+        }
+        public IActionResult Weapon(string weaponId)
+        {
+            var viewModel = new WeaponViewModel(weaponId, _weapons);
             return View(viewModel);
         }
     }

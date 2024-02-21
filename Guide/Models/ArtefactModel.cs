@@ -104,13 +104,12 @@ namespace Guide.Models
             };
             ArtefactStats = stats;
             //description
-            var count = jObject["infoBlocks"].Count();
-            if (jObject["infoBlocks"].Count() == 6)
+            if (jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1].Value<string>("type") == "text")
             {
-                Description = jObject["infoBlocks"][5]
-                        .Value<JObject>("text")
-                        .Value<JObject>("lines")
-                        .Value<string>("en");
+                Description = jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1]
+                                .Value<JObject>("text")
+                                .Value<JObject>("lines")
+                                .Value<string>("en");
             }
             else Description = "";
             //image source
@@ -134,7 +133,7 @@ namespace Guide.Models
         public string Rarity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> Features { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, double> Stats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, string> Stats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }

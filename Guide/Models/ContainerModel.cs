@@ -61,7 +61,7 @@ namespace Guide.Models
                 .Value<JArray>("elements")[2]
                 .Value<double>("value");
             //stats
-            Dictionary<string, double> stats = [];
+            Dictionary<string, string> stats = [];
             var jsonStats = jObject["infoBlocks"][3]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
@@ -72,17 +72,16 @@ namespace Guide.Models
                     .Value<JObject>("lines")
                     .Value<string>("en"),
                     stat
-                    .Value<int>("value"));
+                    .Value<string>("value"));
             }
             Stats = stats;
             //description
-            var count = jObject["infoBlocks"].Count();
-            if (jObject["infoBlocks"].Count() == 6)
+            if (jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1].Value<string>("type") == "text")
             {
-                Description = jObject["infoBlocks"][5]
-                        .Value<JObject>("text")
-                        .Value<JObject>("lines")
-                        .Value<string>("en");
+                Description = jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1]
+                                .Value<JObject>("text")
+                                .Value<JObject>("lines")
+                                .Value<string>("en");
             }
             else Description = "";
             //image source
@@ -93,7 +92,7 @@ namespace Guide.Models
         public string Rarity { get; set; }
         public string Class { get; set; }
         public double Weight { get; set; }
-        public Dictionary<string, double> Stats { get; set; }
+        public Dictionary<string, string> Stats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
         public List<string> Features { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

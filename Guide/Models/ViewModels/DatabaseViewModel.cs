@@ -5,11 +5,21 @@
         public List<ArtefactModel> Artefacts { get; set; }
         public List<ContainerModel> Containers { get; set; }
         public List<ArmorModel> Armors { get; set; }
-        public DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors)
+        public List<WeaponModel> Weapons { get; set; }
+        public DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons)
         {
             Artefacts = artefacts;
             Containers = containers;
             Armors = armors;
+            Weapons = weapons;
+        }
+    }
+    public class WeaponViewModel
+    {
+        public WeaponModel CurrentWeapon { get; set; }
+        public WeaponViewModel(string weaponId, List<WeaponModel> weapons)
+        {
+            CurrentWeapon = weapons.Where(weapon => weapon.Id == weaponId).FirstOrDefault();
         }
     }
     public class ArmorViewModel

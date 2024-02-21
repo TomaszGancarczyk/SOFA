@@ -131,7 +131,7 @@ namespace Guide.Models
             }
             Properties = properties;
             //stats
-            Dictionary<string, double> stats = [];
+            Dictionary<string, string> stats = [];
             var jsonStats = jObject["infoBlocks"][3]
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
@@ -142,7 +142,7 @@ namespace Guide.Models
                     .Value<JObject>("lines")
                     .Value<string>("en"),
                     stat
-                    .Value<int>("value"));
+                    .Value<string>("value"));
             }
             Stats = stats;
             //backpacks
@@ -156,10 +156,13 @@ namespace Guide.Models
                 .Value<JObject>("lines")
                 .Value<string>("en");
             //description
-            Description = jObject["infoBlocks"][6 + ifHasFeature]
-                .Value<JObject>("text")
-                .Value<JObject>("lines")
-                .Value<string>("en");
+            if (jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1].Value<string>("type") == "text")
+            {
+                Description = jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1]
+                                .Value<JObject>("text")
+                                .Value<JObject>("lines")
+                                .Value<string>("en");
+            }
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
         }
@@ -175,7 +178,7 @@ namespace Guide.Models
         public double Weight { get; set; }
         public List<string> Features { get; set; }
         public Dictionary<string, int> Properties { get; set; }
-        public Dictionary<string, double> Stats { get; set; }
+        public Dictionary<string, string> Stats { get; set; }
         public string CompatibleBackpacks { get; set; }
         public string CompatibleContainers { get; set; }
         public string Description { get; set; }

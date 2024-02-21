@@ -131,7 +131,29 @@
         "type": "text",
         "text": ""
       },
-      "elements": []
+      "elements": [
+        {
+          "type": "numeric",
+          "name": {
+            "type": "translation",
+            "key": "weapon.stat_factor.reload_time",
+            "args": {},
+            "lines": {
+              "ru": "Время перезарядки",
+              "en": "Reload time"
+            }
+          },
+          "value": 10.000002,
+          "formatted": {
+            "value": {
+              "ru": "+10%",
+              "en": "+10%"
+            },
+            "nameColor": "C15252",
+            "valueColor": "C15252"
+          }
+        }
+      ]
     },
     {
       "type": "list",
@@ -144,20 +166,7 @@
           "en": "Suitable for"
         }
       },
-      "elements": [
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.psg.name",
-            "args": {},
-            "lines": {
-              "ru": "HK PSG1",
-              "en": "HK PSG1"
-            }
-          }
-        }
-      ]
+      "elements": []
     }
   ]
 }

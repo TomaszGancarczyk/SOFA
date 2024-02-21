@@ -113,32 +113,11 @@
               "en": "Spread"
             }
           },
-          "value": -26.999998,
+          "value": -13.749999,
           "formatted": {
             "value": {
-              "ru": "-27%",
-              "en": "-27%"
-            },
-            "nameColor": "53C353",
-            "valueColor": "53C353"
-          }
-        },
-        {
-          "type": "numeric",
-          "name": {
-            "type": "translation",
-            "key": "weapon.stat_factor.recoil",
-            "args": {},
-            "lines": {
-              "ru": "Отдача",
-              "en": "Recoil"
-            }
-          },
-          "value": -6.0,
-          "formatted": {
-            "value": {
-              "ru": "-6%",
-              "en": "-6%"
+              "ru": "-13,75%",
+              "en": "-13.75%"
             },
             "nameColor": "53C353",
             "valueColor": "53C353"
@@ -155,11 +134,11 @@
               "en": "Horizontal recoil"
             }
           },
-          "value": -15.999996,
+          "value": -14.999998,
           "formatted": {
             "value": {
-              "ru": "-16%",
-              "en": "-16%"
+              "ru": "-15%",
+              "en": "-15%"
             },
             "nameColor": "53C353",
             "valueColor": "53C353"
@@ -195,6 +174,30 @@
           "type": "item",
           "name": {
             "type": "translation",
+            "key": "item.wpn.akmb.name",
+            "args": {},
+            "lines": {
+              "ru": "АКМ «Тишина»",
+              "en": "AKM Tishina"
+            }
+          }
+        },
+        {
+          "type": "item",
+          "name": {
+            "type": "translation",
+            "key": "item.wpn.ak203.name",
+            "args": {},
+            "lines": {
+              "ru": "АК-203",
+              "en": "АК-203"
+            }
+          }
+        },
+        {
+          "type": "item",
+          "name": {
+            "type": "translation",
             "key": "item.wpn.ak103.name",
             "args": {},
             "lines": {
@@ -219,35 +222,23 @@
           "type": "item",
           "name": {
             "type": "translation",
+            "key": "item.wpn.ak15.name",
+            "args": {},
+            "lines": {
+              "ru": "АК-15",
+              "en": "АК-15"
+            }
+          }
+        },
+        {
+          "type": "item",
+          "name": {
+            "type": "translation",
             "key": "item.wpn.sok94.name",
             "args": {},
             "lines": {
               "ru": "СОК-94",
               "en": "SOK-94"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.rpk.name",
-            "args": {},
-            "lines": {
-              "ru": "РПК",
-              "en": "RPK"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.sv98.name",
-            "args": {},
-            "lines": {
-              "ru": "СВ-98",
-              "en": "SV-98"
             }
           }
         },
@@ -267,83 +258,11 @@
           "type": "item",
           "name": {
             "type": "translation",
-            "key": "item.wpn.fal.name",
-            "args": {},
-            "lines": {
-              "ru": "FN FAL",
-              "en": "FN FAL"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.scarh.name",
-            "args": {},
-            "lines": {
-              "ru": "FN SCAR-H",
-              "en": "FN SCAR-H"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.scarssr.name",
-            "args": {},
-            "lines": {
-              "ru": "FN SCAR SSR",
-              "en": "FN SCAR SSR"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.psg.name",
-            "args": {},
-            "lines": {
-              "ru": "HK PSG1",
-              "en": "HK PSG1"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.hk417.name",
-            "args": {},
-            "lines": {
-              "ru": "HK417",
-              "en": "HK417"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
             "key": "item.wpn.dsa58.name",
             "args": {},
             "lines": {
               "ru": "DSA-58",
               "en": "DSA-58"
-            }
-          }
-        },
-        {
-          "type": "item",
-          "name": {
-            "type": "translation",
-            "key": "item.wpn.ak308.name",
-            "args": {},
-            "lines": {
-              "ru": "АК-308",
-              "en": "AK-308"
             }
           }
         },
