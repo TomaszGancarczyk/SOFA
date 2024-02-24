@@ -14,6 +14,9 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            List<BulletModel> bullets = new BulletModel().GetAllBullets();
+            builder.Services.AddSingleton<List<BulletModel>>(bullets);
+
             List<AttachmentModel> attachments = new AttachmentModel().GetAllAttachments();
             builder.Services.AddSingleton<List<AttachmentModel>>(attachments);
 

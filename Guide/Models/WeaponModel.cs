@@ -32,15 +32,16 @@ namespace Guide.Models
             {
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{jObject["id"].Value<string>()}.png");
-                request.Method = "HEAD";
-                try
+                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\weapon\\{category}\\{jObject["id"].Value<string>()}.png");
+                if (ifImageExists)
                 {
-                    request.GetResponse();
                     WeaponModel weaponModel = new(jsonString);
                     weapons.Add(weaponModel);
                 }
-                catch { }
+                else
+                {
+                    Console.WriteLine($"Image for Id: {jObject["id"].Value<string>()} doesn't exist");
+                }
             }
             return weapons;
         }
