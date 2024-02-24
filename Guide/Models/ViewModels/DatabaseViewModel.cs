@@ -6,12 +6,14 @@
         public List<ContainerModel> Containers { get; set; }
         public List<ArmorModel> Armors { get; set; }
         public List<WeaponModel> Weapons { get; set; }
-        public DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons)
+        public List<AttachmentModel> Attachments { get; set; }
+        public DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons, List<AttachmentModel> attachments)
         {
             Artefacts = artefacts;
             Containers = containers;
             Armors = armors;
             Weapons = weapons;
+            Attachments = attachments;
         }
     }
     public class WeaponViewModel
@@ -24,26 +26,34 @@
     }
     public class ArmorViewModel
     {
-        public ArmorModel CurrentArmor { get; set; }
+        public ArmorModel Armor { get; set; }
         public ArmorViewModel(string armorId, List<ArmorModel> armors)
         {
-            CurrentArmor = armors.Where(armor => armor.Id == armorId).FirstOrDefault();
+            Armor = armors.Where(armor => armor.Id == armorId).FirstOrDefault();
         }
     }
     public class ArtefactViewModel
     {
-        public ArtefactModel CurrentArtefact { get; set; }
+        public ArtefactModel Artefact { get; set; }
         public ArtefactViewModel(string artefactId, List<ArtefactModel> artefacts)
         {
-            CurrentArtefact = artefacts.Where(artefactt => artefactt.Id == artefactId).FirstOrDefault();
+            Artefact = artefacts.Where(artefactt => artefactt.Id == artefactId).FirstOrDefault();
         }
     }
     public class ContainerViewModel
     {
-        public ContainerModel CurrentContainer { get; set; }
+        public ContainerModel Container { get; set; }
         public ContainerViewModel(string containerId, List<ContainerModel> containers)
         {
-            CurrentContainer = containers.Where(container => container.Id == containerId).FirstOrDefault();
+            Container = containers.Where(container => container.Id == containerId).FirstOrDefault();
+        }
+    }
+    public class AttachmentViewModel
+    {
+        public AttachmentModel Attachment { get; set; }
+        public AttachmentViewModel(string attachmentId, List<AttachmentModel> attachments)
+        {
+            Attachment = attachments.Where(attachment => attachment.Id == attachmentId).FirstOrDefault();
         }
     }
 }

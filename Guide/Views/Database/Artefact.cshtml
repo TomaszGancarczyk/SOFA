@@ -9,13 +9,13 @@
 
 <div class="text-center scrollable padding-top">
     @{
-        <img src="@Model.CurrentArtefact.ImgSource" />
-        <h1>Id: @Model.CurrentArtefact.Id</h1>
-        <h3>@Model.CurrentArtefact.Name</h3>
-        <h5>Class: @Model.CurrentArtefact.Class</h5>
-        <h5>Weight: @Model.CurrentArtefact.Weight</h5>
+        <img src="@Model.Artefact.ImgSource" />
+        <h1>Id: @Model.Artefact.Id</h1>
+        <h3>@Model.Artefact.Name</h3>
+        <h5>Class: @Model.Artefact.Class</h5>
+        <h5>Weight: @Model.Artefact.Weight</h5>
         <h5>Stats:</h5>
-        foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.CurrentArtefact.ArtefactStats)
+        foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.Artefact.ArtefactStats)
         {
             string drawStat;
             if (stat.Value.Keys.FirstOrDefault() == stat.Value.Values.FirstOrDefault())
@@ -48,6 +48,6 @@
                 </p>
             }
         }
-        <p>@Model.CurrentArtefact.Description</p>
+        <p>@Model.Artefact.Description</p>
     }
 </div>

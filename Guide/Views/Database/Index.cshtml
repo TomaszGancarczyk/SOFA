@@ -13,6 +13,7 @@
         closeSidebar("weaponSidebar")
         closeSidebar("artefactSidebar")
         closeSidebar("containerSidebar")
+        closeSidebar("attachmentSidebar")
         closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
@@ -47,10 +48,12 @@
         closeSidebar("combatSidebar")
         closeSidebar("comboSidebar")
         closeSidebar("scientistSidebar")
+
         closeSidebar("biochemicalSidebar")
         closeSidebar("electrophysicalSidebar")
         closeSidebar("gravitationalSidebar")
         closeSidebar("thermalSidebar")
+
         closeSidebar("assaultriflesSidebar")
         closeSidebar("devicesSidebar")
         closeSidebar("otherweaponsSidebar")
@@ -60,22 +63,32 @@
         closeSidebar("shotgunsandriflesSidebar")
         closeSidebar("sniperriflesSidebar")
         closeSidebar("submachinegunsSidebar")
+
+        closeSidebar("muzzlesandsilencersSidebar")
+        closeSidebar("sightsSidebar")
+        closeSidebar("hanguardsandbracketsSidebar")
+        closeSidebar("magazinesSidebar")
+        closeSidebar("otherattachmentsSidebar")
+        closeSidebar("pistolgripsSidebar")
     }
 </script>
 
 <div class="sticky" style="top: 80px;">
     <div id="mainSidebar" class="sidebar-container sticky">
         <button class="sidebar-button" data-sidebar-id="weaponSidebar" onclick="openSidebar(this)">
-            Weapon
+            Weapons
         </button>
         <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
-            Armor
+            Armors
         </button>
         <button class="sidebar-button" data-sidebar-id="containerSidebar" onclick="openSidebar(this)">
             Backpacks and Containers
         </button>
         <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="openSidebar(this)">
-            Artefact
+            Artefacts
+        </button>
+        <button class="sidebar-button" data-sidebar-id="attachmentSidebar" onclick="openSidebar(this)">
+            Attachments
         </button>
     </div>
 
@@ -87,7 +100,7 @@
     <div id="armorSidebar" class="second-sidebar sidebar-container sticky">
         @foreach (string armorClass in armorClasses)
         {
-            string id = $"{armorClass.ToLower()}Sidebar";
+            string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
             <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
                 @armorClass
             </button>
@@ -96,7 +109,7 @@
     @{
         @foreach (string armorClass in armorClasses)
         {
-            string id = $"{armorClass.ToLower()}Sidebar";
+            string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
             <div id=@id class="second-sidebar sidebar-container sticky">
                 @foreach (ArmorModel armor in Model.Armors)
                 {
@@ -130,7 +143,7 @@
     <div id="artefactSidebar" class="second-sidebar sidebar-container sticky">
         @foreach (string artefactClass in artefactClasses)
         {
-            string id = $"{artefactClass.ToLower()}Sidebar";
+            string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
             <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
                 @artefactClass
             </button>
@@ -139,7 +152,7 @@
     @{
         @foreach (string artefactClass in artefactClasses)
         {
-            string id = $"{artefactClass.ToLower()}Sidebar";
+            string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
             <div id=@id class="second-sidebar sidebar-container sticky">
                 @foreach (ArtefactModel artefact in Model.Artefacts)
                 {
@@ -179,6 +192,37 @@
                     {
                         <button class="sidebar-button" onclick="location.href='@Url.Action("Weapon", "Database", new {weaponId = weapon.Id})'">
                             @weapon.Name
+                        </button>
+                    }
+                }
+            </div>
+        }
+    }
+
+    @* attachment sidebar *@
+    @{
+        List<string> attachmentClasses = ["Muzzles and Silencers", "Sights", "Hanguards and Brackets", "Magazines", "Other Attachments", "Pistol Grips"];
+    }
+    <div id="attachmentSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (string attachmentClass in attachmentClasses)
+        {
+            string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
+            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
+                @attachmentClass
+            </button>
+        }
+    </div>
+    @{
+        @foreach (string attachmentClass in attachmentClasses)
+        {
+            string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
+            <div id=@id class="second-sidebar sidebar-container sticky">
+                @foreach (AttachmentModel attachment in Model.Attachments)
+                {
+                    if (attachment.Class == attachmentClass)
+                    {
+                        <button class="sidebar-button" onclick="location.href='@Url.Action("Attachment", "Database", new {attachmentId = attachment.Id})'">
+                            @attachment.Name
                         </button>
                     }
                 }

@@ -2,6 +2,7 @@ using Guide.Models;
 using Guide.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Net.Mail;
 
 namespace Database.Controllers
 {
@@ -12,18 +13,20 @@ namespace Database.Controllers
         private List<ContainerModel> _containers;
         private List<ArmorModel> _armors;
         private List<WeaponModel> _weapons;
-        public DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons)
+        private List<AttachmentModel> _attachments;
+        public DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments)
         {
             _logger = logger;
             _artefacts = artefacts;
             _containers = containers;
             _armors = armor;
             _weapons = weapons;
+            _attachments = attachments;
         }
 
         public IActionResult Index()
         {
-            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons);
+            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons, _attachments);
             return View(viewModel);
         }
         public IActionResult Armor(string armorId)
@@ -44,6 +47,11 @@ namespace Database.Controllers
         public IActionResult Weapon(string weaponId)
         {
             var viewModel = new WeaponViewModel(weaponId, _weapons);
+            return View(viewModel);
+        }
+        public IActionResult Attachment(string attachmentId)
+        {
+            var viewModel = new AttachmentViewModel(attachmentId, _attachments);
             return View(viewModel);
         }
     }

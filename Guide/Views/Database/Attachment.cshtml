@@ -1,0 +1,62 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model AttachmentViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+<div class="text-center scrollable padding-top">
+    @{
+        <img src="@Model.Attachment.ImgSource" />
+        <h1>Id: @Model.Attachment.Id</h1>
+        <h3>@Model.Attachment.Name</h3>
+        if (@Model.Attachment.Rarity != null)
+        {
+            <h5>Rarity: @Model.Attachment.Rarity</h5>
+        }
+        <h5>Class: @Model.Attachment.Class</h5>
+        <h5>Weight: @Model.Attachment.Weight</h5>
+
+        if (Model.Attachment.Features.Count > 0)
+        {
+            <h5>Features:</h5>
+            foreach (string feature in Model.Attachment.Features)
+            {
+                <p>@feature</p>
+            }
+        }
+        if (Model.Attachment.AttachmentAmmoType.Count > 0)
+        {
+            <h5>Ammo Type:</h5>
+            foreach (string ammoType in Model.Attachment.AttachmentAmmoType)
+            {
+                <p>
+                    @ammoType
+                </p>
+            }
+        }
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, str
+            
+            ing> stat in Model.Attachment.Stats)
+        {
+            string drawStat = $"{stat.Key}: {stat.Value}";
+            <p>
+                @drawStat
+            </p>
+        }
+        <h5>Suitable For:</h5>
+        foreach (string suitable in Model.Attachment.SuitableFor)
+        {
+            <p>
+                @suitable
+            </p>
+        }
+        if (Model.Attachment.Description != null)
+        {
+            <p>@Model.Attachment.Description</p>
+        }
+    }
+</div>

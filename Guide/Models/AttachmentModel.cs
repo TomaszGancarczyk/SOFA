@@ -94,7 +94,7 @@ namespace Guide.Models
             Weight = jObject["infoBlocks"][0]
                 .Value<JArray>("elements")[1 + ifHasRarity]
                 .Value<double>("value");
-             //stats
+            //stats
             Dictionary<string, string> stats = [];
             List<string> attachmentAmmoType = [];
             var jsonStats = jObject["infoBlocks"][2]
@@ -104,7 +104,7 @@ namespace Guide.Models
                 //attachment ammo type
                 if (stat.Value<string>("type") == "text")
                 {
-                    if(stat
+                    if (stat
                     .Value<JObject>("text")
                     .Value<JObject>("lines")
                     .Value<string>("en") != "Suitable ammo")
