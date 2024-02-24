@@ -14,7 +14,8 @@ namespace Database.Controllers
         private List<ArmorModel> _armors;
         private List<WeaponModel> _weapons;
         private List<AttachmentModel> _attachments;
-        public DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments)
+        private List<BulletModel> _bullets;
+        public DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets)
         {
             _logger = logger;
             _artefacts = artefacts;
@@ -22,11 +23,12 @@ namespace Database.Controllers
             _armors = armor;
             _weapons = weapons;
             _attachments = attachments;
+            _bullets = bullets;
         }
 
         public IActionResult Index()
         {
-            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons, _attachments);
+            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons, _attachments, _bullets);
             return View(viewModel);
         }
         public IActionResult Armor(string armorId)
@@ -52,6 +54,11 @@ namespace Database.Controllers
         public IActionResult Attachment(string attachmentId)
         {
             var viewModel = new AttachmentViewModel(attachmentId, _attachments);
+            return View(viewModel);
+        }
+        public IActionResult Bullet(string bulletId)
+        {
+            var viewModel = new BulletViewModel(bulletId, _bullets);
             return View(viewModel);
         }
     }

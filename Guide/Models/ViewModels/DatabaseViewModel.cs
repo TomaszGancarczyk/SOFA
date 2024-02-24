@@ -7,21 +7,23 @@
         public List<ArmorModel> Armors { get; set; }
         public List<WeaponModel> Weapons { get; set; }
         public List<AttachmentModel> Attachments { get; set; }
-        public DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons, List<AttachmentModel> attachments)
+        public List<BulletModel> Bullets { get; set; }
+        public DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets)
         {
             Artefacts = artefacts;
             Containers = containers;
             Armors = armors;
             Weapons = weapons;
             Attachments = attachments;
+            Bullets = bullets;
         }
     }
     public class WeaponViewModel
     {
-        public WeaponModel CurrentWeapon { get; set; }
+        public WeaponModel Weapon { get; set; }
         public WeaponViewModel(string weaponId, List<WeaponModel> weapons)
         {
-            CurrentWeapon = weapons.Where(weapon => weapon.Id == weaponId).FirstOrDefault();
+            Weapon = weapons.Where(weapon => weapon.Id == weaponId).FirstOrDefault();
         }
     }
     public class ArmorViewModel
@@ -54,6 +56,14 @@
         public AttachmentViewModel(string attachmentId, List<AttachmentModel> attachments)
         {
             Attachment = attachments.Where(attachment => attachment.Id == attachmentId).FirstOrDefault();
+        }
+    }
+    public class BulletViewModel
+    {
+        public BulletModel Bullet { get; set; }
+        public BulletViewModel(string bulletId, List<BulletModel> bullets)
+        {
+            Bullet = bullets.Where(bullet => bullet.Id == bulletId).FirstOrDefault();
         }
     }
 }

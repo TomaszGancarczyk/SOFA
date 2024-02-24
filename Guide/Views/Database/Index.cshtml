@@ -14,6 +14,7 @@
         closeSidebar("artefactSidebar")
         closeSidebar("containerSidebar")
         closeSidebar("attachmentSidebar")
+        closeSidebar("bulletSidebar")
         closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
@@ -89,6 +90,9 @@
         </button>
         <button class="sidebar-button" data-sidebar-id="attachmentSidebar" onclick="openSidebar(this)">
             Attachments
+        </button>
+        <button class="sidebar-button" data-sidebar-id="bulletSidebar" onclick="openSidebar(this)">
+            Bullets
         </button>
     </div>
 
@@ -229,4 +233,14 @@
             </div>
         }
     }
+
+    @* bullet sidebar *@
+    <div id="bulletSidebar" class="second-sidebar sidebar-container sticky">
+        @foreach (BulletModel bullet in Model.Bullets)
+        {
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Bullet", "Database", new {bulletId = bullet.Id})'">
+                @bullet.Name
+            </button>
+        }
+    </div>
 </div>

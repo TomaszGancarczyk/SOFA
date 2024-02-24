@@ -1,0 +1,37 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model BulletViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+<div class="text-center scrollable padding-top">
+    @{
+        <img src="@Model.Bullet.ImgSource" />
+        <h1>Id: @Model.Bullet.Id</h1>
+        <h3>@Model.Bullet.Name</h3>
+        <h5>Class: @Model.Bullet.Class</h5>
+        <h5>Weight: @Model.Bullet.Weight</h5>
+        <h5>Features:</h5>
+        foreach (string feature in Model.Bullet.Features)
+        {
+            <p>
+                @feature
+            </p>
+        }
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, string> stat in Model.Bullet.Stats)
+        {
+            string drawStat = $"{stat.Key}: {stat.Value}";
+            <p>
+                @drawStat
+            </p>
+        }
+        if (Model.Bullet.Description != null)
+        {
+            <p>@Model.Bullet.Description</p>
+        }
+    }
+</div>
