@@ -1,5 +1,6 @@
 using Guide.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 
 namespace Guide
@@ -12,6 +13,9 @@ namespace Guide
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            List<AttachmentModel> attachments = new AttachmentModel().GetAllAttachments();
+            builder.Services.AddSingleton<List<AttachmentModel>>(attachments);
 
             List<WeaponModel> weapons = new WeaponModel().GetAllWeapons();
             builder.Services.AddSingleton<List<WeaponModel>>(weapons);

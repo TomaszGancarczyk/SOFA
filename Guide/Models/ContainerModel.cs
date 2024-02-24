@@ -101,6 +101,9 @@ namespace Guide.Models
         public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Dictionary<string, int> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> SuitableFor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        Dictionary<string, Dictionary<double, double>> IItem.PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> AttachmentAmmoType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.

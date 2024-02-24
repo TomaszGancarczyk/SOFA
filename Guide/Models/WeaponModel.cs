@@ -116,9 +116,6 @@ namespace Guide.Models
                 .Value<JArray>("elements");
             foreach (var stat in jsonStats)
             {
-                if (Name == "Coldcutter")
-                {
-                }
                 if (stat.Value<string>("type") == "key-value")
                 {
                     stats.Add(
@@ -157,8 +154,8 @@ namespace Guide.Models
             {
                 Features = features;
             }
-            //damage modifier
-            if (!isDevice)
+                //damage modifier
+                if (!isDevice)
             {
                 //features
                 var jsonFeatures = jObject["infoBlocks"][5 - ifHasType]
@@ -277,7 +274,6 @@ namespace Guide.Models
                         .Value<JObject>("value")
                         .Value<string>("en"));
                 }
-                Stats = stats;
             }
             //description
             if (jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1].Value<string>("type") == "text")
@@ -289,7 +285,6 @@ namespace Guide.Models
             }
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
-
         }
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -302,15 +297,17 @@ namespace Guide.Models
         public string Class { get; set; }
         public double Weight { get; set; }
         public List<string> Features { get; set; }
-        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Dictionary<string, string> Stats { get; set; }
         public DamageGraph DamageGraph { get; set; }
-        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, int> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> SuitableFor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> AttachmentAmmoType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
     public class DamageGraph
     {

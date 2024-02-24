@@ -127,7 +127,7 @@ namespace Guide.Models
         public string Class { get; set; }
         public double Weight { get; set; }
         public Dictionary<string, Dictionary<double, double>> ArtefactStats { get; set; }
-        public Dictionary<string, int> PossibleArtefactStats { get; set; }
+        public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
         public string Rarity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -136,5 +136,7 @@ namespace Guide.Models
         public Dictionary<string, string> Stats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> SuitableFor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> AttachmentAmmoType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
