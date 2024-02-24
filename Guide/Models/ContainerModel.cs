@@ -16,15 +16,16 @@ namespace Guide.Models
                 containerPaths.Add(file);
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{jObject["id"].Value<string>()}.png");
-                request.Method = "HEAD";
-                try
+                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\containers\\{jObject["id"].Value<string>()}.png");
+                if (ifImageExists)
                 {
-                    request.GetResponse();
-                    ContainerModel containerModel = new(jsonString);
+                    ContainerModel containerModel = new(jObject);
                     containers.Add(containerModel);
                 }
-                catch { }
+                else
+                {
+                    Console.WriteLine($"Image for Id: {jObject["id"].Value<string>()} doesn't exist");
+                }
             }
             return containers;
         }
@@ -32,11 +33,8 @@ namespace Guide.Models
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        public ContainerModel(string jsonString)
+        public ContainerModel(JObject jObject)
         {
-            //define jobject
-            var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
             //id
             Id = jObject["id"]
                 .Value<string>();
@@ -108,5 +106,4 @@ namespace Guide.Models
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 }

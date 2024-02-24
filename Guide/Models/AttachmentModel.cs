@@ -29,15 +29,16 @@ namespace Guide.Models
             {
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{jObject["id"].Value<string>()}.png");
-                request.Method = "HEAD";
-                try
+                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\attachment\\{category}\\{jObject["id"].Value<string>()}.png");
+                if (ifImageExists)
                 {
-                    request.GetResponse();
-                    AttachmentModel attachmentModel = new(jsonString);
+                    AttachmentModel attachmentModel = new(jObject);
                     attachments.Add(attachmentModel);
                 }
-                catch { }
+                else
+                {
+                    Console.WriteLine($"Image for Id: {jObject["id"].Value<string>()} doesn't exist");
+                }
             }
             return attachments;
         }
@@ -46,10 +47,8 @@ namespace Guide.Models
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        public AttachmentModel(string jsonString)
+        public AttachmentModel(JObject jObject)
         {
-            //define jobject
-            var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
             //id
             Id = jObject["id"]
                 .Value<string>();
@@ -175,7 +174,7 @@ namespace Guide.Models
             List<string> suitableFor = [];
             var jsonSuitableFor = jObject["infoBlocks"].LastOrDefault()
                 .Value<JArray>("elements");
-            foreach (JObject item in jsonSuitableFor)
+            foreach (JToken item in jsonSuitableFor)
             {
                 suitableFor.Add(item
                             .Value<JObject>("name")

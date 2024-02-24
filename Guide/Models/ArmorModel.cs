@@ -30,15 +30,16 @@ namespace Guide.Models
             {
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{jObject["id"].Value<string>()}.png");
-                request.Method = "HEAD";
-                try
+                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\armor\\{category}\\{jObject["id"].Value<string>()}.png");
+                if (ifImageExists)
                 {
-                    request.GetResponse();
-                    ArmorModel armorModel = new(jsonString);
+                    ArmorModel armorModel = new(jObject);
                     armors.Add(armorModel);
                 }
-                catch { }
+                else
+                {
+                    Console.WriteLine($"Image for Id: {jObject["id"].Value<string>()} doesn't exist");
+                }
             }
             return armors;
         }
@@ -48,10 +49,8 @@ namespace Guide.Models
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        public ArmorModel(string jsonString)
+        public ArmorModel(JObject jObject)
         {
-            //define jobject
-            var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
             //check if has features
             int ifHasFeature = 0;
             if (jObject["infoBlocks"][4]
