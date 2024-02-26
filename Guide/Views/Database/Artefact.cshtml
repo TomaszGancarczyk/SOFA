@@ -7,39 +7,31 @@
     ViewData["Title"] = "Database";
 }
 
-<div class="text-center scrollable padding-top">
-    @{
-        <img src="@Model.Artefact.ImgSource" />
-        <h1>Id: @Model.Artefact.Id</h1>
-        <h3>@Model.Artefact.Name</h3>
-        <h5>Class: @Model.Artefact.Class</h5>
-        <h5>Weight: @Model.Artefact.Weight</h5>
-        <h5>Stats:</h5>
-        foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.Artefact.ArtefactStats)
+@{
+    <img src="@Model.Artefact.ImgSource" />
+    <h1>Id: @Model.Artefact.Id</h1>
+    <h3>@Model.Artefact.Name</h3>
+    <h5>Class: @Model.Artefact.Class</h5>
+    <h5>Weight: @Model.Artefact.Weight</h5>
+    <h5>Stats:</h5>
+    foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.Artefact.ArtefactStats)
+    {
+        string drawStat;
+        if (stat.Value.Keys.FirstOrDefault() == stat.Value.Values.FirstOrDefault())
         {
-            string drawStat;
-            if (stat.Value.Keys.FirstOrDefault() == stat.Value.Values.FirstOrDefault())
+            drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault().ToString()}";
+        }
+        else
+        {
+            drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()} - {stat.Value.Values.FirstOrDefault()}";
+        }
+        if (stat.Key == "Radiation" || stat.Key == "Psy-emissions" || stat.Key == "Biological infection" || stat.Key == "Frost" || stat.Key == "Temperature")
+        {
+            if (stat.Value.Keys.FirstOrDefault() > 0)
             {
-                drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault().ToString()}";
-            }
-            else
-            {
-                drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()} - {stat.Value.Values.FirstOrDefault()}";
-            }
-            if (stat.Key == "Radiation" || stat.Key == "Psy-emissions" || stat.Key == "Biological infection" || stat.Key == "Frost" || stat.Key == "Temperature")
-            {
-                if (stat.Value.Keys.FirstOrDefault() > 0)
-                {
-                    <p style="color: red">
-                        @drawStat
-                    </p>
-                }
-                else
-                {
-                    <p style="color: green">
-                        @drawStat
-                    </p>
-                }
+                <p style="color: red">
+                    @drawStat
+                </p>
             }
             else
             {
@@ -48,6 +40,12 @@
                 </p>
             }
         }
-        <p>@Model.Artefact.Description</p>
+        else
+        {
+            <p style="color: green">
+                @drawStat
+            </p>
+        }
     }
-</div>
+    <p>@Model.Artefact.Description</p>
+}

@@ -7,38 +7,37 @@
     ViewData["Title"] = "Database";
 }
 
-<div class="text-center scrollable padding-top">
-    @{
-        <img src="@Model.Weapon.ImgSource" />
-        <h1>Id: @Model.Weapon.Id</h1>
-        <h3>@Model.Weapon.Name</h3>
-        <h5>Rarity: @Model.Weapon.Rarity</h5>
-        <h5>Class: @Model.Weapon.Class</h5>
-        <h5>Weight: @Model.Weapon.Weight</h5>
-        if (Model.Weapon.Features != null && Model.Weapon.Features.Count > 0)
+@{
+    <img src="@Model.Weapon.ImgSource" />
+    <h1>Id: @Model.Weapon.Id</h1>
+    <h3>@Model.Weapon.Name</h3>
+    <h5>Rarity: @Model.Weapon.Rarity</h5>
+    <h5>Class: @Model.Weapon.Class</h5>
+    <h5>Weight: @Model.Weapon.Weight</h5>
+    if (Model.Weapon.Features != null && Model.Weapon.Features.Count > 0)
+    {
+        <h5>Features:</h5>
+        foreach (string feature in Model.Weapon.Features)
         {
-            <h5>Features:</h5>
-            foreach (string feature in Model.Weapon.Features)
-            {
-                <p>@feature</p>
-            }
-        }
-        <h5>Stats:</h5>
-        foreach (KeyValuePair<string, string> stat in Model.Weapon.Stats)
-        {
-            string drawStat = $"{stat.Key}: {stat.Value}";
-            <p>
-                @drawStat
-            </p>
-        }
-        <p>@Model.Weapon.Description</p>
-        if (Model.Weapon.DamageGraph != null)
-        {
-            <canvas id="weaponChart" style="max-width:500px;max-height:300px;"></canvas>
+            <p>@feature</p>
         }
     }
-</div>
+    <h5>Stats:</h5>
+    foreach (KeyValuePair<string, string> stat in Model.Weapon.Stats)
+    {
+        string drawStat = $"{stat.Key}: {stat.Value}";
+        <p>
+            @drawStat
+        </p>
+    }
+    <p>@Model.Weapon.Description</p>
+    if (Model.Weapon.DamageGraph != null)
+    {
+        <canvas id="weaponChart" style="max-width:500px;max-height:300px;"></canvas>
+    }
+}
 
+@* Damage graph *@
 <script>
     @{
         string xValues = "";
@@ -59,14 +58,13 @@
                 damageDecreaseEnd.ToString().Replace(",", "."),
                 maxDistance.ToString().Replace(",", ".")
             ];
-            // damageDecreaseStart = Model.CurrentWeapon.DamageGraph.DamageDecreaseStart.ToString().Replace(",", ".");
             xValues = $"[0, ";
             yValues = $"[{startDamage.ToString().Replace(",", ".")}, ";
             for (int i = 1; i <= Math.Truncate(maxDistance / 10); i++)
             {
                 if (damageDecreaseStart / 10 - i < 1 && damageDecreaseStart / 10 - i >= 0)
                 {
-                    if (damageDecreaseStart / 10  - i != 0)
+                    if (damageDecreaseStart / 10 - i != 0)
                     {
                         xValues += $"{10 * i}, ";
                         yValues += "NaN, ";
@@ -76,7 +74,7 @@
                 }
                 else if (damageDecreaseEnd / 10 - i < 1 && damageDecreaseEnd / 10 - i >= 0)
                 {
-                    if (damageDecreaseEnd / 10  - i != 0)
+                    if (damageDecreaseEnd / 10 - i != 0)
                     {
                         xValues += $"{10 * i}, ";
                         yValues += "NaN, ";

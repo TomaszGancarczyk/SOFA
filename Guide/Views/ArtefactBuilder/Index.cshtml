@@ -3,54 +3,52 @@
     ViewData["Title"] = "Artefact Builder";
 }
 
-<div class="text-center">
-    <div class="infection"></div>
-    <div class="container-container"></div>
+<div class="infection"></div>
+<div class="container-container"></div>
 
 
-    <div>
-        @foreach (ArtefactModel artefact in Model.Artefacts)
+<div>
+    @foreach (ArtefactModel artefact in Model.Artefacts)
+    {
+        <img src="@artefact.ImgSource" />
+        <h1>Id: @artefact.Id</h1>
+        <h3>@artefact.Name</h3>
+        <h5>Class: @artefact.Class</h5>
+        <h5>Weight: @artefact.Weight</h5>
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.ArtefactStats)
         {
-            <img src="@artefact.ImgSource" />
-            <h1>Id: @artefact.Id</h1>
-            <h3>@artefact.Name</h3>
-            <h5>Class: @artefact.Class</h5>
-            <h5>Weight: @artefact.Weight</h5>
-            <h5>Stats:</h5>
-            foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.ArtefactStats)
-            {
-                string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
-                <p>
-                    @drawStat
-                </p>
-            }
-            if (String.IsNullOrEmpty(artefact.Description))
-            {
-                <p>@artefact.Description</p>
-            }
+            string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
+            <p>
+                @drawStat
+            </p>
         }
-    </div>
-    <div>
-        @foreach (ContainerModel container in Model.Containers)
+        if (String.IsNullOrEmpty(artefact.Description))
         {
-            <img src="@container.ImgSource"/>
-            <h1>Id: @container.Id</h1>
-            <h3>@container.Name</h3>
-            <h5>Rarity: @container.Rarity</h5>
-            <h5>Class: @container.Class</h5>
-            <h5>Weight: @container.Weight</h5>
-            <h5>Stats:</h5>
-            foreach (KeyValuePair<string, string> stat in container.Stats)
-            {
-                string drawStat = $"{stat.Key}: {stat.Value}";
-                <p>
-                    @drawStat
-                </p>
-            }
-            if (String.IsNullOrEmpty(container.Description))
-            {
-                <p>@container.Description</p>
-            }
+            <p>@artefact.Description</p>
         }
-    </div>
+    }
+</div>
+<div>
+    @foreach (ContainerModel container in Model.Containers)
+    {
+        <img src="@container.ImgSource" />
+        <h1>Id: @container.Id</h1>
+        <h3>@container.Name</h3>
+        <h5>Rarity: @container.Rarity</h5>
+        <h5>Class: @container.Class</h5>
+        <h5>Weight: @container.Weight</h5>
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, string> stat in container.Stats)
+        {
+            string drawStat = $"{stat.Key}: {stat.Value}";
+            <p>
+                @drawStat
+            </p>
+        }
+        if (String.IsNullOrEmpty(container.Description))
+        {
+            <p>@container.Description</p>
+        }
+    }
 </div>

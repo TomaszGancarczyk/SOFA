@@ -7,22 +7,20 @@
     ViewData["Title"] = "Database";
 }
 
-<div class="text-center scrollable padding-top">
-    @{
-        <img src="@Model.Container.ImgSource" />
-        <h1>Id: @Model.Container.Id</h1>
-        <h3>@Model.Container.Name</h3>
-        <h5>Rarity: @Model.Container.Rarity</h5>
-        <h5>Class: @Model.Container.Class</h5>
-        <h5>Weight: @Model.Container.Weight</h5>
-        <h5>Stats:</h5>
-        foreach (KeyValuePair<string, string> stat in Model.Container.Stats)
-        {
-            string drawStat = $"{stat.Key}: {stat.Value}";
-            <p>
-                @drawStat
-            </p>
-        }
-        <p>@Model.Container.Description</p>
+@{
+    <img src="@Model.Container.ImgSource" />
+    <h1>Id: @Model.Container.Id</h1>
+    <h3>@Model.Container.Name</h3>
+    <h5>Rarity: @Model.Container.Rarity</h5>
+    <h5>Class: @Model.Container.Class</h5>
+    <h5>Weight: @Model.Container.Weight</h5>
+    <h5>Stats:</h5>
+    foreach (KeyValuePair<string, string> stat in Model.Container.Stats)
+    {
+        string drawStat = $"{stat.Key}: {stat.Value}";
+        <p>
+            @drawStat
+        </p>
     }
-</div>
+    <p>@Model.Container.Description</p>
+}

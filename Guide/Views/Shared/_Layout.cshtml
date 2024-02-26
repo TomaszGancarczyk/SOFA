@@ -14,36 +14,36 @@
     <header class="sticky navbar-layout">
         <p class="title">[SOFA] Guide</p>
     </header>
-    <div id="mainSidebar" class="sidebar-container sticky">
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Guide")'">
-            Guide
-        </button>
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Market")'">
-            Market
-        </button>
-        <button class="sidebar-button" data-sidebar-id="databaseSidebar" onclick="openSidebar(this)">
-            Database
-        </button>
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Barter")'">
-            Barter Tree
-        </button>
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "ArtefactBuilder")'">
-            Artefact Builder
-        </button>
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Map")'">
-            Map
-        </button>
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Quest")'">
-            Quest Tree
-        </button>
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Timer")'">
-            Timers
-        </button>
+    <div class="sticky" style="top: 80px;">
+        <div id="mainSidebar" class="sidebar-container sticky">
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Guide")'">
+                Guide
+            </button>
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Market")'">
+                Market
+            </button>
+            <button class="sidebar-button" data-sidebar-id="databaseSidebar" onclick="openSidebar(this)">
+                Database
+            </button>
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Barter")'">
+                Barter Tree
+            </button>
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "ArtefactBuilder")'">
+                Artefact Builder
+            </button>
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Map")'">
+                Map
+            </button>
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Quest")'">
+                Quest Tree
+            </button>
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Timer")'">
+                Timers
+            </button>
+        </div>
     </div>
-    <div>
-        @await Component.InvokeAsync("DatabaseSidebar")
-    </div>
-    <div class="text-center content-container">
+    @await Component.InvokeAsync("DatabaseSidebar")
+    <div class="text-center content-container padding-top">
         @RenderBody()
     </div>
 
