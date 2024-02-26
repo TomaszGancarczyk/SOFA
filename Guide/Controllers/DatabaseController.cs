@@ -6,31 +6,15 @@ using System.Net.Mail;
 
 namespace Database.Controllers
 {
-    public class DatabaseController : Controller
+    public class DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets) : Controller
     {
-        private readonly ILogger<DatabaseController> _logger;
-        private List<ArtefactModel> _artefacts;
-        private List<ContainerModel> _containers;
-        private List<ArmorModel> _armors;
-        private List<WeaponModel> _weapons;
-        private List<AttachmentModel> _attachments;
-        private List<BulletModel> _bullets;
-        public DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets)
-        {
-            _logger = logger;
-            _artefacts = artefacts;
-            _containers = containers;
-            _armors = armor;
-            _weapons = weapons;
-            _attachments = attachments;
-            _bullets = bullets;
-        }
-
-        public IActionResult Index()
-        {
-            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons, _attachments, _bullets);
-            return View(viewModel);
-        }
+        private readonly ILogger<DatabaseController> _logger = logger;
+        private readonly List<ArtefactModel> _artefacts = artefacts;
+        private readonly List<ContainerModel> _containers = containers;
+        private readonly List<ArmorModel> _armors = armor;
+        private readonly List<WeaponModel> _weapons = weapons;
+        private readonly List<AttachmentModel> _attachments = attachments;
+        private readonly List<BulletModel> _bullets = bullets;
         public IActionResult Armor(string armorId)
         {
             var viewModel = new ArmorViewModel(armorId, _armors);

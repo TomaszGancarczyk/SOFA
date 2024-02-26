@@ -21,7 +21,7 @@
         <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Market")'">
             Market
         </button>
-        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database")'">
+        <button class="sidebar-button" data-sidebar-id="databaseSidebar" onclick="openSidebar(this)">
             Database
         </button>
         <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Barter")'">
@@ -39,6 +39,9 @@
         <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Timer")'">
             Timers
         </button>
+    </div>
+    <div>
+        @await Component.InvokeAsync("DatabaseSidebar")
     </div>
     <div class="text-center content-container">
         @RenderBody()

@@ -14,30 +14,23 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            List<BulletModel> bullets = new BulletModel().GetAllBullets();
+            List<BulletModel> bullets = new BulletModel().GetAllBullets().OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton<List<BulletModel>>(bullets);
 
-            List<AttachmentModel> attachments = new AttachmentModel().GetAllAttachments();
+            List<AttachmentModel> attachments = new AttachmentModel().GetAllAttachments().OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton<List<AttachmentModel>>(attachments);
 
-            List<WeaponModel> weapons = new WeaponModel().GetAllWeapons();
+            List<WeaponModel> weapons = new WeaponModel().GetAllWeapons().OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton<List<WeaponModel>>(weapons);
 
-            List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts();
+            List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts().OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton<List<ArtefactModel>>(artefacts);
 
-            List<ContainerModel> containers = new ContainerModel().GetAllContainers();
+            List<ContainerModel> containers = new ContainerModel().GetAllContainers().OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton<List<ContainerModel>>(containers);
 
-            List<ArmorModel> armors = new ArmorModel().GetAllArmors();
+            List<ArmorModel> armors = new ArmorModel().GetAllArmors().OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton<List<ArmorModel>>(armors);
-
-            List<IItem> allItems = [];
-            allItems.Concat(artefacts)
-                .Concat(containers)
-                .Concat(armors)
-                .ToList();
-            builder.Services.AddSingleton<List<IItem>>(allItems);
 
             var app = builder.Build();
 
