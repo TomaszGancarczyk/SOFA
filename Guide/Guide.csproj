@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Models\Icons\**" />
+    <Compile Remove="Resources\**" />
     <Content Remove="Models\Icons\**" />
+    <Content Remove="Resources\**" />
     <EmbeddedResource Remove="Models\Icons\**" />
+    <EmbeddedResource Remove="Resources\**" />
     <None Remove="Models\Icons\**" />
+    <None Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="wwwroot\css\infections\" />
   </ItemGroup>
 

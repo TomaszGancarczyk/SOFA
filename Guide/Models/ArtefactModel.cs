@@ -4,6 +4,7 @@ using System.Net;
 using System.Collections.Generic;
 using System;
 using Microsoft.IdentityModel.Tokens;
+using Guide.Services;
 
 namespace Guide.Models
 {
@@ -24,12 +25,13 @@ namespace Guide.Models
 
         public List<ArtefactModel> CreateArtefactsCategory(string category)
         {
+            string databasePath = new Shared().GetDatabasePath();
             List<ArtefactModel> artefacts = [];
-            foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\artefact\\{category}", "*.*", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\artefact\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\artefact\\{category}\\{jObject["id"].Value<string>()}.png");
+                bool ifImageExists = File.Exists($"{databasePath}icons\\artefact\\{category}\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
                 {
                     ArtefactModel artefactsModel = new(jObject);

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Guide.Services;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
@@ -25,12 +26,13 @@ namespace Guide.Models
 
         public List<ArmorModel> CreateArmorCategory(string category)
         {
+            string databasePath = new Shared().GetDatabasePath();
             List<ArmorModel> armors = [];
-            foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\armor\\{category}\\{jObject["id"].Value<string>()}.png");
+                bool ifImageExists = File.Exists($"{databasePath}icons\\armor\\{category}\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
                 {
                     ArmorModel armorModel = new(jObject);
@@ -105,7 +107,7 @@ namespace Guide.Models
                 .Value<JArray>("elements");
             foreach (var property in jsonProperties)
             {
-                string propertyName = "";
+                string propertyName;
                 int propertyValue = 0;
                 if (property.Value<string>("type") == "text")
                 {

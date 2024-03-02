@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Channels;
 using Microsoft.IdentityModel.Tokens;
+using Guide.Services;
 
 namespace Guide.Models
 {
@@ -24,12 +25,13 @@ namespace Guide.Models
         }
         public List<AttachmentModel> CreateAttachmentCategory(string category)
         {
+            string databasePath = new Shared().GetDatabasePath();
             List<AttachmentModel> attachments = [];
-            foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\attachment\\{category}", "*.*", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\attachment\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\attachment\\{category}\\{jObject["id"].Value<string>()}.png");
+                bool ifImageExists = File.Exists($"{databasePath}icons\\attachment\\{category}\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
                 {
                     AttachmentModel attachmentModel = new(jObject);

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Channels;
 using Microsoft.IdentityModel.Tokens;
+using Guide.Services;
 
 namespace Guide.Models
 {
@@ -10,14 +11,15 @@ namespace Guide.Models
     {
         public List<BulletModel> GetAllBullets()
         {
+            string databasePath = new Shared().GetDatabasePath();
             List<string> bulletPaths = [];
             List<BulletModel> bullets = [];
-            foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\bullet", "*.*", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\bullet", "*.*", SearchOption.TopDirectoryOnly))
             {
                 bulletPaths.Add(file);
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\bullet\\{jObject["id"].Value<string>()}.png");
+                bool ifImageExists = File.Exists($"{databasePath}icons\\bullet\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
                 {
                     BulletModel bulletsModel = new(jObject);

@@ -22,13 +22,16 @@
             <p>@feature</p>
         }
     }
-    <h5>Stats:</h5>
-    foreach (KeyValuePair<string, string> stat in Model.Weapon.Stats)
+    if (Model.Weapon.Stats != null)
     {
-        string drawStat = $"{stat.Key}: {stat.Value}";
-        <p>
-            @drawStat
-        </p>
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, string> stat in Model.Weapon.Stats)
+        {
+            string drawStat = $"{stat.Key}: {stat.Value}";
+            <p>
+                @drawStat
+            </p>
+        }
     }
     <p>@Model.Weapon.Description</p>
     if (Model.Weapon.DamageGraph != null)

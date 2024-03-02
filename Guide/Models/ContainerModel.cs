@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Channels;
+using Guide.Services;
 
 namespace Guide.Models
 {
@@ -9,14 +10,15 @@ namespace Guide.Models
     {
         public List<ContainerModel> GetAllContainers()
         {
+            string databasePath = new Shared().GetDatabasePath();
             List<string> containerPaths = [];
             List<ContainerModel> containers = [];
-            foreach (string file in Directory.EnumerateFiles($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\items\\containers", "*.*", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\containers", "*.*", SearchOption.TopDirectoryOnly))
             {
                 containerPaths.Add(file);
                 string jsonString = new Json().Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\icons\\containers\\{jObject["id"].Value<string>()}.png");
+                bool ifImageExists = File.Exists($"{databasePath}icons\\containers\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
                 {
                     ContainerModel containerModel = new(jObject);
