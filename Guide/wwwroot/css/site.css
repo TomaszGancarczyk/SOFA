@@ -32,6 +32,8 @@ body {
     margin-left: 200px;
     width: calc(100vw - 220px);
     height: calc(100% - 200px);
+    position: absolute;
+    z-index: -1;
 }
 
 .title {

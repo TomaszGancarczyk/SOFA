@@ -26,11 +26,11 @@ namespace Guide.Models
 
         public List<ArmorModel> CreateArmorCategory(string category)
         {
-            string databasePath = new Shared().GetDatabasePath();
+            string databasePath = Shared.GetDatabasePath();
             List<ArmorModel> armors = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
-                string jsonString = new Json().Reader(file);
+                string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\armor\\{category}\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
@@ -184,9 +184,5 @@ namespace Guide.Models
         public string CompatibleContainers { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
-        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> SuitableFor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> AttachmentAmmoType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

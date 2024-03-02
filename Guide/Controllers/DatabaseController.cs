@@ -6,9 +6,8 @@ using System.Net.Mail;
 
 namespace Database.Controllers
 {
-    public class DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines) : Controller
+    public class DatabaseController(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines) : Controller
     {
-        private readonly ILogger<DatabaseController> _logger = logger;
         private readonly List<ArtefactModel> _artefacts = artefacts;
         private readonly List<ContainerModel> _containers = containers;
         private readonly List<ArmorModel> _armors = armor;

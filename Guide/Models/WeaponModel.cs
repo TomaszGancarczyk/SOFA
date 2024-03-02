@@ -28,11 +28,11 @@ namespace Guide.Models
 
         public List<WeaponModel> CreateWeaponCategory(string category)
         {
-            string databasePath = new Shared().GetDatabasePath();
+            string databasePath = Shared.GetDatabasePath();
             List<WeaponModel> weapons = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\weapon\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
-                string jsonString = new Json().Reader(file);
+                string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\weapon\\{category}\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
@@ -163,9 +163,9 @@ namespace Guide.Models
                 //features
                 var jsonFeatures = jObject["infoBlocks"][5 - ifHasType]
                      .Value<JArray>("elements");
-                if (jsonFeatures.Count() > 0)
+                if (jsonFeatures.Count > 0)
                 {
-                    foreach (JObject feature in jsonFeatures)
+                    foreach (JToken feature in jsonFeatures)
                     {
                         if (Class != "Other Weapons")
                         {
@@ -207,7 +207,7 @@ namespace Guide.Models
                 }
                 var jsonOtherFeatures = jObject["infoBlocks"][4]
                              .Value<JArray>("elements");
-                if (jsonOtherFeatures.Count() > 0)
+                if (jsonOtherFeatures.Count > 0)
                 {
                     foreach (var otherFeature in jsonOtherFeatures)
                     {
@@ -264,10 +264,6 @@ namespace Guide.Models
                                      .Value<JArray>("elements");
                 foreach (var stat in jsonStats)
                 {
-                    if (Name == "SN-2 Leg")
-                    {
-                        var aosga = jObject["infoBlocks"];
-                    }
                     stats.Add(stat
                     .Value<JObject>("name")
                         .Value<JObject>("lines")
@@ -304,28 +300,13 @@ namespace Guide.Models
         public DamageGraph DamageGraph { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
-        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> SuitableFor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> AttachmentAmmoType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
-    public class DamageGraph
+    public class DamageGraph(double startDamage, double damageDecreaseStart, double endDamage, double damageDecreaseEnd, double maxDistance)
     {
-        public DamageGraph(double startDamage, double damageDecreaseStart, double endDamage, double damageDecreaseEnd, double maxDistance)
-        {
-            StartDamage = startDamage;
-            DamageDecreaseStart = damageDecreaseStart;
-            EndDamage = endDamage;
-            DamageDecreaseEnd = damageDecreaseEnd;
-            MaxDistance = maxDistance;
-        }
-        public double StartDamage { get; set; }
-        public double DamageDecreaseStart { get; set; }
-        public double EndDamage { get; set; }
-        public double DamageDecreaseEnd { get; set; }
-        public double MaxDistance { get; set; }
+        public double StartDamage { get; set; } = startDamage;
+        public double DamageDecreaseStart { get; set; } = damageDecreaseStart;
+        public double EndDamage { get; set; } = endDamage;
+        public double DamageDecreaseEnd { get; set; } = damageDecreaseEnd;
+        public double MaxDistance { get; set; } = maxDistance;
     }
 }

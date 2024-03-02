@@ -10,13 +10,13 @@ namespace Guide.Models
     {
         public List<ContainerModel> GetAllContainers()
         {
-            string databasePath = new Shared().GetDatabasePath();
+            string databasePath = Shared.GetDatabasePath();
             List<string> containerPaths = [];
             List<ContainerModel> containers = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\containers", "*.*", SearchOption.TopDirectoryOnly))
             {
                 containerPaths.Add(file);
-                string jsonString = new Json().Reader(file);
+                string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\containers\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
@@ -95,15 +95,6 @@ namespace Guide.Models
         public Dictionary<string, string> Stats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
-        public List<string> Features { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, int> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> SuitableFor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        Dictionary<string, Dictionary<double, double>> IItem.PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> AttachmentAmmoType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.

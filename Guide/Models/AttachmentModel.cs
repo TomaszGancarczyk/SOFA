@@ -25,11 +25,11 @@ namespace Guide.Models
         }
         public List<AttachmentModel> CreateAttachmentCategory(string category)
         {
-            string databasePath = new Shared().GetDatabasePath();
+            string databasePath = Shared.GetDatabasePath();
             List<AttachmentModel> attachments = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\attachment\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
-                string jsonString = new Json().Reader(file);
+                string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\attachment\\{category}\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
@@ -210,11 +210,6 @@ namespace Guide.Models
         public string Description { get; set; }
         public string ImgSource { get; set; }
         public List<string> Features { get; set; }
-        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> SuitableFor { get; set; }
         public List<string> AttachmentAmmoType { get; set; }
         public double StartDamage { get; set; }

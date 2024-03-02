@@ -25,11 +25,11 @@ namespace Guide.Models
 
         public List<ArtefactModel> CreateArtefactsCategory(string category)
         {
-            string databasePath = new Shared().GetDatabasePath();
+            string databasePath = Shared.GetDatabasePath();
             List<ArtefactModel> artefacts = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\artefact\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
-                string jsonString = new Json().Reader(file);
+                string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\artefact\\{category}\\{jObject["id"].Value<string>()}.png");
                 if (ifImageExists)
@@ -114,8 +114,6 @@ namespace Guide.Models
             else Description = "";
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
-
-            var temp = jObject["infoBlocks"];
         }
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -129,13 +127,5 @@ namespace Guide.Models
         public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
-        public string Rarity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> Features { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, int> Properties { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Dictionary<string, string> Stats { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleBackpacks { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CompatibleContainers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> SuitableFor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> AttachmentAmmoType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
