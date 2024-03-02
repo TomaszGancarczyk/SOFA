@@ -1,0 +1,38 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model MedicineViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+@{
+    <img src="@Model.Medicine.ImgSource" />
+    <h1>Id: @Model.Medicine.Id</h1>
+    <h3>@Model.Medicine.Name</h3>
+    <h5>Class: @Model.Medicine.Class</h5>
+    <h5>Weight: @Model.Medicine.Weight</h5>
+    if (Model.Medicine.Features.Count() > 0)
+    {
+        <h5>Features:</h5>
+        foreach (string feature in Model.Medicine.Features)
+        {
+            <p>
+                @feature
+            </p>
+        }
+    }
+    <h5>Stats:</h5>
+    foreach (KeyValuePair<string, string> stat in Model.Medicine.Stats)
+    {
+        string drawStat = $"{stat.Key}: {stat.Value}";
+        <p>
+            @drawStat
+        </p>
+    }
+    if (Model.Medicine.Description != null)
+    {
+        <p>@Model.Medicine.Description</p>
+    }
+}

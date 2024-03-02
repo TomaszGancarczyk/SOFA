@@ -1,6 +1,6 @@
 ﻿namespace Guide.Models.ViewModels
 {
-    public class DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades)
+    public class DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines)
     {
         public List<ArtefactModel> Artefacts { get; set; } = artefacts;
         public List<ContainerModel> Containers { get; set; } = containers;
@@ -9,6 +9,7 @@
         public List<AttachmentModel> Attachments { get; set; } = attachments;
         public List<BulletModel> Bullets { get; set; } = bullets;
         public List<GrenadeModel> Grenades { get; set; } = grenades;
+        public List<MedicineModel > Medicines { get; set; } = medicines;
     }
     public class WeaponViewModel(string weaponId, List<WeaponModel> weapons)
     {
@@ -37,5 +38,9 @@
     public class GrenadeViewModel(string grenadeId, List<GrenadeModel> grenades)
     {
         public GrenadeModel Grenade { get; set; } = grenades.Where(grenade => grenade.Id == grenadeId).FirstOrDefault();
+    }
+    public class MedicineViewModel(string medicineId, List<MedicineModel> medicines)
+    {
+        public MedicineModel Medicine { get; set; } = medicines.Where(medicine => medicine.Id == medicineId).FirstOrDefault();
     }
 }

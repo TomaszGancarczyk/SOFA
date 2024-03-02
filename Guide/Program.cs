@@ -14,6 +14,9 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            List<MedicineModel> medicines = new MedicineModel().GetAllMedicines().OrderBy(p => p.Name).ToList();
+            builder.Services.AddSingleton<List<MedicineModel>>(medicines);
+
             List<GrenadeModel> grenades = new GrenadeModel().GetAllGrenades().OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton<List<GrenadeModel>>(grenades);
 

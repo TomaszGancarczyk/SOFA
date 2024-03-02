@@ -70,6 +70,7 @@
         closeSidebar("attachmentSidebar")
         closeSidebar("bulletSidebar")
         closeSidebar("grenadeSidebar")
+        closeSidebar("medicineSidebar")
     }
     function closeSecondarySidebars() {
         closeSidebar("clothingSidebar")
@@ -126,6 +127,9 @@
         </button>
         <button class="sidebar-button" data-sidebar-id="grenadeSidebar" onclick="openSidebar(this)">
             Grenades
+        </button>
+        <button class="sidebar-button" data-sidebar-id="medicineSidebar" onclick="openSidebar(this)">
+            Medicines
         </button>
     </div>
 
@@ -316,6 +320,19 @@
         {
             <button class="sidebar-button" onclick="location.href='@Url.Action("Grenade", "Database", new {grenadeId = grenade.Id})'">
                 @grenade.Name
+            </button>
+        }
+    </div>
+
+    @* medicine sidebar *@
+    <div id="medicineSidebar" class="second-sidebar sidebar-container sticky">
+        <button class="sidebar-button" onclick="closeMainSidebars()">
+            <--
+        </button>
+        @foreach (MedicineModel medicine in Model.Medicines)
+        {
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Medicine", "Database", new {medicineId = medicine.Id})'">
+                @medicine.Name
             </button>
         }
     </div>
