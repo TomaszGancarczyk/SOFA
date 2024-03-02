@@ -1,7 +1,6 @@
 ﻿@using Guide.Models
 @using System.Net
 @using Guide.Models.ViewModels
-@using Guide.ViewComponents
 @model DatabaseViewModel
 
 @{
@@ -70,6 +69,7 @@
         closeSidebar("containerSidebar")
         closeSidebar("attachmentSidebar")
         closeSidebar("bulletSidebar")
+        closeSidebar("grenadeSidebar")
     }
     function closeSecondarySidebars() {
         closeSidebar("clothingSidebar")
@@ -123,6 +123,9 @@
         </button>
         <button class="sidebar-button" data-sidebar-id="bulletSidebar" onclick="openSidebar(this)">
             Bullets
+        </button>
+        <button class="sidebar-button" data-sidebar-id="grenadeSidebar" onclick="openSidebar(this)">
+            Grenades
         </button>
     </div>
 
@@ -300,6 +303,19 @@
         {
             <button class="sidebar-button" onclick="location.href='@Url.Action("Bullet", "Database", new {bulletId = bullet.Id})'">
                 @bullet.Name
+            </button>
+        }
+    </div>
+
+    @* grenade sidebar *@
+    <div id="grenadeSidebar" class="second-sidebar sidebar-container sticky">
+        <button class="sidebar-button" onclick="closeMainSidebars()">
+            <--
+        </button>
+        @foreach (GrenadeModel grenade in Model.Grenades)
+        {
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Grenade", "Database", new {grenadeId = grenade.Id})'">
+                @grenade.Name
             </button>
         }
     </div>

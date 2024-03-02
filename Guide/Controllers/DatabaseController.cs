@@ -6,7 +6,7 @@ using System.Net.Mail;
 
 namespace Database.Controllers
 {
-    public class DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets) : Controller
+    public class DatabaseController(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades) : Controller
     {
         private readonly ILogger<DatabaseController> _logger = logger;
         private readonly List<ArtefactModel> _artefacts = artefacts;
@@ -15,6 +15,7 @@ namespace Database.Controllers
         private readonly List<WeaponModel> _weapons = weapons;
         private readonly List<AttachmentModel> _attachments = attachments;
         private readonly List<BulletModel> _bullets = bullets;
+        private readonly List<GrenadeModel> _grenades = grenades;
         public IActionResult Armor(string armorId)
         {
             var viewModel = new ArmorViewModel(armorId, _armors);
@@ -43,6 +44,11 @@ namespace Database.Controllers
         public IActionResult Bullet(string bulletId)
         {
             var viewModel = new BulletViewModel(bulletId, _bullets);
+            return View(viewModel);
+        }
+        public IActionResult Grenade(string grenadeId)
+        {
+            var viewModel = new GrenadeViewModel(grenadeId, _grenades);
             return View(viewModel);
         }
     }
