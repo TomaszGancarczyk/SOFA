@@ -18,40 +18,74 @@ namespace Guide
 
             List<Item> allItems = new List<Item>();
 
+            List<OtherModel> others = new OtherModel().GetAllOthers().OrderBy(p => p.Name).ToList();
+            allItems.AddRange(Item.IItemToItem(others));
+            builder.Services.AddSingleton(others);
+
             List<MedicineModel> medicines = new MedicineModel().GetAllMedicines().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(medicines));
-            builder.Services.AddSingleton<List<MedicineModel>>(medicines);
+            builder.Services.AddSingleton(medicines);
 
             List<GrenadeModel> grenades = new GrenadeModel().GetAllGrenades().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(grenades));
-            builder.Services.AddSingleton<List<GrenadeModel>>(grenades);
+            builder.Services.AddSingleton(grenades);
 
             List<BulletModel> bullets = new BulletModel().GetAllBullets().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(bullets));
-            builder.Services.AddSingleton<List<BulletModel>>(bullets);
+            builder.Services.AddSingleton(bullets);
 
             List<AttachmentModel> attachments = new AttachmentModel().GetAllAttachments().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(attachments));
-            builder.Services.AddSingleton<List<AttachmentModel>>(attachments);
+            builder.Services.AddSingleton(attachments);
 
             List<WeaponModel> weapons = new WeaponModel().GetAllWeapons().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(weapons));
-            builder.Services.AddSingleton<List<WeaponModel>>(weapons);
+            builder.Services.AddSingleton(weapons);
 
             List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(artefacts));
-            builder.Services.AddSingleton<List<ArtefactModel>>(artefacts);
+            builder.Services.AddSingleton(artefacts);
 
             List<ContainerModel> containers = new ContainerModel().GetAllContainers().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(containers));
-            builder.Services.AddSingleton<List<ContainerModel>>(containers);
+            builder.Services.AddSingleton(containers);
 
             List<ArmorModel> armors = new ArmorModel().GetAllArmors().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(armors));
-            builder.Services.AddSingleton<List<ArmorModel>>(armors);
+            builder.Services.AddSingleton(armors);
 
             builder.Services.AddSingleton<IEnumerable<Item>>(allItems);
 
+
+            //check if all classes are supported
+            List<string> classes = [];
+            List<string> databaseClasses = [
+                "Clothing", "Combat", "Combo", "Scientist",
+                "Backpacks and Containers",
+                "Biochemical", "Electrophysical", "Gravitational", "Thermal",
+                "Assault Rifles", "Devices", "Other Weapons", "Machine Guns", "Melee Weapons", "Pistols", "Shotguns and Rifles", "Sniper Rifles", "Submachine Guns",
+                "Muzzles and Silencers", "Sights", "Hanguards and Brackets", "Magazines", "Other Attachments", "Pistol Grips",
+                "Medicine",
+                "Grenades",
+                "Rounds",
+                "Skins and Paint",
+                "Barter",
+                "Other"
+                ];
+            foreach (var item in allItems)
+            {
+                if (!classes.Contains(item.Class) && !databaseClasses.Contains(item.Class)){
+                    classes.Add(item.Class);
+                    Console.WriteLine("Class: "+item.Class);
+                }
+            }
+            if (classes.Count > 0)
+            {
+                throw new Exception("Class is not supported");
+            }
+
+
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

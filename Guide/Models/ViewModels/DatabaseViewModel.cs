@@ -1,6 +1,9 @@
-﻿namespace Guide.Models.ViewModels
+﻿using Guide.Models;
+using Newtonsoft.Json.Linq;
+
+namespace Guide.Models.ViewModels
 {
-    public class DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines)
+    public class DatabaseViewModel(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armors, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines, List<OtherModel> others)
     {
         public List<ArtefactModel> Artefacts { get; set; } = artefacts;
         public List<ContainerModel> Containers { get; set; } = containers;
@@ -9,7 +12,10 @@
         public List<AttachmentModel> Attachments { get; set; } = attachments;
         public List<BulletModel> Bullets { get; set; } = bullets;
         public List<GrenadeModel> Grenades { get; set; } = grenades;
-        public List<MedicineModel > Medicines { get; set; } = medicines;
+        public List<MedicineModel> Medicines { get; set; } = medicines;
+        public List<OtherModel> Barters { get; set; } = others.Where(p => p.Class == "Barter").DistinctBy(p => p.Name).ToList();
+        public List<OtherModel> Paints { get; set; } = others.Where(p => p.Class == "Skins and Paint").DistinctBy(p => p.Name).ToList();
+        public List<OtherModel> Others { get; set; } = others.Where(p => p.Class == "Other").Where(p => p.Rarity == null || p.Obtained == null || p.Description == null).DistinctBy(p => p.Name).ToList();
     }
     public class WeaponViewModel(string weaponId, List<WeaponModel> weapons)
     {
@@ -42,5 +48,17 @@
     public class MedicineViewModel(string medicineId, List<MedicineModel> medicines)
     {
         public MedicineModel Medicine { get; set; } = medicines.Where(medicine => medicine.Id == medicineId).FirstOrDefault();
+    }
+    public class BarterViewModel(string barterId, List<OtherModel> barters)
+    {
+        public OtherModel Barter { get; set; } = barters.Where(barter => barter.Id == barterId).FirstOrDefault();
+    }
+    public class PaintViewModel(string paintId, List<OtherModel> paints)
+    {
+        public OtherModel Paint { get; set; } = paints.Where(paint => paint.Id == paintId).FirstOrDefault();
+    }
+    public class OtherViewModel(string otherId, List<OtherModel> others)
+    {
+        public OtherModel Other { get; set; } = others.Where(other => other.Id == otherId).FirstOrDefault();
     }
 }

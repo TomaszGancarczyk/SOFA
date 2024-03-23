@@ -12,11 +12,9 @@ namespace Guide.Models
         public List<BulletModel> GetAllBullets()
         {
             string databasePath = Shared.GetDatabasePath();
-            List<string> bulletPaths = [];
             List<BulletModel> bullets = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\bullet", "*.*", SearchOption.TopDirectoryOnly))
             {
-                bulletPaths.Add(file);
                 string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\bullet\\{jObject["id"].Value<string>()}.png");

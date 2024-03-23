@@ -11,11 +11,9 @@ namespace Guide.Models
         public List<ContainerModel> GetAllContainers()
         {
             string databasePath = Shared.GetDatabasePath();
-            List<string> containerPaths = [];
             List<ContainerModel> containers = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\containers", "*.*", SearchOption.TopDirectoryOnly))
             {
-                containerPaths.Add(file);
                 string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\containers\\{jObject["id"].Value<string>()}.png");

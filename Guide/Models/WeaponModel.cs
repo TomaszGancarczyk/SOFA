@@ -23,6 +23,10 @@ namespace Guide.Models
                     .. CreateWeaponCategory("sniper_rifle"),
                     .. CreateWeaponCategory("submachine_gun"),
                 ];
+            foreach (string file in Directory.EnumerateFiles($"{Shared.GetDatabasePath()}items\\other\\device", "*.*", SearchOption.TopDirectoryOnly))
+            {
+                AllWeapons.Add(new WeaponModel(Shared.Reader(file)));
+            }
             return AllWeapons;
         }
 
@@ -151,14 +155,14 @@ namespace Guide.Models
                             .Value<string>("en"));
                 }
             }
-            if (!isDevice)
+            if (!isDevice && Class != "Other")
                 Stats = stats;
             else
             {
                 Features = features;
             }
-                //damage modifier
-                if (!isDevice)
+            //damage modifier
+            if (!isDevice && Class != "Other")
             {
                 //features
                 var jsonFeatures = jObject["infoBlocks"][5 - ifHasType]
@@ -248,7 +252,7 @@ namespace Guide.Models
                     );
                 }
             }
-            else
+            else if (isDevice)
             {
                 //stats
                 int shortStatsFix = 0;
@@ -274,6 +278,7 @@ namespace Guide.Models
                         .Value<string>("en"));
                 }
             }
+            else Class = "Devices";
             //description
             if (jObject["infoBlocks"][jObject["infoBlocks"].Count() - 1].Value<string>("type") == "text")
             {

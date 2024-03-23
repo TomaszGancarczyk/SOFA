@@ -1,0 +1,20 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model BarterViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+@{
+    <img src="@Model.Barter.ImgSource" />
+    <h1>Id: @Model.Barter.Id</h1>
+    <h3>@Model.Barter.Name</h3>
+    <h5>Class: @Model.Barter.Class</h5>
+    <h5>Weight: @Model.Barter.Weight</h5>
+    if (Model.Barter.Description != null)
+    {
+        <p>@Model.Barter.Description</p>
+    }
+}

@@ -1,0 +1,20 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model PaintViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+@{
+    <img src="@Model.Paint.ImgSource" />
+    <h1>Id: @Model.Paint.Id</h1>
+    <h3>@Model.Paint.Name</h3>
+    <h5>Class: @Model.Paint.Class</h5>
+    <h5>Weight: @Model.Paint.Weight</h5>
+    if (Model.Paint.Description != null)
+    {
+        <p>@Model.Paint.Description</p>
+    }
+}

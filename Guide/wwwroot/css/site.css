@@ -29,9 +29,10 @@ body {
 }
 
 .content-container {
-    margin-left: 200px;
-    width: calc(100vw - 220px);
-    height: calc(100% - 200px);
+    overflow: overlay;
+    right: 0;
+    width: calc(100vw - 200px);
+    height: calc(100% - 80px);
     position: absolute;
     z-index: -1;
 }
@@ -120,14 +121,16 @@ body {
 
 /* Database View */
 
-.second-sidebar {
-    width: 0;
-    outline: none;
+.sidebar-body {
+    display: none;
+    width: 200px;
+    outline: rgb(20, 20, 20) solid 2px;
     z-index: 2;
-    color: white;
-    padding: 0;
+    color: rgb(155, 155, 155);
+    padding: 5px 2px 25px;
     position: relative;
-    left: -2000px;
+    left: 0px;
+    top: 0px;
 }
 
 /* Artefact Builder View */

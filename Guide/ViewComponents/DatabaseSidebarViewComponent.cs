@@ -8,9 +8,8 @@ using System.Net.Mail;
 
 namespace Guide.ViewComponents
 {
-    public class DatabaseSidebar(ILogger<DatabaseController> logger, List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines) : ViewComponent
+    public class DatabaseSidebar(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines, List<OtherModel> others) : ViewComponent
     {
-        private readonly ILogger<DatabaseController> _logger = logger;
         private readonly List<ArtefactModel> _artefacts = artefacts;
         private readonly List<ContainerModel> _containers = containers;
         private readonly List<ArmorModel> _armors = armor;
@@ -19,10 +18,11 @@ namespace Guide.ViewComponents
         private readonly List<BulletModel> _bullets = bullets;
         private readonly List<GrenadeModel> _grenades = grenades;
         private readonly List<MedicineModel> _medicines = medicines;
+        private readonly List<OtherModel> _other = others;
 
         public IViewComponentResult Invoke()
         {
-            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons, _attachments, _bullets, _grenades, _medicines);
+            var viewModel = new DatabaseViewModel(_artefacts, _containers, _armors, _weapons, _attachments, _bullets, _grenades, _medicines, _other);
             return View(viewModel);
         }
     }

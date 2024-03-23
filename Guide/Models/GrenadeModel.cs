@@ -11,11 +11,9 @@ namespace Guide.Models
         public List<GrenadeModel> GetAllGrenades()
         {
             string databasePath = Shared.GetDatabasePath();
-            List<string> grenadePaths = [];
             List<GrenadeModel> grenades = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\grenade", "*.*", SearchOption.TopDirectoryOnly))
             {
-                grenadePaths.Add(file);
                 string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\grenade\\{jObject["id"].Value<string>()}.png");

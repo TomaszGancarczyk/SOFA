@@ -6,7 +6,7 @@ using System.Net.Mail;
 
 namespace Database.Controllers
 {
-    public class DatabaseController(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines) : Controller
+    public class DatabaseController(List<ArtefactModel> artefacts, List<ContainerModel> containers, List<ArmorModel> armor, List<WeaponModel> weapons, List<AttachmentModel> attachments, List<BulletModel> bullets, List<GrenadeModel> grenades, List<MedicineModel> medicines, List<OtherModel> others) : Controller
     {
         private readonly List<ArtefactModel> _artefacts = artefacts;
         private readonly List<ContainerModel> _containers = containers;
@@ -16,6 +16,9 @@ namespace Database.Controllers
         private readonly List<BulletModel> _bullets = bullets;
         private readonly List<GrenadeModel> _grenades = grenades;
         private readonly List<MedicineModel> _medicines = medicines;
+        private readonly List<OtherModel> _barters = others.Where(p => p.Class == "Barter").DistinctBy(p => p.Name).ToList();
+        private readonly List<OtherModel> _paints = others.Where(p => p.Class == "Skins and Paint").DistinctBy(p => p.Name).ToList();
+        private readonly List<OtherModel> _others = others.Where(p => p.Class == "Other").Where(p => p.Rarity == null || p.Obtained == null || p.Description == null).DistinctBy(p => p.Name).ToList();
         public IActionResult Armor(string armorId)
         {
             var viewModel = new ArmorViewModel(armorId, _armors);
@@ -54,6 +57,21 @@ namespace Database.Controllers
         public IActionResult Medicine(string medicineId)
         {
             var viewModel = new MedicineViewModel(medicineId, _medicines);
+            return View(viewModel);
+        }
+        public IActionResult Barter(string barterId)
+        {
+            var viewModel = new BarterViewModel(barterId, _barters);
+            return View(viewModel);
+        }
+        public IActionResult Paint(string paintid)
+        {
+            var viewModel = new PaintViewModel(paintid, _paints);
+            return View(viewModel);
+        }
+        public IActionResult Other(string otherId)
+        {
+            var viewModel = new OtherViewModel(otherId, _others);
             return View(viewModel);
         }
     }

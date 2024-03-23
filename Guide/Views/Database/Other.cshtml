@@ -1,0 +1,20 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@model OtherViewModel
+
+@{
+    ViewData["Title"] = "Database";
+}
+
+@{
+    <img src="@Model.Other.ImgSource" />
+    <h1>Id: @Model.Other.Id</h1>
+    <h3>@Model.Other.Name</h3>
+    <h5>Class: @Model.Other.Class</h5>
+    <h5>Weight: @Model.Other.Weight</h5>
+    if (Model.Other.Description != null)
+    {
+        <p>@Model.Other.Description</p>
+    }
+}

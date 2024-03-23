@@ -13,53 +13,30 @@
         closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.width = "200px";
-        sidebarElement.style.outline = "2px solid rgb(20, 20, 20)";
-        sidebarElement.style.color = "rgb(155, 155, 155)";
-        sidebarElement.style.padding = "5px 2px 25px 2px";
-        sidebarElement.style.left = "0px";
-        sidebarElement.style.top = "0px";
+        sidebarElement.style.display = "block";
     }
     function openSidebar(element) {
         closeMainSidebars()
         closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.width = "200px";
-        sidebarElement.style.outline = "2px solid rgb(20, 20, 20)";
-        sidebarElement.style.color = "rgb(155, 155, 155)";
-        sidebarElement.style.padding = "5px 2px 25px 2px";
-        sidebarElement.style.left = "0px";
-        sidebarElement.style.top = "0px";
+        sidebarElement.style.display = "block";
     }
     function openSecondarySidebar(element) {
         closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.width = "200px";
-        sidebarElement.style.outline = "2px solid rgb(20, 20, 20)";
-        sidebarElement.style.color = "rgb(155, 155, 155)";
-        sidebarElement.style.padding = "5px 2px 25px 2px";
-        sidebarElement.style.left = "0px";
-        sidebarElement.style.top = "0px";
+        sidebarElement.style.display = "block";
     }
     function closeSidebar(sidebarId) {
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.width = "0";
-        sidebarElement.style.outline = "none";
-        sidebarElement.style.color = "rgba(155, 155, 155, 0)";
-        sidebarElement.style.padding = "0";
-        sidebarElement.style.left = "-2000px";
+        sidebarElement.style.display = "none";
     }
     function closeDatabaseSidebar() {
         closeMainSidebars()
         var sidebarId = "databaseSidebar";
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.width = "0";
-        sidebarElement.style.outline = "none";
-        sidebarElement.style.color = "rgba(155, 155, 155, 0)";
-        sidebarElement.style.padding = "0";
-        sidebarElement.style.left = "-2000px";
+        sidebarElement.style.display = "none";
     }
     function closeMainSidebars() {
         closeSecondarySidebars()
@@ -71,6 +48,9 @@
         closeSidebar("bulletSidebar")
         closeSidebar("grenadeSidebar")
         closeSidebar("medicineSidebar")
+        closeSidebar("barterSidebar")
+        closeSidebar("paintSidebar")
+        closeSidebar("otherSidebar")
     }
     function closeSecondarySidebars() {
         closeSidebar("clothingSidebar")
@@ -103,7 +83,7 @@
 </script>
 
 <div class="sticky" style="top: 80px;">
-    <div id="databaseSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="databaseSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeDatabaseSidebar()">
             &lt;--
         </button>
@@ -131,6 +111,15 @@
         <button class="sidebar-button" data-sidebar-id="medicineSidebar" onclick="openSidebar(this)">
             Medicines
         </button>
+        <button class="sidebar-button" data-sidebar-id="barterSidebar" onclick="openSidebar(this)">
+            Barter
+        </button>
+        <button class="sidebar-button" data-sidebar-id="paintSidebar" onclick="openSidebar(this)">
+            Skins and Paints
+        </button>
+        <button class="sidebar-button" data-sidebar-id="otherSidebar" onclick="openSidebar(this)">
+            Others
+        </button>
     </div>
 
 
@@ -138,7 +127,7 @@
     @{
         List<string> armorClasses = ["Clothing", "Combat", "Combo", "Scientist"];
     }
-    <div id="armorSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="armorSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             &lt;--
         </button>
@@ -154,7 +143,7 @@
         @foreach (string armorClass in armorClasses)
         {
             string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="second-sidebar sidebar-container sticky">
+            <div id=@id class="sidebar-body sidebar-container sticky">
                 <button class="sidebar-button" onclick="closeSecondarySidebars()">
                     &lt;--
                 </button>
@@ -173,7 +162,7 @@
 
 
     @* container & backpack sidebar *@
-    <div id="containerSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="containerSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             <--
         </button>
@@ -190,7 +179,7 @@
     @{
         List<string> artefactClasses = ["Biochemical", "Electrophysical", "Gravitational", "Thermal"];
     }
-    <div id="artefactSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="artefactSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             <--
         </button>
@@ -206,7 +195,7 @@
         @foreach (string artefactClass in artefactClasses)
         {
             string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="second-sidebar sidebar-container sticky">
+            <div id=@id class="sidebar-body sidebar-container sticky">
                 <button class="sidebar-button" onclick="closeSecondarySidebars()">
                     &lt;--
                 </button>
@@ -228,7 +217,7 @@
     @{
         List<string> weaponClasses = ["Assault Rifles", "Devices", "Other Weapons", "Machine Guns", "Melee Weapons", "Pistols", "Shotguns and Rifles", "Sniper Rifles", "Submachine Guns"];
     }
-    <div id="weaponSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="weaponSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             <--
         </button>
@@ -244,7 +233,7 @@
         @foreach (string weaponClass in weaponClasses)
         {
             string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="second-sidebar sidebar-container sticky">
+            <div id=@id class="sidebar-body sidebar-container sticky">
                 <button class="sidebar-button" onclick="closeSecondarySidebars()">
                     &lt;--
                 </button>
@@ -265,7 +254,7 @@
     @{
         List<string> attachmentClasses = ["Muzzles and Silencers", "Sights", "Hanguards and Brackets", "Magazines", "Other Attachments", "Pistol Grips"];
     }
-    <div id="attachmentSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="attachmentSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             <--
         </button>
@@ -281,7 +270,7 @@
         @foreach (string attachmentClass in attachmentClasses)
         {
             string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="second-sidebar sidebar-container sticky">
+            <div id=@id class="sidebar-body sidebar-container sticky">
                 <button class="sidebar-button" onclick="closeSecondarySidebars()">
                     &lt;--
                 </button>
@@ -299,7 +288,7 @@
     }
 
     @* bullet sidebar *@
-    <div id="bulletSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="bulletSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             <--
         </button>
@@ -312,7 +301,7 @@
     </div>
 
     @* grenade sidebar *@
-    <div id="grenadeSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="grenadeSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             <--
         </button>
@@ -325,7 +314,7 @@
     </div>
 
     @* medicine sidebar *@
-    <div id="medicineSidebar" class="second-sidebar sidebar-container sticky">
+    <div id="medicineSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeMainSidebars()">
             <--
         </button>
@@ -333,6 +322,46 @@
         {
             <button class="sidebar-button" onclick="location.href='@Url.Action("Medicine", "Database", new {medicineId = medicine.Id})'">
                 @medicine.Name
+            </button>
+        }
+    </div>
+
+    
+    @* barter sidebar *@
+    <div id="barterSidebar" class="sidebar-body sidebar-container sticky">
+        <button class="sidebar-button" onclick="closeMainSidebars()">
+            <--
+        </button>
+        @foreach (OtherModel barter in Model.Barters)
+        {
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Barter", "Database", new {barterId = barter.Id})'">
+                @barter.Name
+            </button>
+        }
+    </div>
+
+    @* paint sidebar *@
+    <div id="paintSidebar" class="sidebar-body sidebar-container sticky">
+        <button class="sidebar-button" onclick="closeMainSidebars()">
+            <--
+        </button>
+        @foreach (OtherModel paint in Model.Paints)
+        {
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Paint", "Database", new {paintId = paint.Id})'">
+                @paint.Name
+            </button>
+        }
+    </div>
+
+    @* other sidebar *@
+    <div id="otherSidebar" class="sidebar-body sidebar-container sticky">
+        <button class="sidebar-button" onclick="closeMainSidebars()">
+            <--
+        </button>
+        @foreach (OtherModel other in Model.Others)
+        {
+            <button class="sidebar-button" onclick="location.href='@Url.Action("Other", "Database", new {otherId = other.Id})'">
+                @other.Name
             </button>
         }
     </div>

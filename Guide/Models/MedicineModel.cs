@@ -12,11 +12,9 @@ namespace Guide.Models
         public List<MedicineModel> GetAllMedicines()
         {
             string databasePath = Shared.GetDatabasePath();
-            List<string> medicinePaths = [];
             List<MedicineModel> medicines = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\medicine", "*.*", SearchOption.TopDirectoryOnly))
             {
-                medicinePaths.Add(file);
                 string jsonString = Shared.Reader(file);
                 var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
                 bool ifImageExists = File.Exists($"{databasePath}icons\\medicine\\{jObject["id"].Value<string>()}.png");
