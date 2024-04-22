@@ -1,0 +1,103 @@
+﻿@using Guide.Models
+@using System.Net
+@using Guide.Models.ViewModels;
+@using Guide.Services
+@using Newtonsoft.Json;
+@using Newtonsoft.Json.Linq;
+@model GraphViewModel
+
+@{
+    ViewData["Title"] = "Graph";
+}
+
+
+<div style="width: 90%; height: 90%">
+    <h1>Armor graph</h1>
+    <canvas id="armorChart"></canvas>
+</div>
+
+<script>
+    const ctx = document.getElementById('armorChart');
+
+    //labels
+    @{
+        string labels = "[";
+        for (int i = 200; i < 420; i++)
+        {
+            if (labels.Length > 1)
+            {
+                labels += ", ";
+            }
+            labels += $"{i}";
+        }
+        labels += "]";
+    }
+    const labels = @labels;
+    
+    //chart construction
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+        @foreach (ArmorModel armor in Model.Armors)
+        {
+        if (!armor.Name.Contains("Worn") && !armor.Name.Contains("Damaged") && armor.Rarity == "Master" && armor.Class != "Scientist" && armor.Class != "Clothing")
+        {
+            if (armor.Class == "Combo") armor.Class = "Combined";
+            var bulletResistance = ((JObject)JsonConvert.DeserializeObject(Shared.Reader($"{Shared.GetDatabasePath()}items\\armor\\{armor.Class.ToLower()}\\_variants\\{armor.Id}\\15.json")))["infoBlocks"][3].Value<JArray>("elements")[0].Value<JObject>("formatted").Value<JObject>("value").Value<string>("en").Replace(".", ",");
+
+            @:{
+            @:label: '@armor.Name',
+                string data = "[";
+                for (int i = 200; i < 420; i++)
+                {
+                    if (data.Length > 1)
+                    {
+                        data += ", ";
+                    }
+                var stat = armor.Stats.Where(stat => stat.Key == "Bullet resistance").FirstOrDefault();
+                if ((double)i % Convert.ToDouble(bulletResistance) < 1 && (double)i % Convert.ToDouble(bulletResistance) > 0)
+                {
+                    if (armor.Properties.Where(peoperty => peoperty.Key == "Movement speed").Select(peoperty => new { Key = peoperty.Key, Value = peoperty.Value }).FirstOrDefault() != null)
+                    {
+                        data += armor.Properties.Where(peoperty => peoperty.Key == "Movement speed").FirstOrDefault().Value;
+                    }
+                    else
+                    {
+                        data += "0";
+                    }
+                }
+                else
+                {
+                    data += "NaN";
+                }
+                }
+                data += "]";
+            @:data: @data,
+            @:borderWidth: 1
+            @:},
+        }
+        }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+                suggestedMin: -15,
+                suggestedMax: 15,
+                title: {
+                    display: true,
+                    text: 'Speed'
+                }
+          },
+          x: {
+              title: {
+                    display: true,
+                    text: 'Bullet resistance'
+                }
+          }
+        }
+      }
+    });
+</script>

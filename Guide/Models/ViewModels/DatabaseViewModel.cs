@@ -17,6 +17,15 @@ namespace Guide.Models.ViewModels
         public List<OtherModel> Paints { get; set; } = others.Where(p => p.Class == "Skins and Paint").DistinctBy(p => p.Name).ToList();
         public List<OtherModel> Others { get; set; } = others.Where(p => p.Class == "Other").Where(p => p.Rarity == null || p.Obtained == null || p.Description == null).DistinctBy(p => p.Name).ToList();
     }
+
+    //graph
+    public class GraphViewModel(List<ArmorModel> armors, List<WeaponModel> weapons, List<BulletModel> bullets)
+    {
+        public List<ArmorModel> Armors { get; set; } = armors;
+        public List<WeaponModel> Weapons { get; set; } = weapons;
+        public List<BulletModel> Bullets { get; set; } = bullets;
+    }
+
     public class WeaponViewModel(string weaponId, List<WeaponModel> weapons)
     {
         public WeaponModel Weapon { get; set; } = weapons.Where(weapon => weapon.Id == weaponId).FirstOrDefault();
