@@ -22,7 +22,7 @@
     //labels
     @{
         string labels = "[";
-        for (int i = 200; i < 420; i++)
+        for (int i = 220; i < 400; i++)
         {
             if (labels.Length > 1)
             {
@@ -33,15 +33,15 @@
         labels += "]";
     }
     const labels = @labels;
-    
+
     //chart construction
     new Chart(ctx, {
       type: 'line',
       data: {
         labels: labels,
         datasets: [
-        @foreach (ArmorModel armor in Model.Armors)
-        {
+    @foreach (ArmorModel armor in Model.Armors)
+    {
         if (!armor.Name.Contains("Worn") && !armor.Name.Contains("Damaged") && armor.Rarity == "Master" && armor.Class != "Scientist" && armor.Class != "Clothing")
         {
             if (armor.Class == "Combo") armor.Class = "Combined";
@@ -49,13 +49,13 @@
 
             @:{
             @:label: '@armor.Name',
-                string data = "[";
-                for (int i = 200; i < 420; i++)
+            string data = "[";
+            for (int i = 220; i < 400; i++)
+            {
+                if (data.Length > 1)
                 {
-                    if (data.Length > 1)
-                    {
-                        data += ", ";
-                    }
+                    data += ", ";
+                }
                 var stat = armor.Stats.Where(stat => stat.Key == "Bullet resistance").FirstOrDefault();
                 if ((double)i % Convert.ToDouble(bulletResistance) < 1 && (double)i % Convert.ToDouble(bulletResistance) > 0)
                 {
@@ -72,30 +72,52 @@
                 {
                     data += "NaN";
                 }
-                }
-                data += "]";
+            }
+            data += "]";
             @:data: @data,
             @:borderWidth: 1
             @:},
         }
-        }
+    }
         ]
       },
       options: {
         scales: {
           y: {
-                suggestedMin: -15,
-                suggestedMax: 15,
+                border: {
+                    color: "rgba(255,255,255,0.2)",
+                    width: 2,
+                },
+                max: 17,
+                min: -17,
                 title: {
                     display: true,
                     text: 'Speed'
-                }
+                },
+                    grid: {
+                        color: "rgba(255,255,255,0.05)",
+                    },
+                    ticks: {
+                        display: true,
+                        color: "rgba(255,255,255,0.5)",
+                    }
           },
           x: {
+                border: {
+                    color: "rgba(255,255,255,0.2)",
+                    width: 2,
+                },
               title: {
                     display: true,
                     text: 'Bullet resistance'
-                }
+                },
+                    grid: {
+                        color: "rgba(255,255,255,0.05)",
+                    },
+                    ticks: {
+                        display: true,
+                        color: "rgba(255,255,255,0.5)",
+                    }
           }
         }
       }
