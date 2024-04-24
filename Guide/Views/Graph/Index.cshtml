@@ -12,37 +12,57 @@
 
 
 <div style="width: 90%; height: 90%">
+    <h1>Weapon graph</h1>
+    <canvas id="weaponChart"></canvas>
     <h1>Armor graph</h1>
     <canvas id="armorChart"></canvas>
 </div>
 
 <script>
-    const ctx = document.getElementById('armorChart');
+    //shared
+
+    //colors
+    @{
+        List<string> colors = [];
+        colors.Add("#FF76CE");
+        colors.Add("#FCFFE0");
+        colors.Add("#1A4D2E");
+        colors.Add("#5BBCFF");
+        colors.Add("#DD5746");
+        colors.Add("#AF8260");
+        colors.Add("#BED7DC");
+        colors.Add("#FF204E");
+        colors.Add("#15F5BA");
+    }
+</script>
+
+<script>
+    const armorCtx = document.getElementById('armorChart');
 
     //labels
     @{
-        string labels = "[";
+        string armorLabels = "[";
         for (int i = 220; i < 400; i++)
         {
-            if (labels.Length > 1)
+            if (armorLabels.Length > 1)
             {
-                labels += ", ";
+                armorLabels += ", ";
             }
-            labels += $"{i}";
+            armorLabels += $"{i}";
         }
-        labels += "]";
+        armorLabels += "]";
     }
-    const labels = @labels;
+    const armorLabels = @armorLabels;
 
     //chart construction
-    new Chart(ctx, {
+    new Chart(armorCtx, {
       type: 'line',
       data: {
-        labels: labels,
+        labels: armorLabels,
         datasets: [
     @foreach (ArmorModel armor in Model.Armors)
     {
-        if (!armor.Name.Contains("Worn") && !armor.Name.Contains("Damaged") && armor.Rarity == "Master" && armor.Class != "Scientist" && armor.Class != "Clothing")
+        if (!armor.Name.Contains("Worn") && !armor.Name.Contains("Damaged") && !armor.Name.Contains("SKAT-9") && !armor.Name.Contains("Ace Exoskeleton") && armor.Rarity == "Master" && armor.Class != "Scientist" && armor.Class != "Clothing")
         {
             if (armor.Class == "Combo") armor.Class = "Combined";
             var bulletResistance = ((JObject)JsonConvert.DeserializeObject(Shared.Reader($"{Shared.GetDatabasePath()}items\\armor\\{armor.Class.ToLower()}\\_variants\\{armor.Id}\\15.json")))["infoBlocks"][3].Value<JArray>("elements")[0].Value<JObject>("formatted").Value<JObject>("value").Value<string>("en").Replace(".", ",");
@@ -75,8 +95,11 @@
             }
             data += "]";
             @:data: @data,
-            @:borderWidth: 1
+            @:borderWidth: 1,
+            @:borderColor: '@colors[0]',
+            @:backgroundColor: '@colors[0]',
             @:},
+            // colors.RemoveAt(0);
         }
     }
         ]
@@ -110,6 +133,134 @@
               title: {
                     display: true,
                     text: 'Bullet resistance'
+                },
+                    grid: {
+                        color: "rgba(255,255,255,0.05)",
+                    },
+                    ticks: {
+                        display: true,
+                        color: "rgba(255,255,255,0.5)",
+                    }
+          }
+        }
+      }
+    });
+</script>
+
+
+
+<script>
+    const weaponCtx = document.getElementById('weaponChart');
+
+     //labels
+    @{
+        string weaponLabels = "[";
+        for (int i = 0; i <= 70; i++)
+        {
+            if (weaponLabels.Length > 1)
+            {
+                weaponLabels += ", ";
+            }
+            weaponLabels += $"{i}";
+        }
+        weaponLabels += "]";
+    }
+    const weaponLabels = @weaponLabels;https://stalcraftdb.net/collection-tasks
+
+    //chart construction
+    new Chart(weaponCtx, {
+      type: 'line',
+      data: {
+        labels: weaponLabels,
+        datasets: [
+            @{
+            List<string> weapons = [];
+            }
+    @foreach (WeaponModel weapon in Model.Weapons)
+    {
+        if (weapon.Rarity == "Master" && weapon.Class == "Assault Rifles" && weapon.Name != "DSA-58")
+        {https://stalcraftdb.net/collection-tasks
+            var upgradedWeapon = ((JObject)JsonConvert.DeserializeObject(Shared.Reader($"{Shared.GetDatabasePath()}items\\weapon\\assault_rifle\\_variants\\{weapon.Id}\\15.json")))["infoBlocks"][7];
+            double damageDecreaseStart = upgradedWeapon.Value<double>("damageDecreaseStart");
+            double damageDecreaseEnd = upgradedWeapon.Value<double>("damageDecreaseEnd");
+            double maxDistance = upgradedWeapon.Value<double>("maxDistance");
+            double startDamage = upgradedWeapon.Value<double>("startDamage");
+            double endDamage = upgradedWeapon.Value<double>("endDamage");
+            var ammoType = weapon.Stats.Where(stat => stat.Key == "Ammo type").Select(stat => new { Key = stat.Key, Value = stat.Value }).FirstOrDefault().Value;
+            double ap = 0;
+            if (ammoType == "5.45") ap = 0.9;
+            else if (ammoType == "7.62") ap = 0.825;
+            else if (ammoType == "9x39") ap = 0.8;
+            else if (ammoType == "12.7") ap = 0.75;
+            else if (ammoType == "5.56") ap = 0.9;
+            int fireRate = Int32.Parse(weapon.Stats.Where(stat => stat.Key == "Rate of fire").Select(stat => new { Key = stat.Key, Value = stat.Value }).FirstOrDefault().Value.Split(' ')[0]);
+            double CalcTTK(double damage)
+            {
+                double dps = damage * fireRate / 60;
+                //cent +15 = 351.23 br
+                double hp = 100 + (351.23 * ap);
+                double ttk = hp / dps;
+                return ttk;
+            }
+
+            string data = $"[{CalcTTK(startDamage).ToString().Replace(",", ".")}";
+            for (int i = 0; i <= 70; i++)
+            {
+                data += ", ";
+                if (i - damageDecreaseStart < 1 && i - damageDecreaseStart >= 0) data += $"{CalcTTK(startDamage).ToString().Replace(",", ".")}";
+                else if (i - damageDecreaseEnd < 1 && i - damageDecreaseEnd >= 0) data += $"{CalcTTK(endDamage).ToString().Replace(",", ".")}";
+                else if (i - maxDistance < 1 && i - maxDistance >= 0) data += $"{CalcTTK(endDamage).ToString().Replace(",", ".")}";
+                else if (i == 69 && i < maxDistance) data += $"{CalcTTK(endDamage).ToString().Replace(",", ".")}";
+                else data += "";
+            }
+            data += "]";
+            weapons.Add(weapon.Name);
+            if (weapon.Name == "АК-15") 
+                weapon.Name = "AK-15";
+            if (weapon.Name == "АМ-17")
+                weapon.Name = "AM-17";
+            @:{
+            @:label: '@weapon.Name',
+            @:data: @data,
+            @:borderWidth: 2,
+            @:borderColor: '@colors[0]',
+            @:backgroundColor: '@colors[0]',
+            @:},
+            colors.RemoveAt(0);
+        }
+    }
+        ]
+      },
+      options: {
+          spanGaps: true,
+        scales: {
+          y: {
+                border: {
+                    color: "rgba(255,255,255,0.2)",
+                    width: 2,
+                },
+                max: 1,
+                min: 0.5,
+                title: {
+                    display: true,
+                    text: 'TTK'
+                },
+                    grid: {
+                        color: "rgba(255,255,255,0.05)",
+                    },
+                    ticks: {
+                        display: true,
+                        color: "rgba(255,255,255,0.5)",
+                    }
+          },
+          x: {
+                border: {
+                    color: "rgba(255,255,255,0.2)",
+                    width: 2,
+                },
+              title: {
+                    display: true,
+                    text: "Distance",
                 },
                     grid: {
                         color: "rgba(255,255,255,0.05)",

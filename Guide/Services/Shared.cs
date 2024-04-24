@@ -8,7 +8,7 @@ namespace Guide.Services
     {
         public static string GetDatabasePath()
         {
-            return "C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\stalcraft-database\\ru\\";
+            return "C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\stalcraft-database\\global\\";
         }
         public static string Reader(string filePath)
         {
@@ -34,7 +34,7 @@ namespace Guide.Services
         }
         public static List<Item> IItemToItem(IEnumerable<IItem> iItems)
         {
-            List<Item> items = new List<Item>();
+            List<Item> items = [];
             foreach (IItem iItem in iItems)
             {
                 var currentItem = new Item(iItem.Id, iItem.Name, iItem.Class);
