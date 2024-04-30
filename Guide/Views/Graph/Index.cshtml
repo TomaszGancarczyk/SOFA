@@ -23,23 +23,30 @@
 
     //colors
     @{
+        List<string> allColors = [];
         List<string> colors = [];
-        colors.Add("#FF76CE");
-        colors.Add("#FCFFE0");
-        colors.Add("#1A4D2E");
-        colors.Add("#5BBCFF");
-        colors.Add("#DD5746");
-        colors.Add("#AF8260");
-        colors.Add("#BED7DC");
-        colors.Add("#FF204E");
-        colors.Add("#15F5BA");
+        allColors.Add("#FF76CE");
+        allColors.Add("#F9F07A");
+        allColors.Add("#0E46A3");
+        allColors.Add("#5BBCFF");
+        allColors.Add("#DD5746");
+        allColors.Add("#AF8260");
+        allColors.Add("#BED7DC");
+        allColors.Add("#FF204E");
+        allColors.Add("#15F5BA");
+        allColors.Add("#6420AA");
+
+        foreach (string color in allColors)
+        {
+            colors.Add(color);
+        }
     }
 </script>
 
+@* armor chart *@
 <script>
     const armorCtx = document.getElementById('armorChart');
 
-    //labels
     @{
         string armorLabels = "[";
         for (int i = 220; i < 400; i++)
@@ -99,7 +106,14 @@
             @:borderColor: '@colors[0]',
             @:backgroundColor: '@colors[0]',
             @:},
-            // colors.RemoveAt(0);
+            colors.RemoveAt(0);
+            if (colors.Count == 0)
+            {
+                foreach (string color in allColors)
+                {
+                    colors.Add(color);
+                }
+            }
         }
     }
         ]
@@ -148,14 +162,15 @@
 </script>
 
 
-
+@* weapon chart *@
 <script>
     const weaponCtx = document.getElementById('weaponChart');
 
-     //labels
     @{
+        int maxRange = 70;
+
         string weaponLabels = "[";
-        for (int i = 0; i <= 70; i++)
+        for (int i = 0; i <= maxRange; i++)
         {
             if (weaponLabels.Length > 1)
             {
@@ -165,7 +180,7 @@
         }
         weaponLabels += "]";
     }
-    const weaponLabels = @weaponLabels;https://stalcraftdb.net/collection-tasks
+    const weaponLabels = @weaponLabels;
 
     //chart construction
     new Chart(weaponCtx, {
@@ -179,8 +194,18 @@
     @foreach (WeaponModel weapon in Model.Weapons)
     {
         if (weapon.Rarity == "Master" && weapon.Class == "Assault Rifles" && weapon.Name != "DSA-58")
-        {https://stalcraftdb.net/collection-tasks
-            var upgradedWeapon = ((JObject)JsonConvert.DeserializeObject(Shared.Reader($"{Shared.GetDatabasePath()}items\\weapon\\assault_rifle\\_variants\\{weapon.Id}\\15.json")))["infoBlocks"][7];
+        // if (weapon.Rarity == "Master" && weapon.Class == "Sniper Rifles")
+        {
+            string upgradedWeaponPathClass = null;
+            if (weapon.Class == "Assault Rifles")
+                upgradedWeaponPathClass = "assault_rifle";
+            else if (weapon.Class == "Machine Guns") 
+                upgradedWeaponPathClass = "machine_gun";
+            else if (weapon.Class == "Submachine Guns") 
+                upgradedWeaponPathClass = "submachine_gun";
+            else if (weapon.Class == "Sniper Rifles") 
+                upgradedWeaponPathClass = "sniper_rifle";
+            JToken upgradedWeapon = ((JObject)JsonConvert.DeserializeObject(Shared.Reader($"{Shared.GetDatabasePath()}items\\weapon\\{upgradedWeaponPathClass}\\_variants\\{weapon.Id}\\15.json")))["infoBlocks"][7];
             double damageDecreaseStart = upgradedWeapon.Value<double>("damageDecreaseStart");
             double damageDecreaseEnd = upgradedWeapon.Value<double>("damageDecreaseEnd");
             double maxDistance = upgradedWeapon.Value<double>("maxDistance");
@@ -193,6 +218,8 @@
             else if (ammoType == "9x39") ap = 0.8;
             else if (ammoType == "12.7") ap = 0.75;
             else if (ammoType == "5.56") ap = 0.9;
+            else if (ammoType == "9 mm") ap = 0.95;
+            else {}
             int fireRate = Int32.Parse(weapon.Stats.Where(stat => stat.Key == "Rate of fire").Select(stat => new { Key = stat.Key, Value = stat.Value }).FirstOrDefault().Value.Split(' ')[0]);
             double CalcTTK(double damage)
             {
@@ -204,13 +231,13 @@
             }
 
             string data = $"[{CalcTTK(startDamage).ToString().Replace(",", ".")}";
-            for (int i = 0; i <= 70; i++)
+            for (int i = 0; i <= maxRange; i++)
             {
                 data += ", ";
                 if (i - damageDecreaseStart < 1 && i - damageDecreaseStart >= 0) data += $"{CalcTTK(startDamage).ToString().Replace(",", ".")}";
                 else if (i - damageDecreaseEnd < 1 && i - damageDecreaseEnd >= 0) data += $"{CalcTTK(endDamage).ToString().Replace(",", ".")}";
                 else if (i - maxDistance < 1 && i - maxDistance >= 0) data += $"{CalcTTK(endDamage).ToString().Replace(",", ".")}";
-                else if (i == 69 && i < maxDistance) data += $"{CalcTTK(endDamage).ToString().Replace(",", ".")}";
+                else if (i == (maxRange - 1) && i < maxDistance) data += $"{CalcTTK(endDamage).ToString().Replace(",", ".")}";
                 else data += "";
             }
             data += "]";
@@ -219,6 +246,8 @@
                 weapon.Name = "AK-15";
             if (weapon.Name == "АМ-17")
                 weapon.Name = "AM-17";
+            if (weapon.Name.Contains("VSS-M"))
+                weapon.Name = "VSS-M Vintorez";
             @:{
             @:label: '@weapon.Name',
             @:data: @data,
@@ -227,6 +256,13 @@
             @:backgroundColor: '@colors[0]',
             @:},
             colors.RemoveAt(0);
+            if (colors.Count == 0)
+            {
+            foreach (string color in allColors)
+                {
+                colors.Add(color);
+                }
+            }
         }
     }
         ]
@@ -243,7 +279,7 @@
                 min: 0.5,
                 title: {
                     display: true,
-                    text: 'TTK'
+                    text: 'TTK (s)'
                 },
                     grid: {
                         color: "rgba(255,255,255,0.05)",
@@ -260,7 +296,7 @@
                 },
               title: {
                     display: true,
-                    text: "Distance",
+                    text: "Distance (m)",
                 },
                     grid: {
                         color: "rgba(255,255,255,0.05)",
