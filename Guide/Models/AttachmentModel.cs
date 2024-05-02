@@ -25,13 +25,16 @@ namespace Guide.Models
         }
         public List<AttachmentModel> CreateAttachmentCategory(string category)
         {
-            string databasePath = Shared.GetDatabasePath();
+            string databasePath = Shared.GetEuDatabasePath();
             List<AttachmentModel> attachments = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\attachment\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
-                var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"{databasePath}icons\\attachment\\{category}\\{jObject["id"].Value<string>()}.png");
+                var jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
+                string? objectId = jObject["id"].Value<string>();
+                bool ifImageExists = false;
+                if (objectId != null)
+                    ifImageExists = File.Exists($"{databasePath}icons\\attachment\\{category}\\{objectId}.png");
                 if (ifImageExists)
                 {
                     AttachmentModel attachmentModel = new(jObject);
@@ -39,16 +42,17 @@ namespace Guide.Models
                 }
                 else
                 {
-                    Console.WriteLine($"Image for Id: {jObject["id"].Value<string>()} doesn't exist");
+                    Console.WriteLine($"Image for Id: {objectId} doesn't exist");
                 }
             }
             return attachments;
         }
-        public AttachmentModel() { }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+        public AttachmentModel() { }
         public AttachmentModel(JObject jObject)
         {
             //id
@@ -215,6 +219,7 @@ namespace Guide.Models
         public double StartDamage { get; set; }
         public double DamageDecreaseStart { get; set; }
     }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

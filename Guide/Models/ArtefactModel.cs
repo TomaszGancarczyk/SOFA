@@ -25,13 +25,16 @@ namespace Guide.Models
 
         public List<ArtefactModel> CreateArtefactsCategory(string category)
         {
-            string databasePath = Shared.GetDatabasePath();
+            string databasePath = Shared.GetEuDatabasePath();
             List<ArtefactModel> artefacts = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\artefact\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
-                var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"{databasePath}icons\\artefact\\{category}\\{jObject["id"].Value<string>()}.png");
+                var jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
+                string? objectId = jObject["id"].Value<string>();
+                bool ifImageExists = false;
+                if (objectId != null)
+                    ifImageExists = File.Exists($"{databasePath}icons\\artefact\\{category}\\{objectId}.png");
                 if (ifImageExists)
                 {
                     ArtefactModel artefactsModel = new(jObject);
@@ -39,15 +42,16 @@ namespace Guide.Models
                 }
                 else
                 {
-                    Console.WriteLine($"Image for Id: {jObject["id"].Value<string>()} doesn't exist");
+                    Console.WriteLine($"Image for Id: {objectId} doesn't exist");
                 }
             }
             return artefacts;
         }
-        public ArtefactModel() { }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
+        public ArtefactModel() { }
         public ArtefactModel(JObject jObject)
         {
             //id
@@ -115,6 +119,7 @@ namespace Guide.Models
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
         }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

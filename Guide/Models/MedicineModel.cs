@@ -11,13 +11,16 @@ namespace Guide.Models
     {
         public List<MedicineModel> GetAllMedicines()
         {
-            string databasePath = Shared.GetDatabasePath();
+            string databasePath = Shared.GetEuDatabasePath();
             List<MedicineModel> medicines = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\medicine", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
-                var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
-                bool ifImageExists = File.Exists($"{databasePath}icons\\medicine\\{jObject["id"].Value<string>()}.png");
+                var jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
+                string? objectId = jObject["id"].Value<string>();
+                bool ifImageExists = false;
+                if (objectId != null)
+                    ifImageExists = File.Exists($"{databasePath}icons\\medicine\\{objectId}.png");
                 if (ifImageExists)
                 {
                     MedicineModel medicineModel = new(jObject);
@@ -25,15 +28,16 @@ namespace Guide.Models
                 }
                 else
                 {
-                    Console.WriteLine($"Image for Id: {jObject["id"].Value<string>()} doesn't exist");
+                    Console.WriteLine($"Image for Id: {objectId} doesn't exist");
                 }
             }
             return medicines;
         }
-        public MedicineModel() { }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8601 // Possible null reference assignment.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
+        public MedicineModel() { }
         public MedicineModel(JObject jObject)
         {
             //id
@@ -118,6 +122,7 @@ namespace Guide.Models
         public string ImgSource { get; set; }
         public List<string> Features { get; set; }
     }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

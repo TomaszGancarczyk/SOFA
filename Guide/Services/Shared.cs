@@ -6,7 +6,11 @@ namespace Guide.Services
 {
     public class Shared
     {
-        public static string GetDatabasePath()
+        public static string GetEuDatabasePath()
+        {
+            return "C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\stalcraft-database\\global\\";
+        }
+        public static string GetRuDatabasePath()
         {
             return "C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\stalcraft-database\\global\\";
         }
@@ -17,24 +21,15 @@ namespace Guide.Services
             return text;
         }
     }
-    public class Item : IItem
+    public class Item(string id, string name, string classs) : IItem
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Class { get; set; }
-        public Item()
-        {
-            
-        }
-        public Item(string id, string name, string classs)
-        {
-            Id = id;
-            Name = name;
-            Class = classs;
-        }
+        public string Id { get; set; } = id;
+        public string Name { get; set; } = name;
+        public string Class { get; set; } = classs;
+
         public static List<Item> IItemToItem(IEnumerable<IItem> iItems)
         {
-            List<Item> items = new List<Item>();
+            List<Item> items = [];
             foreach (IItem iItem in iItems)
             {
                 var currentItem = new Item(iItem.Id, iItem.Name, iItem.Class);

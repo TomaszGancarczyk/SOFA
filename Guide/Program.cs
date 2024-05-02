@@ -16,7 +16,7 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            List<Item> allItems = new List<Item>();
+            List<Item> allItems = [];
 
             List<OtherModel> others = new OtherModel().GetAllOthers().OrderBy(p => p.Name).ToList();
             allItems.AddRange(Item.IItemToItem(others));
