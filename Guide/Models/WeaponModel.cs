@@ -25,7 +25,7 @@ namespace Guide.Models
                 ];
             foreach (string file in Directory.EnumerateFiles($"{Shared.GetEuDatabasePath()}items\\other\\device", "*.*", SearchOption.TopDirectoryOnly))
             {
-                AllWeapons.Add(new WeaponModel(Shared.Reader(file)));
+                AllWeapons.Add(new WeaponModel(Shared.Reader(file), file));
             }
             return AllWeapons;
         }
@@ -44,7 +44,7 @@ namespace Guide.Models
                     ifImageExists = File.Exists($"{databasePath}icons\\weapon\\{category}\\{objectId}.png");
                 if (ifImageExists)
                 {
-                    WeaponModel weaponModel = new(jsonString);
+                    WeaponModel weaponModel = new(jsonString, file);
                     weapons.Add(weaponModel);
                 }
                 else
@@ -61,7 +61,7 @@ namespace Guide.Models
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         public WeaponModel() { }
-        public WeaponModel(string jsonString)
+        public WeaponModel(string jsonString, string file)
         {
             //define jobject
             var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
@@ -293,7 +293,68 @@ namespace Guide.Models
             }
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
+
+            //upgrades
+            Dictionary<int, Dictionary<string, string>> upgradeStats = [];
+            if (Class != "Devices" && Class != "Melee Weapons")
+            {
+                List<string> fileList = file.Split(".").ToList();
+                file = fileList[0];
+                fileList = file.Split("\\").ToList();
+                fileList.Insert(fileList.Count - 1, "_variants");
+                file = "";
+                foreach (string filePart in fileList)
+                    file += $"{filePart}\\";
+                Dictionary<string, string> upgrade = new();
+                int upgradeCount = 1;
+                foreach (string upgradeFile in Directory.EnumerateFiles(file, "*.*", SearchOption.TopDirectoryOnly))
+                {
+                    jObject = (JObject)JsonConvert.DeserializeObject(Shared.Reader(upgradeFile));
+                    stats = [];
+                    var upgradeJsonStats = jObject["infoBlocks"][2]
+                        .Value<JArray>("elements");
+                    foreach (var stat in upgradeJsonStats)
+                    {
+                        if (stat.Value<string>("type") == "key-value")
+                        {
+                            stats.Add(
+                            stat
+                            .Value<JObject>("key")
+                            .Value<JObject>("lines")
+                            .Value<string>("en"),
+                            stat
+                            .Value<JObject>("value")
+                            .Value<JObject>("lines")
+                            .Value<string>("en"));
+                        }
+                        else if (stat.Value<string>("type") == "text")
+                        {
+                            features.Add(
+                                stat
+                            .Value<JObject>("text")
+                            .Value<JObject>("lines")
+                            .Value<string>("en"));
+                        }
+                        else if (stat.Value<string>("type") == "numeric")
+                        {
+                            stats.Add(stat
+                                    .Value<JObject>("name")
+                                    .Value<JObject>("lines")
+                                    .Value<string>("en"),
+                                stat
+                                    .Value<JObject>("formatted")
+                                    .Value<JObject>("value")
+                                    .Value<string>("en"));
+                        }
+                    }
+                    if (!isDevice && Class != "Other")
+                        upgradeStats.Add(upgradeCount, stats);
+                    upgradeCount += 1;
+                }
+            }
+            UpgradeStats = upgradeStats;
         }
+
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8601 // Possible null reference assignment.
@@ -310,6 +371,7 @@ namespace Guide.Models
         public DamageGraph DamageGraph { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public Dictionary<int, Dictionary<string, string>> UpgradeStats { get; set; }
     }
     public class DamageGraph(double startDamage, double damageDecreaseStart, double endDamage, double damageDecreaseEnd, double maxDistance)
     {

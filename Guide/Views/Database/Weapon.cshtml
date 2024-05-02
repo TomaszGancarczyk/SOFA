@@ -27,9 +27,8 @@
         <h5>Stats:</h5>
         foreach (KeyValuePair<string, string> stat in Model.Weapon.Stats)
         {
-            string drawStat = $"{stat.Key}: {stat.Value}";
             <p>
-                @drawStat
+                @stat.Key: @stat.Value
             </p>
         }
     }
@@ -37,6 +36,18 @@
     if (Model.Weapon.DamageGraph != null)
     {
         <canvas id="weaponChart" style="max-width:500px;max-height:300px;"></canvas>
+    }
+
+    <h3>Upgrades</h3>
+    foreach (KeyValuePair<int, Dictionary<string, string>> upgrade in Model.Weapon.UpgradeStats)
+    {
+        <h5>+@upgrade.Key</h5>
+        foreach (KeyValuePair<string, string> stat in upgrade.Value)
+        {
+            <p>
+                @stat.Key: @stat.Value
+            </p>
+        }
     }
 }
 
