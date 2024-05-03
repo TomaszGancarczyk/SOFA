@@ -25,7 +25,9 @@ namespace Guide.Models
                 ];
             foreach (string file in Directory.EnumerateFiles($"{Shared.GetEuDatabasePath()}items\\other\\device", "*.*", SearchOption.TopDirectoryOnly))
             {
-                AllWeapons.Add(new WeaponModel(Shared.Reader(file), file));
+                string jsonString = Shared.Reader(file);
+                var jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
+                AllWeapons.Add(new WeaponModel(jObject, file));
             }
             return AllWeapons;
         }
@@ -44,7 +46,7 @@ namespace Guide.Models
                     ifImageExists = File.Exists($"{databasePath}icons\\weapon\\{category}\\{objectId}.png");
                 if (ifImageExists)
                 {
-                    WeaponModel weaponModel = new(jsonString, file);
+                    WeaponModel weaponModel = new(jObject, file);
                     weapons.Add(weaponModel);
                 }
                 else
@@ -61,10 +63,8 @@ namespace Guide.Models
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         public WeaponModel() { }
-        public WeaponModel(string jsonString, string file)
+        public WeaponModel(JObject jObject, string file)
         {
-            //define jobject
-            var jObject = (JObject)JsonConvert.DeserializeObject(jsonString);
             //check if has rarity
             int ifHasRarity = 0;
             if (jObject["infoBlocks"][0]
@@ -305,7 +305,6 @@ namespace Guide.Models
                 file = "";
                 foreach (string filePart in fileList)
                     file += $"{filePart}\\";
-                Dictionary<string, string> upgrade = new();
                 int upgradeCount = 1;
                 foreach (string upgradeFile in Directory.EnumerateFiles(file, "*.*", SearchOption.TopDirectoryOnly))
                 {
@@ -349,7 +348,7 @@ namespace Guide.Models
                     }
                     if (!isDevice && Class != "Other")
                         upgradeStats.Add(upgradeCount, stats);
-                    upgradeCount += 1;
+                    upgradeCount++;
                 }
             }
             UpgradeStats = upgradeStats;

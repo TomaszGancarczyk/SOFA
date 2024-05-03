@@ -38,7 +38,7 @@ namespace Guide.Models
                     ifImageExists = File.Exists($"{databasePath}icons\\armor\\{category}\\{objectId}.png");
                 if (ifImageExists)
                 {
-                    ArmorModel armorModel = new(jObject);
+                    ArmorModel armorModel = new(jObject, file);
                     armors.Add(armorModel);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Guide.Models
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         public ArmorModel() { }
-        public ArmorModel(JObject jObject)
+        public ArmorModel(JObject jObject, string file)
         {
             //check if has features
             int ifHasFeature = 0;
@@ -170,6 +170,37 @@ namespace Guide.Models
             }
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
+
+            //upgrades
+            Dictionary<int, Dictionary<string, string>> upgradeStats = [];
+            List<string> fileList = file.Split(".").ToList();
+            file = fileList[0];
+            fileList = file.Split("\\").ToList();
+            fileList.Insert(fileList.Count - 1, "_variants");
+            file = "";
+            foreach (string filePart in fileList)
+                file += $"{filePart}\\";
+            int upgradeCount = 1;
+            foreach (string upgradeFile in Directory.EnumerateFiles(file, "*.*", SearchOption.TopDirectoryOnly))
+            {
+                jObject = (JObject)JsonConvert.DeserializeObject(Shared.Reader(upgradeFile));
+                stats = [];
+                var upgradeJsonStats = jObject["infoBlocks"][3]
+                .Value<JArray>("elements");
+                foreach (var stat in upgradeJsonStats)
+                {
+                    stats.Add(
+                        stat
+                        .Value<JObject>("name")
+                        .Value<JObject>("lines")
+                        .Value<string>("en"),
+                        stat
+                        .Value<string>("value"));
+                }
+                upgradeStats.Add(upgradeCount, stats);
+                upgradeCount++;
+            }
+            UpgradeStats = upgradeStats;
         }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.
@@ -189,5 +220,6 @@ namespace Guide.Models
         public string CompatibleContainers { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public Dictionary<int, Dictionary<string, string>> UpgradeStats { get; set; }
     }
 }

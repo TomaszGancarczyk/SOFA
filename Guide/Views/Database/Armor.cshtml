@@ -46,4 +46,16 @@
     <h5>CompatibleContainers:</h5>
     <p>@Model.Armor.CompatibleContainers</p>
     <p>@Model.Armor.Description</p>
+
+    <h3>Upgrades</h3>
+    foreach (KeyValuePair<int, Dictionary<string, string>> upgrade in Model.Armor.UpgradeStats)
+    {
+        <h5>+@upgrade.Key</h5>
+        foreach (KeyValuePair<string, string> stat in upgrade.Value)
+        {
+            <p>
+                @stat.Key: @stat.Value
+            </p>
+        }
+    }
 }
