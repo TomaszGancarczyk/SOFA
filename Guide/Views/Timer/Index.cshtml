@@ -4,33 +4,109 @@
 }
 
 <script>
-    var clanWarCountdownTimer = "0:0:2:0";
+    //clan war timer
+    @{
+        int cwTimerMinutes = 60 - DateTime.Now.Minute;
+        int cwTimerHours = (24 + 19 - DateTime.Now.Hour)%24;
+        int cwTimerDays = DayOfWeek.Thursday - DateTime.Now.DayOfWeek;
+        if (cwTimerDays < 0) cwTimerDays = 0;
+        string cwTimer = $"{cwTimerDays}:{cwTimerHours}:{cwTimerMinutes}";
+    }
+    var clanWarCountdownTimer = "@cwTimer";
     var clanWarCountdown = setInterval(function () {
-        var timer = clanWarCountdownTimer.split(':');
-        var days = parseInt(timer[0], 10);
-        var hours = parseInt(timer[1], 10);
-        var minutes = parseInt(timer[2], 10);
-        var seconds = parseInt(timer[3], 10);
-        --seconds;
-        minutes = (seconds < 0) ? --minutes : minutes;
-        hours = (minutes < 0) ? --hours : hours;
-        days = (hours < 0) ? --days : days;
-        seconds = (seconds < 0) ? 59 : seconds;
-        seconds = (seconds < 10) ? '0' + seconds : seconds;
-        minutes = (minutes < 0) ? 59 : minutes;
-        minutes = (minutes < 10) ? '0' + minutes : minutes;
-        hours = (hours < 0) ? 23 : hours;
-        $('.countdown').html(days + ':' + hours + ':' + minutes);
-        clanWarCountdownTimer = days + ':' + hours + ':' + minutes + ':' + seconds;
-        if (days == 0 && hours == 0 && minutes == 0) {
-            console.log("Stopping countdown")
+        var cwTimer = clanWarCountdownTimer.split(':');
+        var cwDays = parseInt(cwTimer[0], 10);
+        var cwHours = parseInt(cwTimer[1], 10);
+        var cwMinutes = parseInt(cwTimer[2], 10);
+        --cwMinutes;
+        cwHours = (cwMinutes < 0) ? --cwHours : cwHours;
+        cwDays = (cwHours < 0) ? --cwDays : cwDays;
+        cwMinutes = (cwMinutes < 0) ? 59 : cwMinutes;
+        cwMinutes = (cwMinutes < 10) ? '0' + cwMinutes : cwMinutes;
+        cwHours = (cwHours < 0) ? 23 : cwHours;
+        $('.cwCountdown').html(cwDays + ' days ' + cwHours + ' hours ' + cwMinutes + ' minutes');
+        clanWarCountdownTimer = cwDays + ':' + cwHours + ':' + cwMinutes;
+        if (cwDays == 0 && cwHours == 0 && cwMinutes == 0) {
             clearInterval(clanWarCountdown);
         }
-    }, 1000);
+    }, 60000);
+
+    //dead time timer
+    //11-13
+    //15-17
+    //20-22
+    @{
+        int dtTimerMinutes = 60 - DateTime.Now.Minute;
+        bool isDtActive = false;
+        int dtTimerHours = 0;
+        if (dtTimerHours <= 0)
+        {
+            dtTimerHours = (11 - DateTime.Now.Hour) % 24;
+            isDtActive = false;
+        }
+        if (dtTimerHours <= 0)
+        {
+            dtTimerHours = (13 - DateTime.Now.Hour) % 24;
+            isDtActive = true;
+        }
+        if (dtTimerHours <= 0)
+        {
+            dtTimerHours = (15 - DateTime.Now.Hour) % 24;
+            isDtActive = false;
+        }
+        if (dtTimerHours <= 0)
+        {
+            dtTimerHours = (17 - DateTime.Now.Hour) % 24;
+            isDtActive = true;
+        }
+        if (dtTimerHours <= 0)
+        {
+            dtTimerHours = (20 - DateTime.Now.Hour) % 24;
+            isDtActive = false;
+        }
+        if (dtTimerHours <= 0)
+        {
+            dtTimerHours = (22 - DateTime.Now.Hour) % 24;
+            isDtActive = true;
+        }
+        if (dtTimerHours <= 0)
+        {
+            dtTimerHours = (23 - DateTime.Now.Hour) % 24;
+            isDtActive = false;
+        }
+        string dtTimer = $"{dtTimerHours}:{dtTimerMinutes}";
+    }
+        var deadTimeCountdownTimer = "@dtTimer";
+        var deadTimeCountdown = setInterval(function () {
+        var dtTimer = deadTimeCountdownTimer.split(':');
+        var dtHours = parseInt(dtTimer[0], 10);
+        var dtMinutes = parseInt(dtTimer[1], 10);
+        --dtMinutes;
+        dtHours = (dtMinutes < 0) ? --dtHours : dtHours;
+        dtMinutes = (dtMinutes < 0) ? 59 : dtMinutes;
+        dtMinutes = (dtMinutes < 10) ? '0' + dtMinutes : dtMinutes;
+        dtHours = (dtHours < 0) ? 23 : dtHours;
+        $('.dtCountdown').html(dtHours + ' hours ' + dtMinutes + ' minutes ');
+        deadTimeCountdownTimer = dtHours + ':' + dtMinutes;
+        if (dtHours == 0 && dtMinutes == 0) {
+            clearInterval(deadTimeCountdown);
+        }
+    }, 60000);
 </script>
 
 <div class="text-center">
     <p>
-        <div class="countdown"></div>
+        <h3>Time untill Clan War starts</h3>
+        <div class="cwCountdown">@cwTimerDays days @cwTimerHours hours @cwTimerMinutes minutes</div>
+    </p>
+
+    <p>
+        @{
+            string dtMessage = "Time untill Dead Time";
+            if (isDtActive) dtMessage += " closes";
+            else dtMessage += " opens";
+        }
+        <h3>@dtMessage</h3>
+        <div class="dtCountdown">@dtTimerHours hours @dtTimerMinutes minutes</div>
     </p>
 </div>
