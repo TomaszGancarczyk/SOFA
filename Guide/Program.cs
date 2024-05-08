@@ -16,45 +16,74 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            List<Item> allItems = [];
+            List<Item> allEuItems = [];
+            List<Item> allRuItems = [];
 
-            List<OtherModel> others = new OtherModel().GetAllOthers().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(others));
-            builder.Services.AddSingleton(others);
+            List<OtherModel> euOthers = new OtherModel().GetAllOthers(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<OtherModel> ruOthers = new OtherModel().GetAllOthers(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euOthers));
+            allRuItems.AddRange(Item.IItemToItem(ruOthers));
+            builder.Services.AddSingleton(euOthers);
+            builder.Services.AddSingleton(ruOthers);
 
-            List<MedicineModel> medicines = new MedicineModel().GetAllMedicines().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(medicines));
-            builder.Services.AddSingleton(medicines);
+            List<MedicineModel> euMedicines = new MedicineModel().GetAllMedicines(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<MedicineModel> ruMedicines = new MedicineModel().GetAllMedicines(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euMedicines));
+            allRuItems.AddRange(Item.IItemToItem(ruMedicines));
+            builder.Services.AddSingleton(euMedicines);
+            builder.Services.AddSingleton(ruMedicines);
 
-            List<GrenadeModel> grenades = new GrenadeModel().GetAllGrenades().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(grenades));
-            builder.Services.AddSingleton(grenades);
+            List<GrenadeModel> euGrenades = new GrenadeModel().GetAllGrenades(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<GrenadeModel> ruGrenades = new GrenadeModel().GetAllGrenades(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euGrenades));
+            allRuItems.AddRange(Item.IItemToItem(ruGrenades));
+            builder.Services.AddSingleton(euGrenades);
+            builder.Services.AddSingleton(ruGrenades);
 
-            List<BulletModel> bullets = new BulletModel().GetAllBullets().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(bullets));
-            builder.Services.AddSingleton(bullets);
+            List<BulletModel> euBullets = new BulletModel().GetAllBullets(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<BulletModel> ruBullets = new BulletModel().GetAllBullets(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euBullets));
+            allRuItems.AddRange(Item.IItemToItem(ruBullets));
+            builder.Services.AddSingleton(euBullets);
+            builder.Services.AddSingleton(ruBullets);
 
-            List<AttachmentModel> attachments = new AttachmentModel().GetAllAttachments().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(attachments));
-            builder.Services.AddSingleton(attachments);
+            List<AttachmentModel> euAttachments = new AttachmentModel().GetAllAttachments(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<AttachmentModel> ruAttachments = new AttachmentModel().GetAllAttachments(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euAttachments));
+            allRuItems.AddRange(Item.IItemToItem(ruAttachments));
+            builder.Services.AddSingleton(euAttachments);
+            builder.Services.AddSingleton(ruAttachments);
 
-            List<WeaponModel> weapons = new WeaponModel().GetAllWeapons().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(weapons));
-            builder.Services.AddSingleton(weapons);
+            List<WeaponModel> euWeapons = new WeaponModel().GetAllWeapons(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<WeaponModel> ruWeapons = new WeaponModel().GetAllWeapons(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euWeapons));
+            allRuItems.AddRange(Item.IItemToItem(ruWeapons));
+            builder.Services.AddSingleton(euWeapons);
+            builder.Services.AddSingleton(ruWeapons);
 
-            List<ArtefactModel> artefacts = new ArtefactModel().GetAllArtefacts().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(artefacts));
-            builder.Services.AddSingleton(artefacts);
+            List<ArtefactModel> euArtefacts = new ArtefactModel().GetAllArtefacts(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<ArtefactModel> ruArtefacts = new ArtefactModel().GetAllArtefacts(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euArtefacts));
+            allRuItems.AddRange(Item.IItemToItem(ruArtefacts));
+            builder.Services.AddSingleton(euArtefacts);
+            builder.Services.AddSingleton(ruArtefacts);
 
-            List<ContainerModel> containers = new ContainerModel().GetAllContainers().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(containers));
-            builder.Services.AddSingleton(containers);
+            List<ContainerModel> euContainers = new ContainerModel().GetAllContainers(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<ContainerModel> ruContainers = new ContainerModel().GetAllContainers(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euContainers));
+            allRuItems.AddRange(Item.IItemToItem(ruContainers));
+            builder.Services.AddSingleton(euContainers);
+            builder.Services.AddSingleton(ruContainers);
 
-            List<ArmorModel> armors = new ArmorModel().GetAllArmors().OrderBy(p => p.Name).ToList();
-            allItems.AddRange(Item.IItemToItem(armors));
-            builder.Services.AddSingleton(armors);
+            List<ArmorModel> euArmors = new ArmorModel().GetAllArmors(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
+            List<ArmorModel> ruArmors = new ArmorModel().GetAllArmors(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
+            allEuItems.AddRange(Item.IItemToItem(euArmors));
+            allRuItems.AddRange(Item.IItemToItem(ruArmors));
+            builder.Services.AddSingleton(euArmors);
+            builder.Services.AddSingleton(ruArmors);
 
-            builder.Services.AddSingleton<IEnumerable<Item>>(allItems);
+            //builder.Services.AddSingleton<IEnumerable<Item>>(allEuItems);
+            //builder.Services.AddSingleton<IEnumerable<Item>>(allRuItems);
 
 
             //check if all classes are supported
@@ -72,11 +101,19 @@ namespace Guide
                 "Barter",
                 "Other"
                 ];
-            foreach (var item in allItems)
+            foreach (var item in allEuItems)
             {
                 if (!classes.Contains(item.Class) && !databaseClasses.Contains(item.Class)){
                     classes.Add(item.Class);
-                    Console.WriteLine("Class: "+item.Class);
+                    Console.WriteLine("Class: " + item.Class);
+                }
+            }
+            foreach (var item in allRuItems)
+            {
+                if (!classes.Contains(item.Class) && !databaseClasses.Contains(item.Class))
+                {
+                    classes.Add(item.Class);
+                    Console.WriteLine("Class: " + item.Class);
                 }
             }
             if (classes.Count > 0)

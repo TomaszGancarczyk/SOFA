@@ -9,9 +9,8 @@ namespace Guide.Models
 {
     public class MedicineModel : IItem
     {
-        public List<MedicineModel> GetAllMedicines()
+        public List<MedicineModel> GetAllMedicines(string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<MedicineModel> medicines = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\medicine", "*.*", SearchOption.TopDirectoryOnly))
             {

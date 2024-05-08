@@ -8,9 +8,8 @@ namespace Guide.Models
 {
     public class GrenadeModel : IItem
     {
-        public List<GrenadeModel> GetAllGrenades()
+        public List<GrenadeModel> GetAllGrenades(string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<GrenadeModel> grenades = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\grenade", "*.*", SearchOption.TopDirectoryOnly))
             {

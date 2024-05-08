@@ -9,9 +9,8 @@ namespace Guide.Models
 {
     public class OtherModel : IItem
     {
-        public List<OtherModel> GetAllOthers()
+        public List<OtherModel> GetAllOthers(string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<OtherModel> others = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\other", "*.*", SearchOption.TopDirectoryOnly))
             {

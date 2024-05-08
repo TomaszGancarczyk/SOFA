@@ -8,9 +8,8 @@ namespace Guide.Models
 {
     public class ContainerModel : IItem
     {
-        public List<ContainerModel> GetAllContainers()
+        public List<ContainerModel> GetAllContainers(string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<ContainerModel> containers = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\containers", "*.*", SearchOption.TopDirectoryOnly))
             {

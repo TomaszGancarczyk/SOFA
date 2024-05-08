@@ -10,22 +10,21 @@ namespace Guide.Models
     public class AttachmentModel : IItem
     {
         public List<AttachmentModel> AllAttachments { get; set; }
-        public List<AttachmentModel> GetAllAttachments()
+        public List<AttachmentModel> GetAllAttachments(string databasePath)
         {
             AllAttachments =
                 [
-                    .. CreateAttachmentCategory("barrel"),
-                    .. CreateAttachmentCategory("collimator_sights"),
-                    .. CreateAttachmentCategory("forend"),
-                    .. CreateAttachmentCategory("mag"),
-                    .. CreateAttachmentCategory("other"),
-                    .. CreateAttachmentCategory("pistol_handle")
+                    .. CreateAttachmentCategory("barrel", databasePath),
+                    .. CreateAttachmentCategory("collimator_sights", databasePath),
+                    .. CreateAttachmentCategory("forend", databasePath),
+                    .. CreateAttachmentCategory("mag", databasePath),
+                    .. CreateAttachmentCategory("other", databasePath),
+                    .. CreateAttachmentCategory("pistol_handle", databasePath)
                 ];
             return AllAttachments;
         }
-        public List<AttachmentModel> CreateAttachmentCategory(string category)
+        public List<AttachmentModel> CreateAttachmentCategory(string category, string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<AttachmentModel> attachments = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\attachment\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {

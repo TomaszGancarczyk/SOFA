@@ -9,19 +9,19 @@ namespace Guide.Models
     public class WeaponModel : IItem
     {
         public List<WeaponModel> AllWeapons { get; set; }
-        public List<WeaponModel> GetAllWeapons()
+        public List<WeaponModel> GetAllWeapons(string databasePath)
         {
             AllWeapons =
                 [
-                    .. CreateWeaponCategory("assault_rifle"),
-                    .. CreateWeaponCategory("device"),
-                    .. CreateWeaponCategory("heavy"),
-                    .. CreateWeaponCategory("machine_gun"),
-                    .. CreateWeaponCategory("melee"),
-                    .. CreateWeaponCategory("pistol"),
-                    .. CreateWeaponCategory("shotgun_rifle"),
-                    .. CreateWeaponCategory("sniper_rifle"),
-                    .. CreateWeaponCategory("submachine_gun"),
+                    .. CreateWeaponCategory("assault_rifle", databasePath),
+                    .. CreateWeaponCategory("device", databasePath),
+                    .. CreateWeaponCategory("heavy", databasePath),
+                    .. CreateWeaponCategory("machine_gun", databasePath),
+                    .. CreateWeaponCategory("melee", databasePath),
+                    .. CreateWeaponCategory("pistol", databasePath),
+                    .. CreateWeaponCategory("shotgun_rifle", databasePath),
+                    .. CreateWeaponCategory("sniper_rifle", databasePath),
+                    .. CreateWeaponCategory("submachine_gun", databasePath),
                 ];
             foreach (string file in Directory.EnumerateFiles($"{Shared.GetEuDatabasePath()}items\\other\\device", "*.*", SearchOption.TopDirectoryOnly))
             {
@@ -32,9 +32,8 @@ namespace Guide.Models
             return AllWeapons;
         }
 
-        public List<WeaponModel> CreateWeaponCategory(string category)
+        public List<WeaponModel> CreateWeaponCategory(string category, string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<WeaponModel> weapons = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\weapon\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
@@ -296,16 +295,16 @@ namespace Guide.Models
 
             //upgrades
             Dictionary<int, Dictionary<string, string>> upgradeStats = [];
-            if (Class != "Devices" && Class != "Melee Weapons")
+            List<string> fileList = file.Split(".").ToList();
+            file = fileList[0];
+            fileList = file.Split("\\").ToList();
+            fileList.Insert(fileList.Count - 1, "_variants");
+            file = "";
+            foreach (string filePart in fileList)
+                file += $"{filePart}\\";
+            int upgradeCount = 1;
+            if (Directory.Exists(file))
             {
-                List<string> fileList = file.Split(".").ToList();
-                file = fileList[0];
-                fileList = file.Split("\\").ToList();
-                fileList.Insert(fileList.Count - 1, "_variants");
-                file = "";
-                foreach (string filePart in fileList)
-                    file += $"{filePart}\\";
-                int upgradeCount = 1;
                 foreach (string upgradeFile in Directory.EnumerateFiles(file, "*.*", SearchOption.TopDirectoryOnly))
                 {
                     jObject = (JObject)JsonConvert.DeserializeObject(Shared.Reader(upgradeFile));

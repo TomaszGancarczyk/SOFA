@@ -11,21 +11,20 @@ namespace Guide.Models
     public class ArtefactModel : IItem
     {
         public List<ArtefactModel> AllArtefacts { get; set; }
-        public List<ArtefactModel> GetAllArtefacts()
+        public List<ArtefactModel> GetAllArtefacts(string databasePath)
         {
             AllArtefacts =
                 [
-                    .. CreateArtefactsCategory("biochemical"),
-                    .. CreateArtefactsCategory("electrophysical"),
-                    .. CreateArtefactsCategory("gravity"),
-                    .. CreateArtefactsCategory("thermal"),
+                    .. CreateArtefactsCategory("biochemical", databasePath),
+                    .. CreateArtefactsCategory("electrophysical", databasePath),
+                    .. CreateArtefactsCategory("gravity", databasePath),
+                    .. CreateArtefactsCategory("thermal", databasePath),
                 ];
             return AllArtefacts;
         }
 
-        public List<ArtefactModel> CreateArtefactsCategory(string category)
+        public List<ArtefactModel> CreateArtefactsCategory(string category, string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<ArtefactModel> artefacts = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\artefact\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {

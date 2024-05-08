@@ -12,7 +12,7 @@ namespace Guide.Services
         }
         public static string GetRuDatabasePath()
         {
-            return "C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\stalcraft-database\\global\\";
+            return "C:\\Users\\a\\Desktop\\SOFA\\Guide\\Guide\\Database\\stalcraft-database\\ru\\";
         }
         public static string Reader(string filePath)
         {

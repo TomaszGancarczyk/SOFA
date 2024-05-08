@@ -12,21 +12,20 @@ namespace Guide.Models
     public class ArmorModel : IItem
     {
         public List<ArmorModel> AllArmors { get; set; }
-        public List<ArmorModel> GetAllArmors()
+        public List<ArmorModel> GetAllArmors(string databasePath)
         {
             AllArmors =
                 [
-                    .. CreateArmorCategory("clothes"),
-                    .. CreateArmorCategory("combat"),
-                    .. CreateArmorCategory("combined"),
-                    .. CreateArmorCategory("scientist"),
+                    .. CreateArmorCategory("clothes", databasePath),
+                    .. CreateArmorCategory("combat", databasePath),
+                    .. CreateArmorCategory("combined", databasePath),
+                    .. CreateArmorCategory("scientist", databasePath),
                 ];
             return AllArmors;
         }
 
-        public List<ArmorModel> CreateArmorCategory(string category)
+        public List<ArmorModel> CreateArmorCategory(string category, string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<ArmorModel> armors = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {

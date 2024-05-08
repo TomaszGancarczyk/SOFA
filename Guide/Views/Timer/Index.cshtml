@@ -24,7 +24,12 @@
         cwMinutes = (cwMinutes < 0) ? 59 : cwMinutes;
         cwMinutes = (cwMinutes < 10) ? '0' + cwMinutes : cwMinutes;
         cwHours = (cwHours < 0) ? 23 : cwHours;
-        $('.cwCountdown').html(cwDays + ' days ' + cwHours + ' hours ' + cwMinutes + ' minutes');
+        if (cwDays > 0) {
+            $('.cwCountdown').html(cwDays + ' days ' + cwHours + ' hours ' + cwMinutes + ' minutes');
+        }
+        if (cwDays == 0) {
+            $('.cwCountdown').html(cwHours + ' hours ' + cwMinutes + ' minutes');
+        }
         clanWarCountdownTimer = cwDays + ':' + cwHours + ':' + cwMinutes;
         if (cwDays == 0 && cwHours == 0 && cwMinutes == 0) {
             clearInterval(clanWarCountdown);
@@ -71,7 +76,7 @@
         }
         if (dtTimerHours <= 0)
         {
-            dtTimerHours = (23 - DateTime.Now.Hour) % 24;
+            dtTimerHours = (35 - DateTime.Now.Hour) % 24;
             isDtActive = false;
         }
         string dtTimer = $"{dtTimerHours}:{dtTimerMinutes}";
@@ -97,7 +102,14 @@
 <div class="text-center">
     <p>
         <h3>Time untill Clan War starts</h3>
-        <div class="cwCountdown">@cwTimerDays days @cwTimerHours hours @cwTimerMinutes minutes</div>
+        @if (cwTimerDays > 0)
+        {
+            <div class="cwCountdown">@cwTimerDays days @cwTimerHours hours @cwTimerMinutes minutes</div>
+        }
+        else
+        {
+            <div class="cwCountdown">@cwTimerHours hours @cwTimerMinutes minutes</div>
+        }
     </p>
 
     <p>

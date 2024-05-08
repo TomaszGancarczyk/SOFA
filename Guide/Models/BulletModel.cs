@@ -9,9 +9,8 @@ namespace Guide.Models
 {
     public class BulletModel : IItem
     {
-        public List<BulletModel> GetAllBullets()
+        public List<BulletModel> GetAllBullets(string databasePath)
         {
-            string databasePath = Shared.GetEuDatabasePath();
             List<BulletModel> bullets = [];
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\bullet", "*.*", SearchOption.TopDirectoryOnly))
             {
