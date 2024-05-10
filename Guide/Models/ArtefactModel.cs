@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Guide.Services;
 using Newtonsoft.Json;
-using System.Net;
-using System.Collections.Generic;
-using System;
-using Microsoft.IdentityModel.Tokens;
-using Guide.Services;
+using Newtonsoft.Json.Linq;
 
 namespace Guide.Models
 {

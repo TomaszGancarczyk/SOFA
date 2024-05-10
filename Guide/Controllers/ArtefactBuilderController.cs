@@ -1,7 +1,6 @@
 using Guide.Models;
 using Guide.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Artefact.Controllers
 {

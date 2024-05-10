@@ -1,8 +1,6 @@
 using Guide.Models;
 using Guide.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Net.Mail;
 
 namespace Database.Controllers
 {
@@ -22,57 +20,68 @@ namespace Database.Controllers
         public IActionResult Armor(string armorId)
         {
             var viewModel = new ArmorViewModel(armorId, _armors);
-            return View(viewModel);
+            if (viewModel.Armor.Id == armorId && viewModel.Armor.ImgSource != null) return View(viewModel);
+            else return RedirectToAction("Index");
         }
         public IActionResult Artefact(string artefactId)
         {
             var viewModel = new ArtefactViewModel(artefactId, _artefacts);
-            return View(viewModel);
+            if (viewModel.Artefact != null && viewModel.Artefact.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Container(string containerId)
         {
             var viewModel = new ContainerViewModel(containerId, _containers);
-            return View(viewModel);
+            if (viewModel.Container != null && viewModel.Container.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Weapon(string weaponId)
         {
             var viewModel = new WeaponViewModel(weaponId, _weapons);
-            return View(viewModel);
+            if (viewModel.Weapon != null && viewModel.Weapon.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Attachment(string attachmentId)
         {
             var viewModel = new AttachmentViewModel(attachmentId, _attachments);
-            return View(viewModel);
+            if (viewModel.Attachment != null && viewModel.Attachment.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Bullet(string bulletId)
         {
             var viewModel = new BulletViewModel(bulletId, _bullets);
-            return View(viewModel);
+            if (viewModel.Bullet != null && viewModel.Bullet.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Grenade(string grenadeId)
         {
             var viewModel = new GrenadeViewModel(grenadeId, _grenades);
-            return View(viewModel);
+            if (viewModel.Grenade != null && viewModel.Grenade.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Medicine(string medicineId)
         {
             var viewModel = new MedicineViewModel(medicineId, _medicines);
-            return View(viewModel);
+            if (viewModel.Medicine != null && viewModel.Medicine.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Barter(string barterId)
         {
             var viewModel = new BarterViewModel(barterId, _barters);
-            return View(viewModel);
+            if (viewModel.Barter != null && viewModel.Barter.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Paint(string paintid)
         {
             var viewModel = new PaintViewModel(paintid, _paints);
-            return View(viewModel);
+            if (viewModel.Paint != null && viewModel.Paint.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
         public IActionResult Other(string otherId)
         {
             var viewModel = new OtherViewModel(otherId, _others);
-            return View(viewModel);
+            if (viewModel.Other != null && viewModel.Other.ImgSource != null) return View(viewModel);
+            return RedirectToAction("Index");
         }
     }
 }

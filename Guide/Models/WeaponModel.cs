@@ -1,8 +1,6 @@
 ﻿using Guide.Services;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Net;
 
 namespace Guide.Models
 {
@@ -23,7 +21,7 @@ namespace Guide.Models
                     .. CreateWeaponCategory("sniper_rifle", databasePath),
                     .. CreateWeaponCategory("submachine_gun", databasePath),
                 ];
-            foreach (string file in Directory.EnumerateFiles($"{Shared.GetEuDatabasePath()}items\\other\\device", "*.*", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\other\\device", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
                 var jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
