@@ -16,6 +16,8 @@
     }
     function openSidebar(element) {
         closeMainSidebars()
+        var backgroundElement = document.getElementById("backgroundSidebar");
+        backgroundElement.style.display = "block";
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.left = "200px";
@@ -34,14 +36,13 @@
     }
     function closeSidebar(sidebarId) {
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.display = "none";
         sidebarElement.style.left = "0px";
-        sidebarElement.style.display = "block";
     }
     function closeDatabaseSidebar() {
         closeMainSidebars()
-        var sidebarId = "databaseSidebar";
-        var sidebarElement = document.getElementById(sidebarId);
+        var backgroundElement = document.getElementById("backgroundSidebar");
+        backgroundElement.style.display = "none";
+        var sidebarElement = document.getElementById("databaseSidebar");
         sidebarElement.style.display = "none";
         sidebarElement.style.left = "0px";
         sidebarElement.style.display = "block";
@@ -401,6 +402,6 @@
 
     </div>
 </div>
-<div class="sidebar-backgroub" onclick="closeDatabaseSidebar()">
+<div id="backgroundSidebar" class="sidebar-backgroub" onclick="closeDatabaseSidebar()">
 
 </div>

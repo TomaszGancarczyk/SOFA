@@ -3,49 +3,59 @@
     ViewData["Title"] = "Artefact Builder";
 }
 
+<div style="width: calc(100vw - 220px); height: calc(100vh - 80px)">
+    <h3>Choose container</h3>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu">
+            @foreach (ContainerModel container in Model.Containers)
+            {
+                <button class="dropdown-item" type="button">@container.Name</button>
+            }
+        </div>
+    </div>
+    <h3>Choose artifacts</h3>
+</div>
 
-<div>
+<div style="display: flex; flex-wrap: wrap;">
     @foreach (ArtefactModel artefact in Model.Artefacts)
     {
-        <img src="@artefact.ImgSource" />
-        <h1>Id: @artefact.Id</h1>
-        <h3>@artefact.Name</h3>
-        <h5>Class: @artefact.Class</h5>
-        <h5>Weight: @artefact.Weight</h5>
-        <h5>Stats:</h5>
-        foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.ArtefactStats)
-        {
-            string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
-            <p>
-                @drawStat
-            </p>
-        }
-        if (String.IsNullOrEmpty(artefact.Description))
-        {
-            <p>@artefact.Description</p>
-        }
+        <div style="width: 10%">
+            <img src="@artefact.ImgSource" />
+            <h3>@artefact.Name</h3>
+            <h5>@artefact.Class</h5>
+            @foreach (KeyValuePair<string, Dictionary<double, double>> stat in artefact.ArtefactStats)
+            {
+                string drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()}-{stat.Value.Values.FirstOrDefault()}";
+                <p>
+                    @drawStat
+                </p>
+            }
+        </div>
     }
 </div>
-<div>
+<div style="display: flex; flex-wrap: wrap;">
     @foreach (ContainerModel container in Model.Containers)
     {
-        <img src="@container.ImgSource" />
-        <h1>Id: @container.Id</h1>
-        <h3>@container.Name</h3>
-        <h5>Rarity: @container.Rarity</h5>
-        <h5>Class: @container.Class</h5>
-        <h5>Weight: @container.Weight</h5>
-        <h5>Stats:</h5>
-        foreach (KeyValuePair<string, string> stat in container.Stats)
-        {
-            string drawStat = $"{stat.Key}: {stat.Value}";
-            <p>
-                @drawStat
-            </p>
-        }
-        if (String.IsNullOrEmpty(container.Description))
-        {
-            <p>@container.Description</p>
-        }
+        <div style="width: 10%">
+            <img src="@container.ImgSource" />
+            <h3>@container.Name</h3>
+            <h5>Rarity: @container.Rarity</h5>
+            <h5>Weight: @container.Weight</h5>
+            <h5>Stats:</h5>
+            @foreach (KeyValuePair<string, string> stat in container.Stats)
+            {
+                string drawStat = $"{stat.Key}: {stat.Value}";
+                <p>
+                    @drawStat
+                </p>
+            }
+            @if (!String.IsNullOrEmpty(container.Description))
+            {
+                <p>@container.Description</p>
+            }
+        </div>
     }
 </div>
