@@ -10,33 +10,41 @@
 <script>
     function openDatabaseSidebar(element) {
         closeMainSidebars()
-        closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.display = "block";
+        sidebarElement.style.left = "200px";
     }
     function openSidebar(element) {
         closeMainSidebars()
-        closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.display = "block";
+        sidebarElement.style.left = "200px";
     }
     function openSecondarySidebar(element) {
+        closeMainSidebars()
+        var sidebarId = element.getAttribute('data-sidebar-id');
+        var sidebarElement = document.getElementById(sidebarId);
+        sidebarElement.style.left = "400px";
+    }
+    function openTertiarySidebar(element) {
         closeSecondarySidebars()
         var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
-        sidebarElement.style.display = "block";
+        sidebarElement.style.left = "600px";
     }
     function closeSidebar(sidebarId) {
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.display = "none";
+        sidebarElement.style.left = "0px";
+        sidebarElement.style.display = "block";
     }
     function closeDatabaseSidebar() {
         closeMainSidebars()
         var sidebarId = "databaseSidebar";
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.display = "none";
+        sidebarElement.style.left = "0px";
+        sidebarElement.style.display = "block";
     }
     function closeMainSidebars() {
         closeSecondarySidebars()
@@ -82,287 +90,317 @@
     }
 </script>
 
-<div class="sticky" style="top: 80px;">
+<div class="sticky" style="top: 80px; z-index: 1;">
+    <div id="mainSidebar" class="sidebar-container sticky">
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Guide")'">
+            Guide
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Market")'">
+            Market
+        </button>
+        <button class="sidebar-button" data-sidebar-id="databaseSidebar" onclick="openSidebar(this)">
+            Database
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Barter")'">
+            Barter Tree
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "ArtefactBuilder")'">
+            Artefact Builder
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Map")'">
+            Map
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Quest")'">
+            Quest Tree
+        </button>
+        <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Timer")'">
+            Timers
+        </button>
+    </div>
     <div id="databaseSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button" onclick="closeDatabaseSidebar()">
             &lt;--
         </button>
-        <button class="sidebar-button" data-sidebar-id="weaponSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="weaponSidebar" onclick="openSecondarySidebar(this)">
             Weapons
         </button>
-        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSecondarySidebar(this)">
             Armors
         </button>
-        <button class="sidebar-button" data-sidebar-id="containerSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="containerSidebar" onclick="openSecondarySidebar(this)">
             Backpacks and Containers
         </button>
-        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="openSecondarySidebar(this)">
             Artefacts
         </button>
-        <button class="sidebar-button" data-sidebar-id="attachmentSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="attachmentSidebar" onclick="openSecondarySidebar(this)">
             Attachments
         </button>
-        <button class="sidebar-button" data-sidebar-id="bulletSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="bulletSidebar" onclick="openSecondarySidebar(this)">
             Bullets
         </button>
-        <button class="sidebar-button" data-sidebar-id="grenadeSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="grenadeSidebar" onclick="openSecondarySidebar(this)">
             Grenades
         </button>
-        <button class="sidebar-button" data-sidebar-id="medicineSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="medicineSidebar" onclick="openSecondarySidebar(this)">
             Medicines
         </button>
-        <button class="sidebar-button" data-sidebar-id="barterSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="barterSidebar" onclick="openSecondarySidebar(this)">
             Barter
         </button>
-        <button class="sidebar-button" data-sidebar-id="paintSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="paintSidebar" onclick="openSecondarySidebar(this)">
             Skins and Paints
         </button>
-        <button class="sidebar-button" data-sidebar-id="otherSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" data-sidebar-id="otherSidebar" onclick="openSecondarySidebar(this)">
             Others
         </button>
     </div>
-
-
-    @* armor sidebar *@
-    @{
-        List<string> armorClasses = ["Clothing", "Combat", "Combo", "Scientist"];
-    }
-    <div id="armorSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            &lt;--
-        </button>
-        @foreach (string armorClass in armorClasses)
-        {
-            string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
-            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
-                @armorClass
-            </button>
+    <div>
+        @* armor sidebar *@
+        @{
+            List<string> armorClasses = ["Clothing", "Combat", "Combo", "Scientist"];
         }
-    </div>
-    @{
-        @foreach (string armorClass in armorClasses)
-        {
-            string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="sidebar-body sidebar-container sticky">
-                <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                    &lt;--
+        <div id="armorSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                &lt;--
+            </button>
+            @foreach (string armorClass in armorClasses)
+            {
+                string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
+                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                    @armorClass
                 </button>
-                @foreach (ArmorModel armor in Model.Armors)
-                {
-                    if (armor.Class == armorClass)
+            }
+        </div>
+        @{
+            @foreach (string armorClass in armorClasses)
+            {
+                string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
+                <div id=@id class="sidebar-body-body-body sidebar-container sticky">
+                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
+                        &lt;--
+                    </button>
+                    @foreach (ArmorModel armor in Model.Armors)
                     {
-                        <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = armor.Id})'">
-                            @armor.Name
-                        </button>
+                        if (armor.Class == armorClass)
+                        {
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = armor.Id})'">
+                                @armor.Name
+                            </button>
+                        }
                     }
-                }
-            </div>
+                </div>
+            }
         }
-    }
 
 
-    @* container & backpack sidebar *@
-    <div id="containerSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (ContainerModel container in Model.Containers)
-        {
-            <button class="sidebar-button" onclick="location.href='@Url.Action("Container", "Database", new {containerId = @container.Id})'">
-                @container.Name
+        @* container & backpack sidebar *@
+        <div id="containerSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
             </button>
-        }
-    </div>
-
-
-    @* artefact sidebar *@
-    @{
-        List<string> artefactClasses = ["Biochemical", "Electrophysical", "Gravitational", "Thermal"];
-    }
-    <div id="artefactSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (string artefactClass in artefactClasses)
-        {
-            string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
-            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
-                @artefactClass
-            </button>
-        }
-    </div>
-    @{
-        @foreach (string artefactClass in artefactClasses)
-        {
-            string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="sidebar-body sidebar-container sticky">
-                <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                    &lt;--
+            @foreach (ContainerModel container in Model.Containers)
+            {
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Container", "Database", new {containerId = @container.Id})'">
+                    @container.Name
                 </button>
-                @foreach (ArtefactModel artefact in Model.Artefacts)
-                {
-                    if (artefact.Class == artefactClass)
-                    {
-                        <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
-                            @artefact.Name
-                        </button>
-                    }
-                }
-            </div>
+            }
+        </div>
+
+
+        @* artefact sidebar *@
+        @{
+            List<string> artefactClasses = ["Biochemical", "Electrophysical", "Gravitational", "Thermal"];
         }
-    }
-
-
-    @* weapon sidebar *@
-    @{
-        List<string> weaponClasses = ["Assault Rifles", "Devices", "Other Weapons", "Machine Guns", "Melee Weapons", "Pistols", "Shotguns and Rifles", "Sniper Rifles", "Submachine Guns"];
-    }
-    <div id="weaponSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (string weaponClass in weaponClasses)
-        {
-            string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
-            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
-                @weaponClass
+        <div id="artefactSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
             </button>
-        }
-    </div>
-    @{
-        @foreach (string weaponClass in weaponClasses)
-        {
-            string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="sidebar-body sidebar-container sticky">
-                <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                    &lt;--
+            @foreach (string artefactClass in artefactClasses)
+            {
+                string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
+                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                    @artefactClass
                 </button>
-                @foreach (WeaponModel weapon in Model.Weapons)
-                {
-                    if (weapon.Class == weaponClass)
+            }
+        </div>
+        @{
+            @foreach (string artefactClass in artefactClasses)
+            {
+                string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
+                <div id=@id class="sidebar-body-body-body sidebar-container sticky">
+                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
+                        &lt;--
+                    </button>
+                    @foreach (ArtefactModel artefact in Model.Artefacts)
                     {
-                        <button class="sidebar-button" onclick="location.href='@Url.Action("Weapon", "Database", new {weaponId = weapon.Id})'">
-                            @weapon.Name
-                        </button>
+                        if (artefact.Class == artefactClass)
+                        {
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
+                                @artefact.Name
+                            </button>
+                        }
                     }
-                }
-            </div>
+                </div>
+            }
         }
-    }
 
-    @* attachment sidebar *@
-    @{
-        List<string> attachmentClasses = ["Muzzles and Silencers", "Sights", "Hanguards and Brackets", "Magazines", "Other Attachments", "Pistol Grips"];
-    }
-    <div id="attachmentSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (string attachmentClass in attachmentClasses)
-        {
-            string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
-            <button class="sidebar-button" data-sidebar-id=@id onclick="openSecondarySidebar(this)">
-                @attachmentClass
-            </button>
+
+        @* weapon sidebar *@
+        @{
+            List<string> weaponClasses = ["Assault Rifles", "Devices", "Other Weapons", "Machine Guns", "Melee Weapons", "Pistols", "Shotguns and Rifles", "Sniper Rifles", "Submachine Guns"];
         }
-    </div>
-    @{
-        @foreach (string attachmentClass in attachmentClasses)
-        {
-            string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
-            <div id=@id class="sidebar-body sidebar-container sticky">
-                <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                    &lt;--
+        <div id="weaponSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
+            </button>
+            @foreach (string weaponClass in weaponClasses)
+            {
+                string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
+                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                    @weaponClass
                 </button>
-                @foreach (AttachmentModel attachment in Model.Attachments)
-                {
-                    if (attachment.Class == attachmentClass)
+            }
+        </div>
+        @{
+            @foreach (string weaponClass in weaponClasses)
+            {
+                string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
+                <div id=@id class="sidebar-body-body-body sidebar-container sticky">
+                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
+                        &lt;--
+                    </button>
+                    @foreach (WeaponModel weapon in Model.Weapons)
                     {
-                        <button class="sidebar-button" onclick="location.href='@Url.Action("Attachment", "Database", new {attachmentId = attachment.Id})'">
-                            @attachment.Name
-                        </button>
+                        if (weapon.Class == weaponClass)
+                        {
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Weapon", "Database", new {weaponId = weapon.Id})'">
+                                @weapon.Name
+                            </button>
+                        }
                     }
-                }
-            </div>
+                </div>
+            }
         }
-    }
 
-    @* bullet sidebar *@
-    <div id="bulletSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (BulletModel bullet in Model.Bullets)
-        {
-            <button class="sidebar-button" onclick="location.href='@Url.Action("Bullet", "Database", new {bulletId = bullet.Id})'">
-                @bullet.Name
-            </button>
+        @* attachment sidebar *@
+        @{
+            List<string> attachmentClasses = ["Muzzles and Silencers", "Sights", "Hanguards and Brackets", "Magazines", "Other Attachments", "Pistol Grips"];
         }
-    </div>
+        <div id="attachmentSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
+            </button>
+            @foreach (string attachmentClass in attachmentClasses)
+            {
+                string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
+                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                    @attachmentClass
+                </button>
+            }
+        </div>
+        @{
+            @foreach (string attachmentClass in attachmentClasses)
+            {
+                string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
+                <div id=@id class="sidebar-body-body-body sidebar-container sticky">
+                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
+                        &lt;--
+                    </button>
+                    @foreach (AttachmentModel attachment in Model.Attachments)
+                    {
+                        if (attachment.Class == attachmentClass)
+                        {
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Attachment", "Database", new {attachmentId = attachment.Id})'">
+                                @attachment.Name
+                            </button>
+                        }
+                    }
+                </div>
+            }
+        }
 
-    @* grenade sidebar *@
-    <div id="grenadeSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (GrenadeModel grenade in Model.Grenades)
-        {
-            <button class="sidebar-button" onclick="location.href='@Url.Action("Grenade", "Database", new {grenadeId = grenade.Id})'">
-                @grenade.Name
+        @* bullet sidebar *@
+        <div id="bulletSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
             </button>
-        }
-    </div>
+            @foreach (BulletModel bullet in Model.Bullets)
+            {
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Bullet", "Database", new {bulletId = bullet.Id})'">
+                    @bullet.Name
+                </button>
+            }
+        </div>
 
-    @* medicine sidebar *@
-    <div id="medicineSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (MedicineModel medicine in Model.Medicines)
-        {
-            <button class="sidebar-button" onclick="location.href='@Url.Action("Medicine", "Database", new {medicineId = medicine.Id})'">
-                @medicine.Name
+        @* grenade sidebar *@
+        <div id="grenadeSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
             </button>
-        }
-    </div>
+            @foreach (GrenadeModel grenade in Model.Grenades)
+            {
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Grenade", "Database", new {grenadeId = grenade.Id})'">
+                    @grenade.Name
+                </button>
+            }
+        </div>
 
-    
-    @* barter sidebar *@
-    <div id="barterSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (OtherModel barter in Model.Barters)
-        {
-            <button class="sidebar-button" onclick="location.href='@Url.Action("Barter", "Database", new {barterId = barter.Id})'">
-                @barter.Name
+        @* medicine sidebar *@
+        <div id="medicineSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
             </button>
-        }
-    </div>
+            @foreach (MedicineModel medicine in Model.Medicines)
+            {
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Medicine", "Database", new {medicineId = medicine.Id})'">
+                    @medicine.Name
+                </button>
+            }
+        </div>
 
-    @* paint sidebar *@
-    <div id="paintSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (OtherModel paint in Model.Paints)
-        {
-            <button class="sidebar-button" onclick="location.href='@Url.Action("Paint", "Database", new {paintId = paint.Id})'">
-                @paint.Name
-            </button>
-        }
-    </div>
 
-    @* other sidebar *@
-    <div id="otherSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeMainSidebars()">
-            <--
-        </button>
-        @foreach (OtherModel other in Model.Others)
-        {
-            <button class="sidebar-button" onclick="location.href='@Url.Action("Other", "Database", new {otherId = other.Id})'">
-                @other.Name
+        @* barter sidebar *@
+        <div id="barterSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
             </button>
-        }
+            @foreach (OtherModel barter in Model.Barters)
+            {
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Barter", "Database", new {barterId = barter.Id})'">
+                    @barter.Name
+                </button>
+            }
+        </div>
+
+        @* paint sidebar *@
+        <div id="paintSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
+            </button>
+            @foreach (OtherModel paint in Model.Paints)
+            {
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Paint", "Database", new {paintId = paint.Id})'">
+                    @paint.Name
+                </button>
+            }
+        </div>
+
+        @* other sidebar *@
+        <div id="otherSidebar" class="sidebar-body-body sidebar-container sticky">
+            <button class="sidebar-button" onclick="closeMainSidebars()">
+                <--
+            </button>
+            @foreach (OtherModel other in Model.Others)
+            {
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Other", "Database", new {otherId = other.Id})'">
+                    @other.Name
+                </button>
+            }
+        </div>
+
     </div>
+</div>
+<div class="sidebar-backgroub" onclick="closeDatabaseSidebar()">
+
 </div>

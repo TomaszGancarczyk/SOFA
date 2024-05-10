@@ -86,6 +86,7 @@ body {
 .scrollable {
     overflow: auto;
 }
+
 .current-sidebar-button {
     position: relative;
     left: 1px;
@@ -110,7 +111,7 @@ body {
     outline: 2px solid rgb(20, 20, 20);
     outline-offset: -1px;
     padding: 5px 2px 25px 2px;
-    z-index: 3;
+    z-index: 7;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -122,17 +123,46 @@ body {
 /* Database View */
 
 .sidebar-body {
-    display: none;
     width: 200px;
     outline: rgb(20, 20, 20) solid 2px;
-    z-index: 2;
+    z-index: 6;
     color: rgb(155, 155, 155);
     padding: 5px 2px 25px;
-    position: relative;
+    position: absolute;
     left: 0px;
     top: 0px;
+    transition-duration: 0.2s;
 }
 
+.sidebar-body-body {
+    width: 200px;
+    outline: rgb(20, 20, 20) solid 2px;
+    z-index: 5;
+    color: rgb(155, 155, 155);
+    padding: 5px 2px 25px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition-duration: 0.2s;
+}
+
+.sidebar-body-body-body {
+    width: 200px;
+    outline: rgb(20, 20, 20) solid 2px;
+    z-index: 4;
+    color: rgb(155, 155, 155);
+    padding: 5px 2px 25px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transition-duration: 0.2s;
+}
+
+.sidebar-backgroub {
+    position:absolute;
+    width: 100vw;
+    height: calc(100vh - 80px);
+}
 /* Artefact Builder View */
 
 .infection {
