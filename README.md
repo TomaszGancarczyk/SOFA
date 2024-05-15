@@ -1,18 +1,16 @@
-TODO:
+My passion project to learn more of c# programming
 
+TODO:
 > Database
-  - fill database with items
   - add option to compare items
   - add option to upgrade gear
   - search option
 > Artifact
-  - add containers
-    - make container class
-  - add artifacts
   - add calculator
     - add effects and warnings for too high infections
 > Timers
-  - add timers for dead time, clan wars and emissions
+  - make sure timers work correctly
+  - change visuals
 > Barter tree
   - barter tree with stats / cost
     - add used in field
@@ -27,16 +25,14 @@ TODO:
     - teleport bubbles
     - anomalous zones
     - quests
+    - cache areas
+    - arti hotspots
 > Guide
   - fill guide section from doc
 > Market
   - make a market to buy, sell, trade items between players easier
-> Site
-  - layout
-    - margins on sides
-    - darker colors
-    - background photo (depending on your faction?)
 > Login
   - to save quest and barter progress
   - to post on market
   - player profile with stats
+  - visual change on site depending on faction
