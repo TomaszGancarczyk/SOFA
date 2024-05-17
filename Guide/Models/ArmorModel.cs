@@ -22,6 +22,7 @@ namespace Guide.Models
         public List<ArmorModel> CreateArmorCategory(string category, string databasePath)
         {
             List<ArmorModel> armors = [];
+            BarterModel bases = BarterModel.GetBarter(Shared.GetEuDatabasePath());
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
@@ -33,6 +34,22 @@ namespace Guide.Models
                 if (ifImageExists)
                 {
                     ArmorModel armorModel = new(jObject, file);
+                    foreach (var factionBase in bases.Bases)
+                    {
+                        foreach (var offer in factionBase.Barters)
+                        {
+                            if (offer.ItemId == objectId)
+                            {
+                                ItemBarter barter = new();
+                                barter.RequiredLevel = offer.RequiredLevel;
+                                barter.BaseName = factionBase.BaseName;
+                                barter.Offers = offer.Offers;
+                                armorModel.Barter = barter;
+                                factionBase.Barters.Remove(offer);
+                                break;
+                            }
+                        }
+                    }
                     armors.Add(armorModel);
                 }
                 else
@@ -215,5 +232,6 @@ namespace Guide.Models
         public string Description { get; set; }
         public string ImgSource { get; set; }
         public Dictionary<int, Dictionary<string, string>> UpgradeStats { get; set; }
+        public ItemBarter Barter { get; set; }
     }
 }

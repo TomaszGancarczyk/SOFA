@@ -38,6 +38,24 @@
         <canvas id="weaponChart" style="max-width:500px;max-height:300px;"></canvas>
     }
 
+    <h1>Barter</h1>
+    @if (Model.Weapon.Barter != null)
+    {
+        <p>@Model.Weapon.Barter.BaseName lvl @Model.Weapon.Barter.RequiredLevel</p>
+        <h5>Offers</h5>
+        int i = 1;
+        foreach (var offer in Model.Weapon.Barter.Offers)
+        {
+            <h5>Offer #@i</h5>
+            <p>@offer.Price roubles</p>
+            foreach (var item in offer.RequiredItems)
+            {
+                <p>@item.Value @item.Key</p>
+            }
+            i++;
+        }
+    }
+
     <h3>Upgrades</h3>
     foreach (KeyValuePair<int, Dictionary<string, string>> upgrade in Model.Weapon.UpgradeStats)
     {

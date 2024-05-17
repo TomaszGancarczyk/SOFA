@@ -9,6 +9,7 @@ namespace Guide.Models
         public List<OtherModel> GetAllOthers(string databasePath)
         {
             List<OtherModel> others = [];
+            BarterModel bases = BarterModel.GetBarter(Shared.GetEuDatabasePath());
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\other", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
@@ -20,6 +21,22 @@ namespace Guide.Models
                 if (ifImageExists)
                 {
                     OtherModel otherModel = new(jObject);
+                    foreach (var factionBase in bases.Bases)
+                    {
+                        foreach (var offer in factionBase.Barters)
+                        {
+                            if (offer.ItemId == objectId)
+                            {
+                                ItemBarter barter = new();
+                                barter.RequiredLevel = offer.RequiredLevel;
+                                barter.BaseName = factionBase.BaseName;
+                                barter.Offers = offer.Offers;
+                                otherModel.Barter = barter;
+                                factionBase.Barters.Remove(offer);
+                                break;
+                            }
+                        }
+                    }
                     others.Add(otherModel);
                 }
                 else
@@ -38,6 +55,22 @@ namespace Guide.Models
                 if (ifImageExists)
                 {
                     OtherModel otherModel = new(jObject);
+                    foreach (var factionBase in bases.Bases)
+                    {
+                        foreach (var offer in factionBase.Barters)
+                        {
+                            if (offer.ItemId == objectId)
+                            {
+                                ItemBarter barter = new();
+                                barter.RequiredLevel = offer.RequiredLevel;
+                                barter.BaseName = factionBase.BaseName;
+                                barter.Offers = offer.Offers;
+                                otherModel.Barter = barter;
+                                factionBase.Barters.Remove(offer);
+                                break;
+                            }
+                        }
+                    }
                     others.Add(otherModel);
                 }
                 else
@@ -145,6 +178,7 @@ namespace Guide.Models
         public bool IsPaint { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public ItemBarter Barter { get; set; }
     }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.

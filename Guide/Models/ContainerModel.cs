@@ -9,6 +9,7 @@ namespace Guide.Models
         public List<ContainerModel> GetAllContainers(string databasePath)
         {
             List<ContainerModel> containers = [];
+            BarterModel bases = BarterModel.GetBarter(Shared.GetEuDatabasePath());
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\containers", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
@@ -20,6 +21,22 @@ namespace Guide.Models
                 if (ifImageExists)
                 {
                     ContainerModel containerModel = new(jObject);
+                    foreach (var factionBase in bases.Bases)
+                    {
+                        foreach (var offer in factionBase.Barters)
+                        {
+                            if (offer.ItemId == objectId)
+                            {
+                                ItemBarter barter = new();
+                                barter.RequiredLevel = offer.RequiredLevel;
+                                barter.BaseName = factionBase.BaseName;
+                                barter.Offers = offer.Offers;
+                                containerModel.Barter = barter;
+                                factionBase.Barters.Remove(offer);
+                                break;
+                            }
+                        }
+                    }
                     containers.Add(containerModel);
                 }
                 else
@@ -94,6 +111,7 @@ namespace Guide.Models
         public Dictionary<string, string> Stats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        public ItemBarter Barter { get; set; }
     }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.

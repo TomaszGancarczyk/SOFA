@@ -33,6 +33,7 @@ namespace Guide.Models
         public List<WeaponModel> CreateWeaponCategory(string category, string databasePath)
         {
             List<WeaponModel> weapons = [];
+            BarterModel bases = BarterModel.GetBarter(Shared.GetEuDatabasePath());
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\weapon\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
@@ -44,6 +45,22 @@ namespace Guide.Models
                 if (ifImageExists)
                 {
                     WeaponModel weaponModel = new(jObject, file);
+                    foreach (var factionBase in bases.Bases)
+                    {
+                        foreach (var offer in factionBase.Barters)
+                        {
+                            if (offer.ItemId == objectId)
+                            {
+                                ItemBarter barter = new();
+                                barter.RequiredLevel = offer.RequiredLevel;
+                                barter.BaseName = factionBase.BaseName;
+                                barter.Offers = offer.Offers;
+                                weaponModel.Barter = barter;
+                                factionBase.Barters.Remove(offer);
+                                break;
+                            }
+                        }
+                    }
                     weapons.Add(weaponModel);
                 }
                 else
@@ -368,6 +385,7 @@ namespace Guide.Models
         public string Description { get; set; }
         public string ImgSource { get; set; }
         public Dictionary<int, Dictionary<string, string>> UpgradeStats { get; set; }
+        public ItemBarter Barter { get; set; }
     }
     public class DamageGraph(double startDamage, double damageDecreaseStart, double endDamage, double damageDecreaseEnd, double maxDistance)
     {

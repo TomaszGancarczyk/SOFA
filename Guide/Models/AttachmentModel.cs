@@ -24,6 +24,7 @@ namespace Guide.Models
         public List<AttachmentModel> CreateAttachmentCategory(string category, string databasePath)
         {
             List<AttachmentModel> attachments = [];
+            BarterModel bases = BarterModel.GetBarter(Shared.GetEuDatabasePath());
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\attachment\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
@@ -35,6 +36,22 @@ namespace Guide.Models
                 if (ifImageExists)
                 {
                     AttachmentModel attachmentModel = new(jObject);
+                    foreach (var factionBase in bases.Bases)
+                    {
+                        foreach (var offer in factionBase.Barters)
+                        {
+                            if (offer.ItemId == objectId)
+                            {
+                                ItemBarter barter = new();
+                                barter.RequiredLevel = offer.RequiredLevel;
+                                barter.BaseName = factionBase.BaseName;
+                                barter.Offers = offer.Offers;
+                                attachmentModel.Barter = barter;
+                                factionBase.Barters.Remove(offer);
+                                break;
+                            }
+                        }
+                    }
                     attachments.Add(attachmentModel);
                 }
                 else
@@ -215,6 +232,7 @@ namespace Guide.Models
         public List<string> AttachmentAmmoType { get; set; }
         public double StartDamage { get; set; }
         public double DamageDecreaseStart { get; set; }
+        public ItemBarter Barter { get; set; }
     }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.

@@ -85,4 +85,10 @@ namespace Guide.Models
         public string Price { get; set; }
         public Dictionary<string, string> RequiredItems { get; set; }
     }
+    public class ItemBarter
+    {
+        public string BaseName { get; set; }
+        public string RequiredLevel { get; set; }
+        public List<OffersBarterModel> Offers { get; set; }
+    }
 }
