@@ -16,43 +16,44 @@ namespace Guide.Models
             List<BarterBaseModel> baseList = [];
             foreach (var barterBase in jObject)
             {
+                //bases
                 BarterBaseModel baseModel = new();
                 baseModel.BaseName = barterBase
                     .Value<JObject>("settlementTitle")
                     .Value<JObject>("lines")
                     .Value<string>("en");
-                List<OfferBarterModel> offersList = new();
-                foreach (var offer in barterBase.Value<JToken>("recipes"))
+                List<BarterBarterModel> barterList = new();
+                foreach (var barter in barterBase.Value<JToken>("recipes"))
                 {
-                    //offers
-                    OfferBarterModel offersModel = new();
-                    offersModel.RequiredLevel = offer
+                    //barters
+                    BarterBarterModel barterModel = new();
+                    barterModel.RequiredLevel = barter
                         .Value<string>("settlementRequiredLevel");
-                    offersModel.ItemId = offer
+                    barterModel.ItemId = barter
                         .Value<string>("item");
-                    var offers = offer
-                        .Value<JArray>("offers");
 
                     //recipes
-                    List<RecipesBarterModel> recipeList = [];
-                    foreach (var recipe in offers)
+                    var barters = barter
+                        .Value<JArray>("offers");
+                    List<OffersBarterModel> offerList = [];
+                    foreach (var offer in barters)
                     {
-                        RecipesBarterModel recipeModel = new();
-                        recipeModel.Price = recipe.Value<string>("cost");
+                        OffersBarterModel offerModel = new();
+                        offerModel.Price = offer.Value<string>("cost");
                         Dictionary<string, string> requiredItemsList = [];
-                        foreach (var item in recipe.Value<JArray>("requiredItems"))
+                        foreach (var item in offer.Value<JArray>("requiredItems"))
                         {
                             string itemId = item.Value<string>("item");
                             string amount = item.Value<string>("amount");
                             requiredItemsList.Add(itemId, amount);
                         }
-                        recipeModel.RequiredItems = requiredItemsList;
-                        recipeList.Add(recipeModel);
+                        offerModel.RequiredItems = requiredItemsList;
+                        offerList.Add(offerModel);
                     }
-                    offersModel.Recipes = recipeList;
-                    offersList.Add(offersModel);
+                    barterModel.Offers = offerList;
+                    barterList.Add(barterModel);
                 }
-                baseModel.Offers = offersList;
+                baseModel.Barters = barterList;
                 baseList.Add(baseModel);
             }
             Bases = baseList;
@@ -63,15 +64,15 @@ namespace Guide.Models
     public class BarterBaseModel
     {
         public string BaseName { get; set; }
-        public List<OfferBarterModel> Offers { get; set; }
+        public List<BarterBarterModel> Barters { get; set; }
     }
-    public class OfferBarterModel
+    public class BarterBarterModel
     {
         public string RequiredLevel { get; set; }
         public string ItemId { get; set; }
-        public List<RecipesBarterModel> Recipes { get; set; }
+        public List<OffersBarterModel> Offers { get; set; }
     }
-    public class RecipesBarterModel
+    public class OffersBarterModel
     {
         public string Price { get; set; }
         public Dictionary<string, string> RequiredItems { get; set; }
