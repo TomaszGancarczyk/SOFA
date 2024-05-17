@@ -14,9 +14,8 @@ namespace Guide
 
 
 
-            new BarterModel().GetBarter(Shared.GetEuDatabasePath());
-
-
+            BarterModel barters = BarterModel.GetBarter(Shared.GetEuDatabasePath());
+            builder.Services.AddSingleton(barters);
 
             List<OtherModel> euOthers = new OtherModel().GetAllOthers(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
             //List<OtherModel> ruOthers = new OtherModel().GetAllOthers(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();

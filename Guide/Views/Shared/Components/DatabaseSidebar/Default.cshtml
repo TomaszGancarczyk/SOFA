@@ -119,8 +119,7 @@
         </button>
     </div>
     <div id="databaseSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button" onclick="closeDatabaseSidebar()">
-            &lt;--
+        <button class="sidebar-button-back sidebar-button" onclick="closeDatabaseSidebar()">
         </button>
         <button class="sidebar-button" data-sidebar-id="weaponSidebar" onclick="openSecondarySidebar(this)">
             Weapons
@@ -162,8 +161,7 @@
             List<string> armorClasses = ["Clothing", "Combat", "Combo", "Scientist"];
         }
         <div id="armorSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                &lt;--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (string armorClass in armorClasses)
             {
@@ -178,8 +176,7 @@
             {
                 string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
                 <div id=@id class="sidebar-body-body-body sidebar-container sticky">
-                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                        &lt;--
+                    <button class="sidebar-button-back sidebar-button" onclick="closeSecondarySidebars()">
                     </button>
                     @foreach (ArmorModel armor in Model.Armors)
                     {
@@ -197,8 +194,7 @@
 
         @* container & backpack sidebar *@
         <div id="containerSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (ContainerModel container in Model.Containers)
             {
@@ -214,8 +210,7 @@
             List<string> artefactClasses = ["Biochemical", "Electrophysical", "Gravitational", "Thermal"];
         }
         <div id="artefactSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (string artefactClass in artefactClasses)
             {
@@ -230,8 +225,7 @@
             {
                 string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
                 <div id=@id class="sidebar-body-body-body sidebar-container sticky">
-                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                        &lt;--
+                    <button class="sidebar-button-back sidebar-button" onclick="closeSecondarySidebars()">
                     </button>
                     @foreach (ArtefactModel artefact in Model.Artefacts)
                     {
@@ -252,8 +246,7 @@
             List<string> weaponClasses = ["Assault Rifles", "Devices", "Other Weapons", "Machine Guns", "Melee Weapons", "Pistols", "Shotguns and Rifles", "Sniper Rifles", "Submachine Guns"];
         }
         <div id="weaponSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (string weaponClass in weaponClasses)
             {
@@ -268,8 +261,7 @@
             {
                 string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
                 <div id=@id class="sidebar-body-body-body sidebar-container sticky">
-                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                        &lt;--
+                    <button class="sidebar-button-back sidebar-button" onclick="closeSecondarySidebars()">
                     </button>
                     @foreach (WeaponModel weapon in Model.Weapons)
                     {
@@ -289,8 +281,7 @@
             List<string> attachmentClasses = ["Muzzles and Silencers", "Sights", "Hanguards and Brackets", "Magazines", "Other Attachments", "Pistol Grips"];
         }
         <div id="attachmentSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (string attachmentClass in attachmentClasses)
             {
@@ -305,8 +296,7 @@
             {
                 string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
                 <div id=@id class="sidebar-body-body-body sidebar-container sticky">
-                    <button class="sidebar-button" onclick="closeSecondarySidebars()">
-                        &lt;--
+                    <button class="sidebar-button-back sidebar-button" onclick="closeSecondarySidebars()">
                     </button>
                     @foreach (AttachmentModel attachment in Model.Attachments)
                     {
@@ -323,8 +313,7 @@
 
         @* bullet sidebar *@
         <div id="bulletSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (BulletModel bullet in Model.Bullets)
             {
@@ -336,8 +325,7 @@
 
         @* grenade sidebar *@
         <div id="grenadeSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (GrenadeModel grenade in Model.Grenades)
             {
@@ -349,8 +337,7 @@
 
         @* medicine sidebar *@
         <div id="medicineSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (MedicineModel medicine in Model.Medicines)
             {
@@ -363,8 +350,7 @@
 
         @* barter sidebar *@
         <div id="barterSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (OtherModel barter in Model.Barters)
             {
@@ -376,8 +362,7 @@
 
         @* paint sidebar *@
         <div id="paintSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (OtherModel paint in Model.Paints)
             {
@@ -389,8 +374,7 @@
 
         @* other sidebar *@
         <div id="otherSidebar" class="sidebar-body-body sidebar-container sticky">
-            <button class="sidebar-button" onclick="closeMainSidebars()">
-                <--
+            <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
             </button>
             @foreach (OtherModel other in Model.Others)
             {

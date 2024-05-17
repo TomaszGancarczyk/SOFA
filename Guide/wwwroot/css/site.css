@@ -73,6 +73,7 @@ body {
     text-align: center;
     padding: inherit;
     padding-bottom: 0;
+    font-weight: bold;
     border: none;
     color: inherit;
     background: url(sidebar-button.png) no-repeat;
@@ -83,7 +84,15 @@ body {
         background: url(sidebar-button-hover.png) no-repeat;
     }
 
-.scrollable {
+.sidebar-button-back {
+    background: url(sidebar-button-back.png) no-repeat;
+}
+
+    .sidebar-button-back:hover {
+        background: url(sidebar-button-back-hover.png) no-repeat;
+    }
+
+    .scrollable {
     overflow: auto;
 }
 

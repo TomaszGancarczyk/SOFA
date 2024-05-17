@@ -7,8 +7,9 @@ namespace Guide.Models
 {
     public class BarterModel
     {
-        public void GetBarter(string databasePath)
+        public static BarterModel GetBarter(string databasePath)
         {
+            BarterModel model = new BarterModel();
             string file = $"{databasePath}barter_recipes.json";
             string jsonString = Shared.Reader(file);
             var jObject = JsonConvert.DeserializeObject(jsonString) as JArray;
@@ -17,20 +18,24 @@ namespace Guide.Models
             foreach (var barterBase in jObject)
             {
                 //bases
-                BarterBaseModel baseModel = new();
-                baseModel.BaseName = barterBase
+                BarterBaseModel baseModel = new()
+                {
+                    BaseName = barterBase
                     .Value<JObject>("settlementTitle")
                     .Value<JObject>("lines")
-                    .Value<string>("en");
-                List<BarterBarterModel> barterList = new();
+                    .Value<string>("en")
+                };
+                List<BarterBarterModel> barterList = [];
                 foreach (var barter in barterBase.Value<JToken>("recipes"))
                 {
                     //barters
-                    BarterBarterModel barterModel = new();
-                    barterModel.RequiredLevel = barter
-                        .Value<string>("settlementRequiredLevel");
-                    barterModel.ItemId = barter
-                        .Value<string>("item");
+                    BarterBarterModel barterModel = new()
+                    {
+                        RequiredLevel = barter
+                        .Value<string>("settlementRequiredLevel"),
+                        ItemId = barter
+                        .Value<string>("item")
+                    };
 
                     //recipes
                     var barters = barter
@@ -38,8 +43,10 @@ namespace Guide.Models
                     List<OffersBarterModel> offerList = [];
                     foreach (var offer in barters)
                     {
-                        OffersBarterModel offerModel = new();
-                        offerModel.Price = offer.Value<string>("cost");
+                        OffersBarterModel offerModel = new()
+                        {
+                            Price = offer.Value<string>("cost")
+                        };
                         Dictionary<string, string> requiredItemsList = [];
                         foreach (var item in offer.Value<JArray>("requiredItems"))
                         {
@@ -56,7 +63,8 @@ namespace Guide.Models
                 baseModel.Barters = barterList;
                 baseList.Add(baseModel);
             }
-            Bases = baseList;
+            model.Bases = baseList;
+            return model;
         }
 
         public List<BarterBaseModel> Bases { get; set; }
