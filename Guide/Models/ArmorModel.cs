@@ -25,7 +25,7 @@ namespace Guide.Models
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
-                var jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
+                JObject jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
                 string? objectId = jObject["id"].Value<string>();
                 bool ifImageExists = false;
                 if (objectId != null)

@@ -12,6 +12,12 @@ namespace Guide
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+
+
+            new BarterModel().GetBarter(Shared.GetEuDatabasePath());
+
+
+
             List<OtherModel> euOthers = new OtherModel().GetAllOthers(Shared.GetEuDatabasePath()).OrderBy(p => p.Name).ToList();
             //List<OtherModel> ruOthers = new OtherModel().GetAllOthers(Shared.GetRuDatabasePath()).OrderBy(p => p.Name).ToList();
             builder.Services.AddSingleton(euOthers);
