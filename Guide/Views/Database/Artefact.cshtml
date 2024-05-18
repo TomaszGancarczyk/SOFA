@@ -1,20 +1,20 @@
 ﻿@using Guide.Models
 @using System.Net
 @using Guide.Models.ViewModels;
-@model ArtefactViewModel
+@model ItemViewModel
 
 @{
     ViewData["Title"] = "Database";
 }
 
 @{
-    <img src="@Model.Artefact.ImgSource" />
-    <h1>Id: @Model.Artefact.Id</h1>
-    <h3>@Model.Artefact.Name</h3>
-    <h5>Class: @Model.Artefact.Class</h5>
-    <h5>Weight: @Model.Artefact.Weight</h5>
+    <img src="@Model.Item.ImgSource" />
+    <h1>Id: @Model.Item.Id</h1>
+    <h3>@Model.Item.Name</h3>
+    <h5>Class: @Model.Item.Class</h5>
+    <h5>Weight: @Model.Item.Weight</h5>
     <h5>Stats:</h5>
-    foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.Artefact.ArtefactStats)
+    foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.Item.ArtefactStats)
     {
         string drawStat;
         if (stat.Value.Keys.FirstOrDefault() == stat.Value.Values.FirstOrDefault())
@@ -47,5 +47,5 @@
             </p>
         }
     }
-    <p>@Model.Artefact.Description</p>
+    <p>@Model.Item.Description</p>
 }

@@ -1,4 +1,6 @@
-﻿namespace Guide.Services
+﻿using Guide.Models;
+
+namespace Guide.Services
 {
     public class Shared
     {
@@ -15,6 +17,32 @@
             using StreamReader reader = new(filePath);
             string text = reader.ReadToEnd();
             return text;
+        }
+        public static Item CreateItemFromModel(IItem item)
+        {
+            return new Item
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Rarity = item.Rarity,
+                Class = item.Class,
+                Weight = item.Weight,
+                Features = item.Features,
+                Properties = item.Properties,
+                Stats = item.Stats,
+                Description = item.Description,
+                ImgSource = item.ImgSource,
+                Barter = item.Barter,
+                UpgradeStats = item.UpgradeStats,
+                DamageGraphField = item.DamageGraphField,
+                CompatibleBackpacks = item.CompatibleBackpacks,
+                CompatibleContainers = item.CompatibleContainers,
+                ArtefactStats = item.ArtefactStats,
+                PossibleArtefactStats = item.PossibleArtefactStats,
+                SuitableFor = item.SuitableFor,
+                AttachmentAmmoType = item.AttachmentAmmoType,
+                Obtained = item.Obtained
+            };
         }
     }
 }

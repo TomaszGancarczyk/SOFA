@@ -1,31 +1,31 @@
 ﻿@using Guide.Models
 @using System.Net
 @using Guide.Models.ViewModels;
-@model ArmorViewModel
+@model ItemViewModel
 
 @{
     ViewData["Title"] = "Database";
 }
 
 @{
-    <img src="@Model.Armor.ImgSource" />
-    <h1>Id: @Model.Armor.Id</h1>
-    <h3>@Model.Armor.Name</h3>
-    <h5>Rarity: @Model.Armor.Rarity</h5>
-    <h5>Class: @Model.Armor.Class</h5>
-    <h5>Weight: @Model.Armor.Weight</h5>
-    if (Model.Armor.Features.Count > 0)
+    <img src="@Model.Item.ImgSource" />
+    <h1>Id: @Model.Item.Id</h1>
+    <h3>@Model.Item.Name</h3>
+    <h5>Rarity: @Model.Item.Rarity</h5>
+    <h5>Class: @Model.Item.Class</h5>
+    <h5>Weight: @Model.Item.Weight</h5>
+    if (Model.Item.Features.Count > 0)
     {
         <h5>Features:</h5>
-        foreach (string feature in Model.Armor.Features)
+        foreach (string feature in Model.Item.Features)
         {
             <p>@feature</p>
         }
     }
-    if (Model.Armor.Properties.Count > 0)
+    if (Model.Item.Properties.Count > 0)
     {
         <h5>Properties:</h5>
-        foreach (KeyValuePair<string, int> property in Model.Armor.Properties)
+        foreach (KeyValuePair<string, int> property in Model.Item.Properties)
         {
             string drawProperty = $"{property.Key}: {property.Value}";
             <p>
@@ -34,7 +34,7 @@
         }
     }
     <h5>Stats:</h5>
-    foreach (KeyValuePair<string, string> stat in Model.Armor.Stats)
+    foreach (KeyValuePair<string, string> stat in Model.Item.Stats)
     {
         string drawStat = $"{stat.Key}: {stat.Value}";
         <p>
@@ -42,13 +42,13 @@
         </p>
     }
     <h5>CompatibleBackpacks:</h5>
-    <p>@Model.Armor.CompatibleBackpacks</p>
+    <p>@Model.Item.CompatibleBackpacks</p>
     <h5>CompatibleContainers:</h5>
-    <p>@Model.Armor.CompatibleContainers</p>
-    <p>@Model.Armor.Description</p>
+    <p>@Model.Item.CompatibleContainers</p>
+    <p>@Model.Item.Description</p>
 
     <h3>Upgrades</h3>
-    foreach (KeyValuePair<int, Dictionary<string, string>> upgrade in Model.Armor.UpgradeStats)
+    foreach (KeyValuePair<int, Dictionary<string, string>> upgrade in Model.Item.UpgradeStats)
     {
         <h5>+@upgrade.Key</h5>
         foreach (KeyValuePair<string, string> stat in upgrade.Value)

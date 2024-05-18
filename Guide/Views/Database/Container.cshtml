@@ -1,26 +1,26 @@
 ﻿@using Guide.Models
 @using System.Net
 @using Guide.Models.ViewModels;
-@model ContainerViewModel
+@model ItemViewModel
 
 @{
     ViewData["Title"] = "Database";
 }
 
 @{
-    <img src="@Model.Container.ImgSource" />
-    <h1>Id: @Model.Container.Id</h1>
-    <h3>@Model.Container.Name</h3>
-    <h5>Rarity: @Model.Container.Rarity</h5>
-    <h5>Class: @Model.Container.Class</h5>
-    <h5>Weight: @Model.Container.Weight</h5>
+    <img src="@Model.Item.ImgSource" />
+    <h1>Id: @Model.Item.Id</h1>
+    <h3>@Model.Item.Name</h3>
+    <h5>Rarity: @Model.Item.Rarity</h5>
+    <h5>Class: @Model.Item.Class</h5>
+    <h5>Weight: @Model.Item.Weight</h5>
     <h5>Stats:</h5>
-    foreach (KeyValuePair<string, string> stat in Model.Container.Stats)
+    foreach (KeyValuePair<string, string> stat in Model.Item.Stats)
     {
         string drawStat = $"{stat.Key}: {stat.Value}";
         <p>
             @drawStat
         </p>
     }
-    <p>@Model.Container.Description</p>
+    <p>@Model.Item.Description</p>
 }

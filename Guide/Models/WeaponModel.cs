@@ -256,7 +256,7 @@ namespace Guide.Models
                 //damage graph
                 if (Class != "Other Weapons" && Class != "Melee Weapons")
                 {
-                    DamageGraph = new DamageGraph(
+                    DamageGraphField = new DamageGraph(
                 jObject["infoBlocks"][6]
                     .Value<double>("startDamage"),
                 jObject["infoBlocks"][6]
@@ -381,18 +381,27 @@ namespace Guide.Models
         public double Weight { get; set; }
         public List<string> Features { get; set; }
         public Dictionary<string, string> Stats { get; set; }
-        public DamageGraph DamageGraph { get; set; }
+        public DamageGraph DamageGraphField { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
         public Dictionary<int, Dictionary<string, string>> UpgradeStats { get; set; }
         public ItemBarter Barter { get; set; }
-    }
-    public class DamageGraph(double startDamage, double damageDecreaseStart, double endDamage, double damageDecreaseEnd, double maxDistance)
-    {
-        public double StartDamage { get; set; } = startDamage;
-        public double DamageDecreaseStart { get; set; } = damageDecreaseStart;
-        public double EndDamage { get; set; } = endDamage;
-        public double DamageDecreaseEnd { get; set; } = damageDecreaseEnd;
-        public double MaxDistance { get; set; } = maxDistance;
+        public Dictionary<string, int> Properties { get => null; set => throw new NotImplementedException(); }
+        public string CompatibleBackpacks { get => null; set => throw new NotImplementedException(); }
+        public string CompatibleContainers { get => null; set => throw new NotImplementedException(); }
+        public Dictionary<string, Dictionary<double, double>> ArtefactStats { get => null; set => throw new NotImplementedException(); }
+        public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get => null; set => throw new NotImplementedException(); }
+        public List<string> SuitableFor { get => null; set => throw new NotImplementedException(); }
+        public List<string> AttachmentAmmoType { get => null; set => throw new NotImplementedException(); }
+        public string Obtained { get => null; set => throw new NotImplementedException(); }
+
+        public class DamageGraph(double startDamage, double damageDecreaseStart, double endDamage, double damageDecreaseEnd, double maxDistance)
+        {
+            public double StartDamage { get; set; } = startDamage;
+            public double DamageDecreaseStart { get; set; } = damageDecreaseStart;
+            public double EndDamage { get; set; } = endDamage;
+            public double DamageDecreaseEnd { get; set; } = damageDecreaseEnd;
+            public double MaxDistance { get; set; } = maxDistance;
+        }
     }
 }

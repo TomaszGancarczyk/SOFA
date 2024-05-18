@@ -1,6 +1,6 @@
 ﻿namespace Guide.Models
 {
-    public interface IItem
+    public class Item : IItem
     {
         public string Id { get; set; }
         public string Name { get; set; }

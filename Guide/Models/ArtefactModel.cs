@@ -127,5 +127,17 @@ namespace Guide.Models
         public Dictionary<string, Dictionary<double, double>> PossibleArtefactStats { get; set; }
         public string Description { get; set; }
         public string ImgSource { get; set; }
+        string IItem.Rarity { get => null; set => throw new NotImplementedException(); }
+        List<string> IItem.Features { get => null; set => throw new NotImplementedException(); }
+        Dictionary<string, int> IItem.Properties { get => null; set => throw new NotImplementedException(); }
+        Dictionary<string, string> IItem.Stats { get => null; set => throw new NotImplementedException(); }
+        ItemBarter IItem.Barter { get => null; set => throw new NotImplementedException(); }
+        Dictionary<int, Dictionary<string, string>> IItem.UpgradeStats { get => null; set => throw new NotImplementedException(); }
+        WeaponModel.DamageGraph IItem.DamageGraphField { get => null; set => throw new NotImplementedException(); }
+        string IItem.CompatibleBackpacks { get => null; set => throw new NotImplementedException(); }
+        string IItem.CompatibleContainers { get => null; set => throw new NotImplementedException(); }
+        List<string> IItem.SuitableFor { get => null; set => throw new NotImplementedException(); }
+        List<string> IItem.AttachmentAmmoType { get => null; set => throw new NotImplementedException(); }
+        string IItem.Obtained { get => null; set => throw new NotImplementedException(); }
     }
 }

@@ -40,10 +40,12 @@ namespace Guide.Models
                         {
                             if (offer.ItemId == objectId)
                             {
-                                ItemBarter barter = new();
-                                barter.RequiredLevel = offer.RequiredLevel;
-                                barter.BaseName = factionBase.BaseName;
-                                barter.Offers = offer.Offers;
+                                ItemBarter barter = new()
+                                {
+                                    RequiredLevel = offer.RequiredLevel,
+                                    BaseName = factionBase.BaseName,
+                                    Offers = offer.Offers
+                                };
                                 armorModel.Barter = barter;
                                 factionBase.Barters.Remove(offer);
                                 break;
@@ -233,5 +235,11 @@ namespace Guide.Models
         public string ImgSource { get; set; }
         public Dictionary<int, Dictionary<string, string>> UpgradeStats { get; set; }
         public ItemBarter Barter { get; set; }
+        WeaponModel.DamageGraph IItem.DamageGraphField { get => null; set => throw new NotImplementedException(); }
+        Dictionary<string, Dictionary<double, double>> IItem.ArtefactStats { get => null; set => throw new NotImplementedException(); }
+        Dictionary<string, Dictionary<double, double>> IItem.PossibleArtefactStats { get => null; set => throw new NotImplementedException(); }
+        List<string> IItem.SuitableFor { get => null; set => throw new NotImplementedException(); }
+        List<string> IItem.AttachmentAmmoType { get => null; set => throw new NotImplementedException(); }
+        string IItem.Obtained { get => null; set => throw new NotImplementedException(); }
     }
 }

@@ -230,9 +230,15 @@ namespace Guide.Models
         public List<string> Features { get; set; }
         public List<string> SuitableFor { get; set; }
         public List<string> AttachmentAmmoType { get; set; }
-        public double StartDamage { get; set; }
-        public double DamageDecreaseStart { get; set; }
         public ItemBarter Barter { get; set; }
+        Dictionary<string, int> IItem.Properties { get => null; set => throw new NotImplementedException(); }
+        Dictionary<int, Dictionary<string, string>> IItem.UpgradeStats { get => null; set => throw new NotImplementedException(); }
+        WeaponModel.DamageGraph IItem.DamageGraphField { get => null; set => throw new NotImplementedException(); }
+        string IItem.CompatibleBackpacks { get => null; set => throw new NotImplementedException(); }
+        string IItem.CompatibleContainers { get => null; set => throw new NotImplementedException(); }
+        Dictionary<string, Dictionary<double, double>> IItem.ArtefactStats { get => null; set => throw new NotImplementedException(); }
+        Dictionary<string, Dictionary<double, double>> IItem.PossibleArtefactStats { get => null; set => throw new NotImplementedException(); }
+        string IItem.Obtained { get => null; set => throw new NotImplementedException(); }
     }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning restore CS8604 // Possible null reference argument.

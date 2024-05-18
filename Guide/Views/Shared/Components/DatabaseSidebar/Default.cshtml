@@ -182,7 +182,7 @@
                     {
                         if (armor.Class == armorClass)
                         {
-                            <button class="sidebar-button" onclick="location.href='@Url.Action("Armor", "Database", new {armorId = armor.Id})'">
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = armor.Id})'">
                                 @armor.Name
                             </button>
                         }
@@ -198,7 +198,7 @@
             </button>
             @foreach (ContainerModel container in Model.Containers)
             {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Container", "Database", new {containerId = @container.Id})'">
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = container.Id})'">
                     @container.Name
                 </button>
             }
@@ -231,7 +231,7 @@
                     {
                         if (artefact.Class == artefactClass)
                         {
-                            <button class="sidebar-button" onclick="location.href='@Url.Action("Artefact", "Database", new {artefactId = artefact.Id})'">
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = artefact.Id})'">
                                 @artefact.Name
                             </button>
                         }
@@ -267,7 +267,7 @@
                     {
                         if (weapon.Class == weaponClass)
                         {
-                            <button class="sidebar-button" onclick="location.href='@Url.Action("Weapon", "Database", new {weaponId = weapon.Id})'">
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = weapon.Id})'">
                                 @weapon.Name
                             </button>
                         }
@@ -302,7 +302,7 @@
                     {
                         if (attachment.Class == attachmentClass)
                         {
-                            <button class="sidebar-button" onclick="location.href='@Url.Action("Attachment", "Database", new {attachmentId = attachment.Id})'">
+                            <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = attachment.Id})'">
                                 @attachment.Name
                             </button>
                         }
@@ -317,7 +317,7 @@
             </button>
             @foreach (BulletModel bullet in Model.Bullets)
             {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Bullet", "Database", new {bulletId = bullet.Id})'">
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = bullet.Id})'">
                     @bullet.Name
                 </button>
             }
@@ -329,7 +329,7 @@
             </button>
             @foreach (GrenadeModel grenade in Model.Grenades)
             {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Grenade", "Database", new {grenadeId = grenade.Id})'">
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = grenade.Id})'">
                     @grenade.Name
                 </button>
             }
@@ -341,7 +341,7 @@
             </button>
             @foreach (MedicineModel medicine in Model.Medicines)
             {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Medicine", "Database", new {medicineId = medicine.Id})'">
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = medicine.Id})'">
                     @medicine.Name
                 </button>
             }
@@ -354,7 +354,7 @@
             </button>
             @foreach (OtherModel barter in Model.Barters)
             {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Barter", "Database", new {barterId = barter.Id})'">
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = barter.Id})'">
                     @barter.Name
                 </button>
             }
@@ -366,7 +366,7 @@
             </button>
             @foreach (OtherModel paint in Model.Paints)
             {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Paint", "Database", new {paintId = paint.Id})'">
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = paint.Id})'">
                     @paint.Name
                 </button>
             }
@@ -378,7 +378,7 @@
             </button>
             @foreach (OtherModel other in Model.Others)
             {
-                <button class="sidebar-button" onclick="location.href='@Url.Action("Other", "Database", new {otherId = other.Id})'">
+                <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Database", new {item = other.Id})'">
                     @other.Name
                 </button>
             }
