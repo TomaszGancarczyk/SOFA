@@ -26,9 +26,13 @@ namespace Guide.Models
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\armor\\{category}", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
-                JObject jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
-                string? objectId = jObject["id"].Value<string>();
+                if (JsonConvert.DeserializeObject(jsonString) is not JObject jObject)
+                {
+                    Console.WriteLine($"Jobject is null for: {file}");
+                    continue;
+                }
                 bool ifImageExists = false;
+                string? objectId = jObject["id"].Value<string>();
                 if (objectId != null)
                     ifImageExists = File.Exists($"{databasePath}icons\\armor\\{category}\\{objectId}.png");
                 if (ifImageExists)
@@ -215,11 +219,7 @@ namespace Guide.Models
             }
             UpgradeStats = upgradeStats;
         }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-#pragma warning restore CS8604 // Possible null reference argument.
-#pragma warning restore CS8601 // Possible null reference assignment.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8603 // Possible null reference return.
 
         public string Id { get; set; }
         public string Name { get; set; }

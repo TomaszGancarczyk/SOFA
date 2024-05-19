@@ -9,10 +9,15 @@ namespace Guide.Models
     {
         public static BarterModel GetBarter(string databasePath)
         {
-            BarterModel model = new BarterModel();
+            BarterModel model = new();
             string file = $"{databasePath}barter_recipes.json";
             string jsonString = Shared.Reader(file);
             var jObject = JsonConvert.DeserializeObject(jsonString) as JArray;
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8601 // Possible null reference assignment.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 
             List<BarterBaseModel> baseList = [];
             foreach (var barterBase in jObject)

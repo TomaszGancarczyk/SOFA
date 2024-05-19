@@ -12,7 +12,11 @@ namespace Guide.Models
             foreach (string file in Directory.EnumerateFiles($"{databasePath}items\\medicine", "*.*", SearchOption.TopDirectoryOnly))
             {
                 string jsonString = Shared.Reader(file);
-                JObject jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
+                if (JsonConvert.DeserializeObject(jsonString) is not JObject jObject)
+                {
+                    Console.WriteLine($"Jobject is null for: {file}");
+                    continue;
+                }
                 string? objectId = jObject["id"].Value<string>();
                 bool ifImageExists = false;
                 if (objectId != null)
@@ -109,6 +113,8 @@ namespace Guide.Models
             //image source
             ImgSource = $"https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/global/icons/{jObject["category"]}/{Id}.png";
         }
+#pragma warning disable CS8603 // Possible null reference return.
+
         public string Id { get; set; }
         public string Name { get; set; }
         public string Class { get; set; }
@@ -130,8 +136,4 @@ namespace Guide.Models
         public string Obtained { get => null; set => throw new NotImplementedException(); }
         WeaponModel.DamageGraph IItem.DamageGraphField { get => null; set => throw new NotImplementedException(); }
     }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-#pragma warning restore CS8604 // Possible null reference argument.
-#pragma warning restore CS8601 // Possible null reference assignment.
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
 }
