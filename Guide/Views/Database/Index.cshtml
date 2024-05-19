@@ -11,4 +11,325 @@
     <img src="@Model.Item.ImgSource" />
     <h1>Id: @Model.Item.Id</h1>
     <h3>@Model.Item.Name</h3>
+    if (@Model.Item.Rarity != null)
+    {
+        <h5>Rarity: @Model.Item.Rarity</h5>
+    }
+    if (@Model.Item.Class != null)
+    {
+        <h5>Rarity: @Model.Item.Class</h5>
+    }
+    if (@Model.Item.Weight != null)
+    {
+        <h5>Weight: @Model.Item.Weight</h5>
+    }
+    if (Model.Item.Features != null)
+    {
+        <h5>Features:</h5>
+        foreach (string feature in Model.Item.Features)
+        {
+            <p>@feature</p>
+        }
+    }
+    if (Model.Item.Properties != null)
+    {
+        <h5>Properties:</h5>
+        foreach (KeyValuePair<string, int> property in Model.Item.Properties)
+        {
+            <p>
+                @property.Key: @property.Value
+            </p>
+        }
+    }
+    if (Model.Item.AttachmentAmmoType != null)
+    {
+        <h5>Ammo Type:</h5>
+        foreach (string ammoType in Model.Item.AttachmentAmmoType)
+        {
+            <p>
+                @ammoType
+            </p>
+        }
+    }
+    if (Model.Item.Stats != null)
+    {
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, string> stat in Model.Item.Stats)
+        {
+            <p>
+                @stat.Key: @stat.Value
+            </p>
+        }
+    }
+    if (Model.Item.ArtefactStats != null)
+    {
+        <h5>Stats:</h5>
+        foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.Item.ArtefactStats)
+        {
+            string drawStat;
+            if (stat.Value.Keys.FirstOrDefault() == stat.Value.Values.FirstOrDefault())
+            {
+                drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault().ToString()}";
+            }
+            else
+            {
+                drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()} : {stat.Value.Values.FirstOrDefault()}";
+            }
+            if (stat.Key == "Radiation" || stat.Key == "Psy-emissions" || stat.Key == "Biological infection" || stat.Key == "Frost" || stat.Key == "Temperature")
+            {
+                Console.WriteLine(((double)stat.Value.Keys.FirstOrDefault()));
+                if ((double)stat.Value.Keys.FirstOrDefault() > 0)
+                {
+                    <p style="color: red">
+                        @drawStat
+                    </p>
+                }
+                else
+                {
+                    <p style="color: green">
+                        @drawStat
+                    </p>
+                }
+            }
+            else
+            {
+                if ((double)stat.Value.Keys.FirstOrDefault() < 0)
+                {
+                    <p style="color: red">
+                        @drawStat
+                    </p>
+                }
+                else
+                {
+                    <p style="color: green">
+                        @drawStat
+                    </p>
+                }
+            }
+        }
+        if (Model.Item.PossibleArtefactStats != null)
+        {
+            <h5>Possible stats:</h5>
+            foreach (KeyValuePair<string, Dictionary<double, double>> stat in Model.Item.PossibleArtefactStats)
+            {
+                string drawStat;
+                if (stat.Value.Keys.FirstOrDefault() == stat.Value.Values.FirstOrDefault())
+                {
+                    drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault().ToString()}";
+                }
+                else
+                {
+                    drawStat = $"{stat.Key}: {stat.Value.Keys.FirstOrDefault()} : {stat.Value.Values.FirstOrDefault()}";
+                }
+                <p>
+                    @drawStat
+                </p>
+            }
+        }
+    }
+    if (Model.Item.CompatibleBackpacks != null)
+    {
+        <h5>CompatibleBackpacks:</h5>
+        <p>@Model.Item.CompatibleBackpacks</p>
+    }
+    if (Model.Item.CompatibleContainers != null)
+    {
+        <h5>CompatibleContainers:</h5>
+        <p>@Model.Item.CompatibleContainers</p>
+    }
+    if (Model.Item.SuitableFor != null)
+    {
+        foreach (string suitable in Model.Item.SuitableFor)
+        {
+            <p>
+                @suitable
+            </p>
+        }
+    }
+    if (Model.Item.Description != null)
+    {
+        <p>@Model.Item.Description</p>
+    }
+    if (Model.Item.DamageGraphField != null)
+    {
+        <canvas id="weaponChart" style="max-width:500px;max-height:300px;"></canvas>
+    }
+    @if (Model.Item.Barter != null)
+    {
+        <h1>Barter</h1>
+        <p>@Model.Item.Barter.BaseName lvl @Model.Item.Barter.RequiredLevel</p>
+        <h5>Offers</h5>
+        int i = 1;
+        foreach (var offer in Model.Item.Barter.Offers)
+        {
+            <h5>Offer #@i</h5>
+            <p>@offer.Price roubles</p>
+            foreach (var item in offer.RequiredItems)
+            {
+                <p>@item.Value @item.Key</p>
+            }
+            i++;
+        }
+    }
+    if (Model.Item.UpgradeStats != null)
+    {
+        <h3>Upgrades</h3>
+        foreach (KeyValuePair<int, Dictionary<string, string>> upgrade in Model.Item.UpgradeStats)
+        {
+            <h5>+@upgrade.Key</h5>
+            foreach (KeyValuePair<string, string> stat in upgrade.Value)
+            {
+                <p>
+                    @stat.Key: @stat.Value
+                </p>
+            }
+        }
+    }
+    if (Model.Item.Obtained != null)
+    {
+        <h5>Obtained:</h5>
+        <p>@Model.Item.Obtained</p>
+    }
+}
+
+@* Damage graph *@
+@if (Model.Item.DamageGraphField != null)
+{
+    <script>
+        @{
+            string xValues = "";
+            string yValues = "";
+            double graphHeight = 0;
+            List<string> distanceLabels = [];
+            if (Model.Item.DamageGraphField != null)
+            {
+                graphHeight = Model.Item.DamageGraphField.StartDamage + 5;
+                double damageDecreaseStart = Model.Item.DamageGraphField.DamageDecreaseStart;
+                double damageDecreaseEnd = Model.Item.DamageGraphField.DamageDecreaseEnd;
+                double maxDistance = Model.Item.DamageGraphField.MaxDistance;
+                double startDamage = @Model.Item.DamageGraphField.StartDamage;
+                double endDamage = @Model.Item.DamageGraphField.EndDamage;
+                distanceLabels = [
+                    "0",
+        damageDecreaseStart.ToString().Replace(",", "."),
+        damageDecreaseEnd.ToString().Replace(",", "."),
+        maxDistance.ToString().Replace(",", ".")
+                ];
+                xValues = $"[0, ";
+                yValues = $"[{startDamage.ToString().Replace(",", ".")}, ";
+                for (int i = 1; i <= Math.Truncate(maxDistance / 10); i++)
+                {
+                    if (damageDecreaseStart / 10 - i < 1 && damageDecreaseStart / 10 - i >= 0)
+                    {
+                        if (damageDecreaseStart / 10 - i != 0)
+                        {
+                            xValues += $"{10 * i}, ";
+                            yValues += "NaN, ";
+                        }
+                        xValues += $"{damageDecreaseStart.ToString().Replace(",", ".")}, ";
+                        yValues += $"{startDamage.ToString().Replace(",", ".")}, ";
+                    }
+                    else if (damageDecreaseEnd / 10 - i < 1 && damageDecreaseEnd / 10 - i >= 0)
+                    {
+                        if (damageDecreaseEnd / 10 - i != 0)
+                        {
+                            xValues += $"{10 * i}, ";
+                            yValues += "NaN, ";
+                        }
+                        xValues += $"{damageDecreaseEnd.ToString().Replace(",", ".")}, ";
+                        yValues += $"{endDamage.ToString().Replace(",", ".")}, ";
+                    }
+                    else if (maxDistance / 10 - i < 1 && maxDistance / 10 - i >= 0)
+                    {
+                        if (maxDistance / 10 - i != 0)
+                        {
+                            xValues += $"{10 * i}, ";
+                            yValues += "NaN, ";
+                        }
+                        xValues += $"{maxDistance.ToString().Replace(",", ".")}]";
+                        yValues += $"{endDamage.ToString().Replace(",", ".")}]";
+                    }
+                    else
+                    {
+                        xValues += $"{10 * i}, ";
+                        yValues += "NaN, ";
+                    }
+                }
+            }
+        }
+
+        const xValues = @xValues;
+        const yValues = @yValues;
+        new Chart("weaponChart", {
+            type: "line",
+            data: {
+                labels: xValues,
+                datasets:
+                    [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(255,255,255,0.5)",
+                        borderColor: "rgba(255,255,255,0.2)",
+                        data: yValues,
+                        spanGaps: true,
+                    }]
+            },
+            options:
+            {
+                plugins: {
+                    legend: { display: false },
+                },
+                scales:
+                {
+                    x: {
+                        border: {
+                            color: "rgba(255,255,255,0.2)",
+                            width: 2,
+                        },
+                        grid: {
+                            color: "rgba(255,255,255,0.1)",
+                        },
+                        title: {
+                            color: "rgba(255,255,255,0.5)",
+                            display: true,
+                            text: "Distance",
+                        },
+                        ticks: {
+                            display: true,
+                            color: "rgba(255,255,255,0.5)",
+                                callback: function(value, index, ticks) {
+        @foreach (string label in distanceLabels)
+        {
+            @:if (this.getLabelForValue(value) == @label)
+            @:{
+            @:return this.getLabelForValue(value) + "m";
+            @:}
+        }
+                                }
+                        }
+                    },
+                    y: {
+                        border: {
+                            color: "rgba(255,255,255,0.2)",
+                            width: 2,
+                        },
+                        grid: {
+                            display: false,
+                        },
+                        title: {
+                            color: "rgba(255,255,255,0.5)",
+                            display: true,
+                            text: "Damage",
+                        },
+                        min: 0, max: @graphHeight.ToString().Replace(",", "."),
+                        ticks: {
+                            display: true,
+                            color: "rgba(255,255,255,0.5)",
+                            stepSize: 10,
+                        }
+                    },
+                }
+            }
+        });
+    </script>
 }

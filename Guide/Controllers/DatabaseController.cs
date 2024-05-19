@@ -14,15 +14,19 @@ namespace Database.Controllers
             if (itemModel == null)
             {
                 Console.WriteLine($"Cannot find item: {item}");
-                return RedirectToAction("Index");
+                return RedirectToAction("Error");
             }
             var viewModel = new ItemViewModel(itemModel);
             if (viewModel.Item.ImgSource != null) return View(viewModel);
             else
             {
                 Console.WriteLine($"Image doesn't exist for Id: {viewModel.Item.Id}");
-                return RedirectToAction("Index");
+                return RedirectToAction("Error");
             }
+        }
+        public IActionResult Error() 
+        { 
+            return View();
         }
     }
 }
