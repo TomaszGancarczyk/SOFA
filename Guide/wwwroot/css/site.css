@@ -29,7 +29,6 @@ body {
 }
 
 .content-container {
-    overflow: overlay;
     right: 0;
     width: calc(100vw - 200px);
     height: calc(100% - 80px);
@@ -90,6 +89,24 @@ body {
 
     .sidebar-button-back:hover {
         background: url(sidebar-button-back-hover.png) no-repeat;
+    }
+
+.sidebar-button-back-half {
+    background: url(sidebar-button-back-half.png) no-repeat;
+    width: 95px;
+}
+
+    .sidebar-button-back-half:hover {
+        background: url(sidebar-button-back-half-hover.png) no-repeat;
+    }
+
+.sidebar-button-search-half {
+    background: url(sidebar-button-search-half.png) no-repeat;
+    width: 95px;
+}
+
+    .sidebar-button-search-half:hover {
+        background: url(sidebar-button-search-half-hover.png) no-repeat;
     }
 
     .scrollable {

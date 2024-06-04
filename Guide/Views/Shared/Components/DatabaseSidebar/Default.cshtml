@@ -14,6 +14,11 @@
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.left = "200px";
     }
+    function openSearchSidebar(element) {
+        closeMainSidebars()
+        var sidebarElement = document.getElementById('searchSidebar');
+        sidebarElement.style.left = "400px";
+    }
     function openSidebar(element) {
         closeMainSidebars()
         var backgroundElement = document.getElementById("backgroundSidebar");
@@ -88,6 +93,8 @@
         closeSidebar("magazinesSidebar")
         closeSidebar("otherattachmentsSidebar")
         closeSidebar("pistolgripsSidebar")
+
+        closeSidebar("searchSidebar")
     }
 </script>
 
@@ -119,7 +126,9 @@
         </button>
     </div>
     <div id="databaseSidebar" class="sidebar-body sidebar-container sticky">
-        <button class="sidebar-button-back sidebar-button" onclick="closeDatabaseSidebar()">
+        <button class="sidebar-button-back-half sidebar-button" onclick="closeDatabaseSidebar()">
+        </button>
+        <button class="sidebar-button-search-half sidebar-button" onclick="openSearchSidebar()">
         </button>
         <button class="sidebar-button" data-sidebar-id="weaponSidebar" onclick="openSecondarySidebar(this)">
             Weapons
@@ -153,6 +162,10 @@
         </button>
         <button class="sidebar-button" data-sidebar-id="otherSidebar" onclick="openSecondarySidebar(this)">
             Others
+        </button>
+    </div>
+    <div id="searchSidebar" class="sidebar-body-body sidebar-container sticky">
+        <button class="sidebar-button-back sidebar-button" onclick="closeMainSidebars()">
         </button>
     </div>
     <div>
