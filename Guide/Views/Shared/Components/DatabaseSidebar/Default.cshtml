@@ -8,34 +8,25 @@
 }
 
 <script>
-    function openDatabaseSidebar(element) {
+    function openDatabaseSidebar(sidebarId) {
         closeMainSidebars()
-        var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.left = "200px";
     }
-    function openSearchSidebar(element) {
-        closeMainSidebars()
-        var sidebarElement = document.getElementById('searchSidebar');
-        sidebarElement.style.left = "400px";
-    }
-    function openSidebar(element) {
+    function openSidebar(sidebarId) {
         closeMainSidebars()
         var backgroundElement = document.getElementById("backgroundSidebar");
         backgroundElement.style.display = "block";
-        var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.left = "200px";
     }
-    function openSecondarySidebar(element) {
+    function openSecondarySidebar(sidebarId) {
         closeMainSidebars()
-        var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.left = "400px";
     }
-    function openTertiarySidebar(element) {
+    function openTertiarySidebar(sidebarId) {
         closeSecondarySidebars()
-        var sidebarId = element.getAttribute('data-sidebar-id');
         var sidebarElement = document.getElementById(sidebarId);
         sidebarElement.style.left = "600px";
     }
@@ -106,7 +97,7 @@
         <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Market")'">
             Market
         </button>
-        <button class="sidebar-button" data-sidebar-id="databaseSidebar" onclick="openSidebar(this)">
+        <button class="sidebar-button" onclick="openSidebar('databaseSidebar')">
             Database
         </button>
         <button class="sidebar-button" onclick="location.href='@Url.Action("Index", "Barter")'">
@@ -128,39 +119,39 @@
     <div id="databaseSidebar" class="sidebar-body sidebar-container sticky">
         <button class="sidebar-button-back-half sidebar-button" onclick="closeDatabaseSidebar()">
         </button>
-        <button class="sidebar-button-search-half sidebar-button" onclick="openSearchSidebar()">
+        <button class="sidebar-button-search-half sidebar-button" onclick="openSecondarySidebar('searchSidebar')">
         </button>
-        <button class="sidebar-button" data-sidebar-id="weaponSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button"onclick="openSecondarySidebar('weaponSidebar')">
             Weapons
         </button>
-        <button class="sidebar-button" data-sidebar-id="armorSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('armorSidebar')">
             Armors
         </button>
-        <button class="sidebar-button" data-sidebar-id="containerSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('containerSidebar')">
             Backpacks and Containers
         </button>
-        <button class="sidebar-button" data-sidebar-id="artefactSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('artefactSidebar')">
             Artefacts
         </button>
-        <button class="sidebar-button" data-sidebar-id="attachmentSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('attachmentSidebar')">
             Attachments
         </button>
-        <button class="sidebar-button" data-sidebar-id="bulletSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('bulletSidebar')">
             Bullets
         </button>
-        <button class="sidebar-button" data-sidebar-id="grenadeSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('grenadeSidebar')">
             Grenades
         </button>
-        <button class="sidebar-button" data-sidebar-id="medicineSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('medicineSidebar')">
             Medicines
         </button>
-        <button class="sidebar-button" data-sidebar-id="barterSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('barterSidebar')">
             Barter
         </button>
-        <button class="sidebar-button" data-sidebar-id="paintSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('paintSidebar')">
             Skins and Paints
         </button>
-        <button class="sidebar-button" data-sidebar-id="otherSidebar" onclick="openSecondarySidebar(this)">
+        <button class="sidebar-button" onclick="openSecondarySidebar('otherSidebar')">
             Others
         </button>
     </div>
@@ -179,7 +170,7 @@
             @foreach (string armorClass in armorClasses)
             {
                 string id = $"{armorClass.ToLower().Replace(" ", "")}Sidebar";
-                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                <button class="sidebar-button" onclick="openTertiarySidebar('@id')">
                     @armorClass
                 </button>
             }
@@ -228,7 +219,7 @@
             @foreach (string artefactClass in artefactClasses)
             {
                 string id = $"{artefactClass.ToLower().Replace(" ", "")}Sidebar";
-                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                <button class="sidebar-button" onclick="openTertiarySidebar('@id')">
                     @artefactClass
                 </button>
             }
@@ -264,7 +255,7 @@
             @foreach (string weaponClass in weaponClasses)
             {
                 string id = $"{weaponClass.ToLower().Replace(" ", "")}Sidebar";
-                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                <button class="sidebar-button" onclick="openTertiarySidebar('@id')">
                     @weaponClass
                 </button>
             }
@@ -299,7 +290,7 @@
             @foreach (string attachmentClass in attachmentClasses)
             {
                 string id = $"{attachmentClass.ToLower().Replace(" ", "")}Sidebar";
-                <button class="sidebar-button" data-sidebar-id=@id onclick="openTertiarySidebar(this)">
+                <button class="sidebar-button" onclick="openTertiarySidebar('@id')">
                     @attachmentClass
                 </button>
             }
