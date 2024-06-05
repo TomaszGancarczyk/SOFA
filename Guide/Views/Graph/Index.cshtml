@@ -27,14 +27,15 @@
         List<string> colors = [];
         allColors.Add("#FF76CE");
         allColors.Add("#F9F07A");
-        allColors.Add("#0E46A3");
         allColors.Add("#5BBCFF");
         allColors.Add("#DD5746");
         allColors.Add("#AF8260");
-        allColors.Add("#BED7DC");
         allColors.Add("#FF204E");
         allColors.Add("#15F5BA");
-        allColors.Add("#6420AA");
+        allColors.Add("#FFFFFF");
+        allColors.Add("#808836");
+        allColors.Add("#ccd5ae");
+        allColors.Add("#7678ed");
 
         foreach (string color in allColors)
         {
@@ -48,6 +49,7 @@
     const armorCtx = document.getElementById('armorChart');
 
     @{
+        bool isSuperHeavyCreated = false;
         string armorLabels = "[";
         for (int i = 220; i < 400; i++)
         {
@@ -73,6 +75,17 @@
         {
             if (armor.Class == "Combo") armor.Class = "Combined";
             var bulletResistance = ((JObject)JsonConvert.DeserializeObject(Shared.Reader($"{Shared.GetDatabasePath()}items\\armor\\{armor.Class.ToLower()}\\_variants\\{armor.Id}\\15.json")))["infoBlocks"][3].Value<JArray>("elements")[0].Value<JObject>("formatted").Value<JObject>("value").Value<string>("en").Replace(".", ",");
+            
+            if (armor.Name.Contains("Super-Heavy Armored Suit"))
+            {
+                if (!isSuperHeavyCreated)
+                {
+                    armor.Name = "Faction Super-Heavy Armored Suit";
+                    isSuperHeavyCreated = true;
+                }
+                else
+                    continue;
+            }
 
             @:{
             @:label: '@armor.Name',
@@ -100,6 +113,7 @@
                     data += "NaN";
                 }
             }
+
             data += "]";
             @:data: @data,
             @:borderWidth: 1,
@@ -119,6 +133,7 @@
         ]
       },
       options: {
+                pointRadius: 7,
         scales: {
           y: {
                 border: {
@@ -167,7 +182,7 @@
     const weaponCtx = document.getElementById('weaponChart');
 
     @{
-        int maxRange = 70;
+        int maxRange = 65;
 
         string weaponLabels = "[";
         for (int i = 0; i <= maxRange; i++)
@@ -248,6 +263,14 @@
                 weapon.Name = "AM-17";
             if (weapon.Name.Contains("VSS-M"))
                 weapon.Name = "VSS-M Vintorez";
+            if (weapon.Name.Contains("191"))
+                weapon.Name = "QBZ-191";
+            if (weapon.Name == "HK XM8S")
+            {
+                continue;
+            }
+            if (weapon.Name == "HK XM8")
+                weapon.Name = "HK XM8/HK XM8S";
             @:{
             @:label: '@weapon.Name',
             @:data: @data,
@@ -268,6 +291,7 @@
         ]
       },
       options: {
+          pointRadius: 0,
           spanGaps: true,
         scales: {
           y: {
@@ -275,8 +299,8 @@
                     color: "rgba(255,255,255,0.2)",
                     width: 2,
                 },
-                max: 1,
-                min: 0.5,
+                max: 0.95,
+                min: 0.55,
                 title: {
                     display: true,
                     text: 'TTK (s)'
