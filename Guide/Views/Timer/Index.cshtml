@@ -6,7 +6,7 @@
 <script>
     //clan war timer
     @{
-        int cwTimerMinutes = 60 - DateTime.Now.Minute;
+        int cwTimerMinutes = 59 - DateTime.Now.Minute;
         int cwTimerHours = (24 + 19 - DateTime.Now.Hour)%24;
         int cwTimerDays = DayOfWeek.Thursday - DateTime.Now.DayOfWeek;
         if (cwTimerDays < 0 || cwTimerDays == 4) cwTimerDays = 0;
@@ -37,7 +37,7 @@
     }, 60000);
 
     @{
-        int dtTimerMinutes = 60 - DateTime.Now.Minute;
+        int dtTimerMinutes = 59 - DateTime.Now.Minute;
         bool isDtActive = false;
         int dtTimerHours = 0;
         if (dtTimerHours <= 0)

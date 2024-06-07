@@ -1,4 +1,4 @@
-﻿namespace Guide.Models
+﻿namespace Guide.Models.DatabaseModels
 {
     public interface IItem
     {

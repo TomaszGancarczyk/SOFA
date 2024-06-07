@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Guide.Models
+namespace Guide.Models.DatabaseModels
 {
     public class WeaponModel : IItem
     {
@@ -201,7 +201,7 @@ namespace Guide.Models
                     {
                         if (Class != "Other Weapons")
                         {
-                            if (feature.Value<String>("type") != "numeric")
+                            if (feature.Value<string>("type") != "numeric")
                             {
                                 features.Add(feature
                                 .Value<JObject>("text")
@@ -243,7 +243,7 @@ namespace Guide.Models
                 {
                     foreach (var otherFeature in jsonOtherFeatures)
                     {
-                        if (otherFeature.Value<String>("type") == "numeric")
+                        if (otherFeature.Value<string>("type") == "numeric")
                         {
                             features.Add($"{otherFeature
                                     .Value<JObject>("name")

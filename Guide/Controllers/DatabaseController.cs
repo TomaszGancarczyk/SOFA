@@ -1,5 +1,5 @@
 using Barter.Controllers;
-using Guide.Models;
+using Guide.Models.DatabaseModels;
 using Guide.Models.ViewModels;
 using Guide.Services;
 using Microsoft.AspNetCore.Mvc;

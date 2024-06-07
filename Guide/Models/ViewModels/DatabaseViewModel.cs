@@ -1,7 +1,4 @@
-﻿using Guide.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Newtonsoft.Json.Linq;
-using System.Net.Mail;
+﻿using Guide.Models.DatabaseModels;
 
 namespace Guide.Models.ViewModels
 {

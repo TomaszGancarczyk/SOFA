@@ -1,4 +1,6 @@
-﻿namespace Guide.Models.ViewModels
+﻿using Guide.Models.DatabaseModels;
+
+namespace Guide.Models.ViewModels
 {
     public class ArtefactBuilderViewModel
     {

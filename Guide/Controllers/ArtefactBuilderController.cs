@@ -1,4 +1,4 @@
-using Guide.Models;
+using Guide.Models.DatabaseModels;
 using Guide.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 

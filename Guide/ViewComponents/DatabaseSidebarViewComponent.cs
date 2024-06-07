@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Guide.Models;
 using Guide.Models.ViewModels;
 using Database.Controllers;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
+using Guide.Models.DatabaseModels;
 
 namespace Guide.ViewComponents
 {

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Guide.Models
+namespace Guide.Models.DatabaseModels
 {
     public class MedicineModel : IItem
     {
