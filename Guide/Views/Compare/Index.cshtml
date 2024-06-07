@@ -1,7 +1,12 @@
-﻿@{
+﻿@using Guide.Models.DatabaseModels
+@using System.Net
+@using Guide.Models.ViewModels;
+@model CompareViewModel
+
+@{
     ViewData["Title"] = "Compare";
 }
 
-<p>
-    Compare
-</p>
+@foreach(Item item in Model.Items){
+    <p>item.Name</p>
+}
