@@ -3,6 +3,9 @@
     public class QuestModel
     {
         public string Id { get; set; }
+        public string NextQuest { get; set; }
+        public string PreviousQuest { get; set; }
+        public List<QuestStep> QuestSteps { get; set; }
     }
     public class QuestStep
     {
